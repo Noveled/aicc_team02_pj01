@@ -7,7 +7,7 @@ import { login } from "../../redux/slices/authSlice";
 
 const Login = () => {
   const [values, setValues] = useState({
-    email: null,
+    id: null,
     password: null,
   });
 
@@ -15,15 +15,16 @@ const Login = () => {
   const dispatch = useDispatch();
 
   axios.defaults.withCredentials = true;
-  //withCredentials 옵션은 단어 그대로, 다른 도메인(Cross Origin)에 요청을 보낼 때 요청에 인증(credential) 정보를 담아서 보낼 지를 결정하는 항목이다. 즉, 쿠키나 인증 헤더 정보를 포함시켜 요청하고 싶다면, 클라이언트에서 API 요청 메소드를 보낼때 withCredentials 옵션을 true로 설정해야한다.
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!values.email) {
-      alert("이메일을 입력해주세요");
+    if (!values.id) {
+      alert("아이디를 입력해주세요");
+      return;
     }
     if (!values.password) {
       alert("패스워드를 입력해주세요");
+      return;
     }
     axios
       .post("http://localhost:8080/login", values)
@@ -46,15 +47,15 @@ const Login = () => {
       <h2>Sign-In</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email">
-            <strong>Email</strong>
+          <label htmlFor="id">
+            <strong>id</strong>
           </label>
           <input
-            type="email"
-            placeholder="Enter Your Email..."
-            name="email"
+            type="text"
+            placeholder="Enter Your ID..."
+            name="id"
             className="form-control"
-            onChange={(e) => setValues({ ...values, email: e.target.value })}
+            onChange={(e) => setValues({ ...values, id: e.target.value })}
           />
         </div>
         <div>

@@ -1,0 +1,27 @@
+CREATE TABLE users (
+    id TEXT PRIMARY KEY,
+    password TEXT NOT NULL,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    nickname TEXT UNIQUE NOT NULL,
+    date TIMESTAMP NOT NULL
+);
+
+CREATE TABLE course (
+    id SERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    userId TEXT NOT NULL FOREIGN KEY,
+    date TIMESTAMP NOT NULL
+    like INT NOT NULL,
+    distance FLOAT NOT NULL,
+    viewcount INT NOT NULL,
+    lat FLOAT[] NOT NULL,
+    lng FLOAT[] NOT NULL
+);
+
+CREATE TABLE like (
+    id SERIAL PRIMARY KEY,
+    course TEXT NOT NULL FOREIGN KEY,
+    userId TEXT NOT NULL FOREIGN KEY,
+    date TIMESTAMP NOT NULL
+);
