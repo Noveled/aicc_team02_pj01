@@ -8,6 +8,7 @@
   box-sizing: border-box;
 }
 
+/* login */
 .auth-form {
   width: 100%;
   display: flex;
@@ -24,4 +25,11 @@
 .btn {
   border-radius: 4px;
   background: #bbb;
+}
+
+/* search style */
+.search-item {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
 }

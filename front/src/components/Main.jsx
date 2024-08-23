@@ -1,15 +1,25 @@
 import React from "react";
-// import { logout } from "../redux/slices/authSlice";
-// import { useDispatch } from "react-redux";
+import Map from "./Map";
+import Recommend from "./Recommend";
+import FooterNaviBar from "./NaviBar/FooterNaviBar";
 
 const Main = () => {
-  // const dispatch = useDispatch();
+  return (
+    <div className="main w-full h-[100vh] relative">
+      <div className="flex flex-col justify-between w-full h-[100vh]">
+        <div>
+          <Recommend></Recommend>
+        </div>
+        <div>
+          <FooterNaviBar></FooterNaviBar>
+        </div>
+      </div>
 
-  // const handleLogout = () => {
-  //   dispatch(logout());
-  // };
-
-  return <div>Main</div>;
+      <div className="map w-full h-[100vh] absolute">
+        <Map></Map>
+      </div>
+    </div>
+  );
 };
 
 export default Main;
