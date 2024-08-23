@@ -19,7 +19,6 @@ CREATE TABLE course (
     lng FLOAT[] NOT NULL,
     location TEXT NOT NULL,
     marathon BOOLEAN,
-    walk BOOLEAN,
 );
 
 CREATE TABLE like (

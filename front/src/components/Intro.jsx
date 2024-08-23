@@ -13,9 +13,11 @@ const Intro = () => {
           <Main></Main>
         </div>
       ) : (
-        <div>
-          <p>로그인 해주세요</p>
-          <Link to="/login">Login</Link>
+        <div className="w-full flex justify-between">
+          <div>INTRO</div>
+          <button className="p-4">
+            <Link to="/login">Login</Link>
+          </button>
         </div>
       )}
     </div>

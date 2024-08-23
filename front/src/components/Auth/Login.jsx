@@ -45,8 +45,11 @@ const Login = () => {
   return (
     <div>
       <h2>Sign-In</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form
+        onSubmit={handleSubmit}
+        className="w-full p-4 flex flex-col gap-y-4"
+      >
+        <div className="auth-form">
           <label htmlFor="id">
             <strong>id</strong>
           </label>
@@ -58,7 +61,8 @@ const Login = () => {
             onChange={(e) => setValues({ ...values, id: e.target.value })}
           />
         </div>
-        <div>
+
+        <div className="auth-form">
           <label htmlFor="password">
             <strong>Password</strong>
           </label>
@@ -70,11 +74,13 @@ const Login = () => {
             onChange={(e) => setValues({ ...values, password: e.target.value })}
           />
         </div>
-        <button type="submit" className="btn">
+        <button type="submit" className="btn w-[20%]">
           Sign In
         </button>
-        <p>Agree to our Terms and Policies</p>
-        <Link to="/register">Create Account</Link>
+        {/* <p>Agree to our Terms and Policies</p> */}
+        <button className="btn w-40">
+          <Link to="/register">Create Account</Link>
+        </button>
       </form>
     </div>
   );

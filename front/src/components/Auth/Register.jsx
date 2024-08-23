@@ -55,8 +55,11 @@ const Register = () => {
     <div>
       <div>
         <h2>Sign-Up</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
+        <form
+          onSubmit={handleSubmit}
+          className="w-full p-4 flex flex-col gap-y-4"
+        >
+          <div className="auth-form">
             <label htmlFor="id">
               <strong>id</strong>
             </label>
@@ -69,7 +72,7 @@ const Register = () => {
             />
           </div>
 
-          <div>
+          <div className="auth-form">
             <label htmlFor="password">
               <strong>Password</strong>
             </label>
@@ -84,7 +87,7 @@ const Register = () => {
             />
           </div>
 
-          <div>
+          <div className="auth-form">
             <label htmlFor="name">
               <strong>Name</strong>
             </label>
@@ -97,7 +100,7 @@ const Register = () => {
             />
           </div>
 
-          <div>
+          <div className="auth-form">
             <label htmlFor="nickname">
               <strong>Nickname</strong>
             </label>
@@ -112,7 +115,7 @@ const Register = () => {
             />
           </div>
 
-          <div>
+          <div className="auth-form">
             <label htmlFor="email">
               <strong>Email</strong>
             </label>
@@ -125,11 +128,13 @@ const Register = () => {
             />
           </div>
 
-          <button type="submit" className="btn">
+          <button type="submit" className="btn w-20">
             Sign Up
           </button>
           <p>Agree to our Terms and Policies</p>
-          <Link to="/login">Sign In</Link>
+          <button className="btn w-20">
+            <Link to="/login">Sign In</Link>
+          </button>
         </form>
       </div>
     </div>
