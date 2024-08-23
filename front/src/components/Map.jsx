@@ -1,7 +1,12 @@
 import React from "react";
+import test from "./test.jpg";
 
 const Map = () => {
-  return <div>map</div>;
+  return (
+    <div>
+      <img src={test} alt="" />
+    </div>
+  );
 };
 
 export default Map;

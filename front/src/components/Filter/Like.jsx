@@ -3,8 +3,7 @@ import Item from "./Item";
 
 const Like = () => {
   return (
-    <div>
-      Like
+    <div className="like">
       <Item></Item>
     </div>
   );

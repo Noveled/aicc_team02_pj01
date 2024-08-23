@@ -4,36 +4,25 @@ import axios from "axios";
 
 const Register = () => {
   const [values, setValues] = useState({
-    name: null,
-    id: null,
-    email: null,
+    user_name: null,
+    user_email: null,
     password: null,
-    nickname: null,
   });
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!values.id) {
-      alert("아이디를 입력해주세요");
+    if (!values.user_name) {
+      alert("이름을 입력해주세요");
+      return;
+    }
+    if (!values.user_email) {
+      alert("이메일을 입력해주세요");
       return;
     }
     if (!values.password) {
       alert("패스워드를 입력해주세요");
-      return;
-    }
-    if (!values.name) {
-      alert("이름을 입력해주세요");
-      return;
-    }
-    if (!values.email) {
-      alert("이메일을 입력해주세요");
-      return;
-    }
-    if (!values.nickname) {
-      alert("닉네임을 입력해주세요");
       return;
     }
 
@@ -60,15 +49,17 @@ const Register = () => {
           className="w-full p-4 flex flex-col gap-y-4"
         >
           <div className="auth-form">
-            <label htmlFor="id">
+            <label htmlFor="user_name">
               <strong>id</strong>
             </label>
             <input
               type="text"
-              placeholder="Enter Your ID..."
-              name="id"
+              placeholder="Enter Your Name..."
+              name="user_name"
               className="form-control"
-              onChange={(e) => setValues({ ...values, id: e.target.value })}
+              onChange={(e) =>
+                setValues({ ...values, user_name: e.target.value })
+              }
             />
           </div>
 
@@ -88,43 +79,17 @@ const Register = () => {
           </div>
 
           <div className="auth-form">
-            <label htmlFor="name">
-              <strong>Name</strong>
-            </label>
-            <input
-              type="text"
-              placeholder="Enter Your Name..."
-              name="name"
-              className="form-control"
-              onChange={(e) => setValues({ ...values, name: e.target.value })}
-            />
-          </div>
-
-          <div className="auth-form">
-            <label htmlFor="nickname">
-              <strong>Nickname</strong>
-            </label>
-            <input
-              type="text"
-              placeholder="Enter Your Nickname..."
-              name="nickname"
-              className="form-control"
-              onChange={(e) =>
-                setValues({ ...values, nickname: e.target.value })
-              }
-            />
-          </div>
-
-          <div className="auth-form">
-            <label htmlFor="email">
+            <label htmlFor="user_email">
               <strong>Email</strong>
             </label>
             <input
               type="email"
               placeholder="Enter Your Email..."
-              name="email"
+              name="user_email"
               className="form-control"
-              onChange={(e) => setValues({ ...values, email: e.target.value })}
+              onChange={(e) =>
+                setValues({ ...values, user_email: e.target.value })
+              }
             />
           </div>
 

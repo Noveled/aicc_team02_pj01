@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const FooterNaviBar = () => {
   return (
-    <div className="footer">
+    <div className="footer-navi">
       <div className="footer-wrapper flex justify-between p-4">
         <button className="search btn">
           <Link to={"/search"}>탐색</Link>

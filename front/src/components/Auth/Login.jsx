@@ -7,7 +7,7 @@ import { login } from "../../redux/slices/authSlice";
 
 const Login = () => {
   const [values, setValues] = useState({
-    id: null,
+    user_name: null,
     password: null,
   });
 
@@ -18,7 +18,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!values.id) {
+    if (!values.user_name) {
       alert("아이디를 입력해주세요");
       return;
     }
@@ -50,15 +50,17 @@ const Login = () => {
         className="w-full p-4 flex flex-col gap-y-4"
       >
         <div className="auth-form">
-          <label htmlFor="id">
+          <label htmlFor="user_name">
             <strong>id</strong>
           </label>
           <input
             type="text"
             placeholder="Enter Your ID..."
-            name="id"
+            name="user_name"
             className="form-control"
-            onChange={(e) => setValues({ ...values, id: e.target.value })}
+            onChange={(e) =>
+              setValues({ ...values, user_name: e.target.value })
+            }
           />
         </div>
 

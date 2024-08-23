@@ -1,9 +1,8 @@
 CREATE TABLE users (
-    id TEXT PRIMARY KEY,
-    password TEXT NOT NULL,
-    name TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    nickname TEXT UNIQUE NOT NULL,
+    user_id SERIAL PRIMARY KEY,
+    password_hash TEXT NOT NULL,
+    user_name TEXT NOT NULL,
+    user_email TEXT UNIQUE NOT NULL,
     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

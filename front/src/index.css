@@ -27,9 +27,47 @@
   background: #bbb;
 }
 
+.map {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -100;
+}
+
 /* search style */
 .search-item {
   display: flex;
   flex-direction: column;
   row-gap: 0.5rem;
+}
+
+/* detail style */
+.detail-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  padding: 1rem;
+}
+
+.detail-map {
+  width: 100%;
+  height: 50vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -100;
+  overflow-y: hidden;
+}
+
+/* footer navi bar style */
+.footer-navi {
+  background: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }

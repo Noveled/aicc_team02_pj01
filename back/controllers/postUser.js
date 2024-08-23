@@ -5,17 +5,11 @@ const jwt = require("jsonwebtoken");
 
 exports.postUser = async (req, res) => {
   try {
-    const hash = await bcrypt.hash(req.body.password, salt);
-    const values = [
-      req.body.id,
-      hash,
-      req.body.name,
-      req.body.email,
-      req.body.nickname,
-    ];
+    const password_hash = await bcrypt.hash(req.body.password, salt);
+    const values = [req.body.user_name, password_hash, req.body.user_email];
 
     await database.query(
-      "INSERT INTO users (id, password, name, email, nickname) VALUES ($1, $2, $3, $4, $5)",
+      "INSERT INTO users (user_name, password_hash, user_email) VALUES ($1, $2, $3)",
       values
     );
 
@@ -27,22 +21,26 @@ exports.postUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   try {
-    const { rows } = await database.query("SELECT * FROM users WHERE id = $1", [
-      req.body.id,
-    ]);
+    const { rows } = await database.query(
+      "SELECT * FROM users WHERE user_name = $1",
+      [req.body.user_name]
+    );
 
     if (!rows.length) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const compare = await bcrypt.compare(req.body.password, rows[0].password);
+    const compare = await bcrypt.compare(
+      req.body.password,
+      rows[0].password_hash
+    );
 
     if (!compare) {
       return res.status(401).json({ message: "Password not matched" });
     }
 
-    const name = rows[0].name;
-    const email = rows[0].email;
+    const name = rows[0].user_name;
+    const email = rows[0].user_email;
     const token = jwt.sign({ name, email }, process.env.SECRET_KEY, {
       expiresIn: "1d",
     }); // 암호화 될 데이터, 비밀키, 잔존기간

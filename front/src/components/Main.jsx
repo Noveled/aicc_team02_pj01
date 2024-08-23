@@ -5,18 +5,13 @@ import FooterNaviBar from "./NaviBar/FooterNaviBar";
 
 const Main = () => {
   return (
-    <div className="main w-full h-[100vh] relative">
-      <div className="flex flex-col justify-between w-full h-[100vh]">
-        <div>
-          <Recommend></Recommend>
+    <div className="main w-full h-[100vh]">
+      <div>
+        <Recommend></Recommend>
+        <FooterNaviBar></FooterNaviBar>
+        <div className="map">
+          <Map></Map>
         </div>
-        <div>
-          <FooterNaviBar></FooterNaviBar>
-        </div>
-      </div>
-
-      <div className="map w-full h-[100vh] absolute">
-        <Map></Map>
       </div>
     </div>
   );

@@ -1,4 +1,7 @@
 import React from "react";
+
+import FooterNaviBar from "./FooterNaviBar";
+
 import { logout } from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 
@@ -9,10 +12,11 @@ const MyPage = () => {
     dispatch(logout());
   };
   return (
-    <div>
-      <div>
+    <div className="my-page">
+      <div className="my-page-wrapper">
         <button onClick={handleLogout}>Log out</button>
       </div>
+      <FooterNaviBar></FooterNaviBar>
     </div>
   );
 };
