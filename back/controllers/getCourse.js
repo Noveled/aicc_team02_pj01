@@ -10,7 +10,7 @@ exports.getCourse = async(req, res) => {
   let query = `
     SELECT p.*, i.url AS thumbnail_id
     FROM running_course_table p
-    LEFT JOIN images_table i ON p.id = i.course_id AND i.is_primary = TRUE
+    LEFT JOIN images_table i ON p.course_id = i.course_id AND i.is_primary = TRUE
     WHERE 1=1
   `;
 

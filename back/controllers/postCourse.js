@@ -17,11 +17,11 @@ exports.postCourse = async(req, res) => {
       `WITH new_course AS (
         INSERT INTO running_course_table (course_name, user_id, content, thumbnail_id, created_at, updated_at, liked, distance, viewcount, waypoint, city, is_marathon, is_visible, is_private, center, level)
           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
-          RETURNING id
+          RETURNING course_id
       )
       INSERT INTO images_table (course_id, url, is_primary, img_created_at)
       VALUES 
-      ((SELECT id FROM new_course), $17, $18, $19)
+      ((SELECT course_id FROM new_course), $17, $18, $19)
       `,
       [
         course_name, 
@@ -53,6 +53,6 @@ exports.postCourse = async(req, res) => {
   } catch (error) {
     // 트랜잭션 롤백
     await database.query('ROLLBACK');
-    return res.status(500).json({ error });
+    return res.status(500).json({ error: error.message });
   }
 };

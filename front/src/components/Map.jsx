@@ -1,10 +1,11 @@
 import React from "react";
-import test from "./test.jpg";
+// import test from "./test.jpg";
 
 const Map = () => {
   return (
     <div>
-      <img src={test} alt="" />
+      {/* <img src={test} alt="" /> */}
+      MAP
     </div>
   );
 };

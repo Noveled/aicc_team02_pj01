@@ -1,7 +1,9 @@
 import React from 'react'
 
-const CourseData = ({data, func, i}) => {
+const CourseData = ({data, func}) => {
   // console.log('c', data);
+  // console.log('d', data.center);
+
   return (
     <div className='my-4'>
       <div className='grid grid-cols-4 gap-2'>
@@ -18,7 +20,7 @@ const CourseData = ({data, func, i}) => {
       </div>
       <div>
         <button className='border border-gray-400 rounded-md p-1'
-        onClick={() => func(data.waypoint)}>코스 보기</button>
+        onClick={() => func(data.waypoint, data.center)}>코스 보기</button>
       </div>
     </div>
   )

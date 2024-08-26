@@ -15,12 +15,12 @@ exports.updateCourse = async (req, res) => {
       `WITH updated_course AS (
           UPDATE running_course_table 
           SET course_name = $1, content = $2, thumbnail_id = $3, updated_at = $4, distance = $5, waypoint = $6, city = $7, is_visible = $8, is_private = $9, center = $10, level = $11
-          WHERE id = $14
-          RETURNING id
+          WHERE course_id = $14
+          RETURNING course_id
       )
       UPDATE images_table 
       SET url = $12, img_created_at = $13 
-      WHERE course_id = (SELECT id FROM updated_course)`,
+      WHERE course_id = (SELECT course_id FROM updated_course)`,
       [course_name, content, thumbnail_id, updated_at, distance, JSON.stringify(waypoint), city, is_visible, is_private, JSON.stringify(center), level, url, img_created_at, course_id]
     );
     
