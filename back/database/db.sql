@@ -10,7 +10,7 @@ CREATE TABLE users (
 CREATE TABLE running_course_table (
     course_id SERIAL PRIMARY KEY,
     course_name VARCHAR(40) NOT NULL,
-    user_id VARCHAR(20) NOT NULL, -- FOREIGN KEY
+    user_id INT NOT NULL,
 	content VARCHAR(500) NOT NULL,
 	thumbnail_id TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -22,10 +22,20 @@ CREATE TABLE running_course_table (
 	city VARCHAR(20) NOT NULL,
 	is_marathon BOOLEAN NOT NULL DEFAULT false,
 	is_visible BOOLEAN NOT NULL DEFAULT true,
-	is_priavte BOOLEAN NOT NULL DEFAULT false
+	is_private BOOLEAN NOT NULL DEFAULT false,
+	center JSON NOT NULL,
+	level INT NOT NULL
 );
 
-SELECT * FROM running_course_table;
+-- 이미지 테이블 생성
+CREATE TABLE images_table (
+    img_id SERIAL PRIMARY KEY,
+    course_id INT NOT NULL REFERENCES running_course_table(course_id) ON DELETE CASCADE, -- FOREIGN KEY 설정
+    url TEXT NOT NULL,
+    is_primary BOOLEAN DEFAULT false,
+    img_created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 
 CREATE TABLE like (
     id SERIAL PRIMARY KEY,
