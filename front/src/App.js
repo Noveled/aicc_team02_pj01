@@ -8,6 +8,10 @@ import MakeCourse from "./components/NaviBar/MakeCourse";
 import MyPage from "./components/NaviBar/MyPage";
 import Detail from "./components/Filter/Detail";
 
+// 맵 기능 구현 테스트
+import PolyMap from "./components/PolyMap";
+import DirectionMap from "./components/DirectionMap";
+
 function App() {
   return (
     <div className="App">
@@ -23,6 +27,10 @@ function App() {
           <Route path="/mypage" element={<MyPage />} />
 
           <Route path="/detail" element={<Detail />} />
+
+          {/* 기능 구현 테스트 페이지 */}
+          <Route path="/polyMap" element={<PolyMap />} />
+          <Route path="/directMap" element={<DirectionMap />} />
         </Routes>
       </BrowserRouter>
     </div>
