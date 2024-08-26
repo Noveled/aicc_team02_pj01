@@ -41,8 +41,8 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className="register">
+      <div className="register-wrapper">
         <h2>Sign-Up</h2>
         <form
           onSubmit={handleSubmit}
