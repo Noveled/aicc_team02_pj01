@@ -26,7 +26,7 @@ const Box = () => {
 
   return (
     <div className="box">
-      <div className="box-wrapper">
+      <div className="box-wrapper h-[95vh] overflow-y-scroll">
         <div className="flex justify-between">
           <button onClick={handleMyCourse} className="btn">
             나의 코스

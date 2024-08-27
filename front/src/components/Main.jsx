@@ -6,13 +6,13 @@ import FooterNaviBar from "./NaviBar/FooterNaviBar";
 const Main = () => {
   return (
     <div className="main w-full h-[100vh]">
-      <div>
+      <div className="h-[95vh] overflow-y-scroll">
         <Recommend></Recommend>
-        <FooterNaviBar></FooterNaviBar>
         <div className="map">
           <Map></Map>
         </div>
       </div>
+      <FooterNaviBar></FooterNaviBar>
     </div>
   );
 };
