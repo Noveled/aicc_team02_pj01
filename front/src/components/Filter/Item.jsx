@@ -6,7 +6,7 @@ import { FaThumbsUp } from "react-icons/fa6";
 const Item = ({ item }) => {
   console.log(item);
   return (
-    <div className="item p-3 w-[50%]">
+    <div className="item p-3">
       <div>
         <Link to={"/detail"} state={{ item: item }}>
           <div>

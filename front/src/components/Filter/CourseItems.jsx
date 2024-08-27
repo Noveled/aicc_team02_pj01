@@ -41,9 +41,12 @@ const CourseItems = ({ categoryIdx }) => {
 
   return (
     <div className="course-items">
-      <div className="flex gap-x-4 overflow-x-auto">
+      <div className="flex overflow-x-auto w-full">
+        {/* <div className="w-[50%]">test</div> */}
         {getCourseData?.map((item, idx) => (
-          <Item key={idx} item={item}></Item>
+          <div className="category-items">
+            <Item key={idx} item={item}></Item>
+          </div>
         ))}
       </div>
     </div>

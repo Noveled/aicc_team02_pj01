@@ -43,6 +43,10 @@
   row-gap: 0.5rem;
 }
 
+.category-items {
+  width: 50%;
+}
+
 /* detail style */
 .detail-wrapper {
   position: fixed;
