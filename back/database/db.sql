@@ -5,7 +5,7 @@ CREATE TABLE users (
     user_name TEXT UNIQUE NOT NULL,
     user_email TEXT UNIQUE NOT NULL,
     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    url VARCHAR(100)
+    url TEXT
 );
 
 -- 코스 테이블 생성
