@@ -240,16 +240,9 @@ const PolyMap = () => {
       return;
     }
 
-<<<<<<< HEAD
     axios
       .post('http://localhost:8080/make_course', values)
       .then((res) => {
-=======
-    axios.post('http://localhost:8080/make_course', values)
-    .then((res) => {
-      console.log(res);
-      if (res.status === 201) {
->>>>>>> 20a85422e7f17ac50c9494eae87d55c3c96a2540
         console.log(res);
         if (res.status === 201) {
           console.log(res);
