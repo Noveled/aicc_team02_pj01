@@ -4,7 +4,8 @@ CREATE TABLE users (
     password_hash TEXT NOT NULL,
     user_name TEXT UNIQUE NOT NULL,
     user_email TEXT UNIQUE NOT NULL,
-    date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    url VARCHAR(100)
 );
 
 -- 코스 테이블 생성
@@ -33,9 +34,9 @@ SELECT * FROM running_course_table;
 CREATE TABLE images_table (
     img_id SERIAL PRIMARY KEY,
     course_id INT, -- FOREIGN KEY
-	url VARCHAR(100),
+	url TEXT,
 	is_primary BOOLEAN DEFAULT true,
-	img_created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	img_created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 
