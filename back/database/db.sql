@@ -1,7 +1,8 @@
 -- 유저 테이블 생성
 CREATE TABLE users_table (
-    user_id SERIAL PRIMARY KEY,
-    password_hash TEXT NOT NULL,
+    user_table_idx SERIAL PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    user_password_hash TEXT NOT NULL,
     user_name TEXT UNIQUE NOT NULL,
     user_email TEXT UNIQUE NOT NULL,
     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
