@@ -5,7 +5,7 @@ CREATE TABLE users_table (
     user_name TEXT UNIQUE NOT NULL,
     user_email TEXT UNIQUE NOT NULL,
     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    url TEXT DEFAULT https://i.namu.wiki/i/M0j6sykCciGaZJ8yW0CMumUigNAFS8Z-dJA9h_GKYSmqqYSQyqJq8D8xSg3qAz2htlsPQfyHZZMmAbPV-Ml9UA.webp
+    url TEXT DEFAULT 'https://i.namu.wiki/i/M0j6sykCciGaZJ8yW0CMumUigNAFS8Z-dJA9h_GKYSmqqYSQyqJq8D8xSg3qAz2htlsPQfyHZZMmAbPV-Ml9UA.webp'
 );
 
 -- 코스 테이블 생성
