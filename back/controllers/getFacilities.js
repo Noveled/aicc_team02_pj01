@@ -8,7 +8,7 @@ exports.getFacilities = async (req, res) => {
     SELECT * FROM facilities_table
   `;
 
-  // userId가 존재하는 경우 query 추가
+  // fac_type 존재하는 경우 query 추가
   if (fac_type) {
     query += ` WHERE fac_type = $${values.length + 1}`;
     values.push(fac_type);

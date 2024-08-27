@@ -12,7 +12,7 @@ CREATE TABLE users_table (
 CREATE TABLE running_course_table (
     course_id SERIAL PRIMARY KEY,
     course_name VARCHAR(40) NOT NULL,
-    user_id VARCHAR(20) NOT NULL, -- FOREIGN KEY
+    user_id INT NOT NULL, -- FOREIGN KEY
 	content VARCHAR(500) NOT NULL,
 	thumbnail_id TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -46,4 +46,15 @@ CREATE TABLE like (
     course TEXT NOT NULL FOREIGN KEY,
     userId TEXT NOT NULL FOREIGN KEY,
     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- 편의 시설 테이블 생성
+CREATE TABLE facilities_table (
+	fac_id SERIAL PRIMARY KEY,
+    fac_name VARCHAR(255) NOT NULL,
+    location_detail VARCHAR(500),
+    latitude DECIMAL(9, 6),
+    longitude DECIMAL(9, 6),
+	fac_type VARCHAR(100) NOT NULL
 );
