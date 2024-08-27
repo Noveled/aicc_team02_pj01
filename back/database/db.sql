@@ -12,7 +12,7 @@ CREATE TABLE users_table (
 CREATE TABLE running_course_table (
     course_id SERIAL PRIMARY KEY,
     course_name VARCHAR(40) NOT NULL,
-    user_id VARCHAR(20) NOT NULL, -- FOREIGN KEY
+    user_id INT NOT NULL, -- FOREIGN KEY
 	content VARCHAR(500) NOT NULL,
 	thumbnail_id TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

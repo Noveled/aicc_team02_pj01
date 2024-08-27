@@ -235,7 +235,7 @@ const PolyMap = () => {
       return;
     }
 
-    axios.post('http://localhost:8080/post_course', values)
+    axios.post('http://localhost:8080/make_course', values)
     .then((res) => {
       console.log(res);
       if (res.status === 201) {
