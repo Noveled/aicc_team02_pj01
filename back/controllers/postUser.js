@@ -6,10 +6,15 @@ const jwt = require("jsonwebtoken");
 exports.postUser = async (req, res) => {
   try {
     const password_hash = await bcrypt.hash(req.body.password, salt);
-    const values = [req.body.user_name, password_hash, req.body.user_email];
+    const values = [
+      req.body.user_id,
+      req.body.user_name,
+      password_hash,
+      req.body.user_email,
+    ];
 
     await database.query(
-      "INSERT INTO users_table (user_name, password_hash, user_email) VALUES ($1, $2, $3)",
+      "INSERT INTO users_table (user_id, user_name, user_password_hash, user_email) VALUES ($1, $2, $3, $4)",
       values
     );
 
