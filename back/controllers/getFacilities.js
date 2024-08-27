@@ -1,6 +1,6 @@
-const database = require('../database/database'); // database.js import 
+const database = require('../database/database'); // database.js import
 
-exports.getFacilities = async(req, res) => {
+exports.getFacilities = async (req, res) => {
   const fac_type = req.query.fac_type; // 시설 타입
   const values = [];
   // 기본 SQL 쿼리
@@ -18,6 +18,6 @@ exports.getFacilities = async(req, res) => {
     const result = await database.query(query, values);
     return res.status(200).json(result.rows);
   } catch (error) {
-    return res.status(500).json({error: error.message});
+    return res.status(500).json({ error: error.message });
   }
 };
