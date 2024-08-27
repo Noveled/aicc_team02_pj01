@@ -3,7 +3,7 @@ const { v4: uuid4 } = require('uuid');
 
 exports.postCourse = async(req, res) => {
   const { course_name, user_id, content, distance, waypoint, city, is_private, url, center, level } = req.body;
-
+  
   // console.log(course_name, user_id, content, distance, JSON.stringify(waypoint), city, is_private, url, center, level);
 
   try {

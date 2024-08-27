@@ -47,3 +47,14 @@ CREATE TABLE like (
     userId TEXT NOT NULL FOREIGN KEY,
     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+
+-- 편의 시설 테이블 생성
+CREATE TABLE facilities_table (
+	fac_id SERIAL PRIMARY KEY,
+    fac_name VARCHAR(255) NOT NULL,
+    location_detail VARCHAR(500),
+    latitude DECIMAL(9, 6),
+    longitude DECIMAL(9, 6),
+	fac_type VARCHAR(100) NOT NULL
+);
