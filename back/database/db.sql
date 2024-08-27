@@ -1,3 +1,4 @@
+-- 유저 테이블 생성
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     password_hash TEXT NOT NULL,
@@ -37,6 +38,8 @@ CREATE TABLE images_table (
 	img_created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 );
 
+
+-- 좋아요 / 즐겨찾기 테이블 생성
 CREATE TABLE like (
     id SERIAL PRIMARY KEY,
     course TEXT NOT NULL FOREIGN KEY,

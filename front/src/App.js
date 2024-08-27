@@ -11,6 +11,7 @@ import Detail from "./components/Filter/Detail";
 // 맵 기능 구현 테스트
 import PolyMap from "./components/PolyMap";
 import DirectionMap from "./components/DirectionMap";
+import FacilitiesMap from "./components/FacilitiesMap";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           {/* 기능 구현 테스트 페이지 */}
           <Route path="/polyMap" element={<PolyMap />} />
           <Route path="/directMap" element={<DirectionMap />} />
+          <Route path="/facilMap" element={<FacilitiesMap />} />
         </Routes>
       </BrowserRouter>
     </div>

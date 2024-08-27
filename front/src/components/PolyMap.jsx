@@ -134,7 +134,7 @@ const PolyMap = () => {
     setBoxInfo((prevBoxInfo) => [...prevBoxInfo, customOverlay]);
   };
 
-  const loadMarkers = (data, center) => {
+  const loadMarkers = (data, center, level) => {
     clearAllMarkers();
     data.forEach(({ Ma, La }) => {
     // for (let i = 0; i < LONG.length; i++) {
@@ -144,6 +144,8 @@ const PolyMap = () => {
       addLinePath(position);
     });
     // var moveLatLon = new kakao.maps.LatLng(center.La, center.Ma);
+    // console.log('level', level);
+    map.setLevel(level);
     panTo(center);
   };
 
@@ -199,7 +201,7 @@ const PolyMap = () => {
     var moveLatLon = new kakao.maps.LatLng(centerPos.Ma, centerPos.La);
     // 지도 중심을 부드럽게 이동시킵니다
     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-    console.log('moveLatLon :', moveLatLon);
+    // console.log('moveLatLon :', moveLatLon);
     map.panTo(moveLatLon);            
 }        
 
@@ -302,8 +304,8 @@ const PolyMap = () => {
 
       <h2 className='font-semibold text-xl'>CourseData</h2>
       {
-        courseData.map((data) => (
-          <CourseData data={data} func = {loadMarkers} />
+        courseData.map((data, idx) => (
+          <CourseData key={idx} data={data} func = {loadMarkers} />
         ))
       }
     </>
