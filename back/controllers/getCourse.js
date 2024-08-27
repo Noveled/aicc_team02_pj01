@@ -2,7 +2,7 @@ const database = require('../database/database'); // database.js import
 
 exports.getCourse = async(req, res) => {
   const userId = req.query.userId; // 유저 아이디
-  const courseType = req.query.courseType; // 코스 타입
+  const isMarathon = req.query.isMarathon; // 마라톤 코스 여부
   const isVisible = req.query.isVisible; // 검색 가능 여부(삭제 여부)
   const values = [];
 
@@ -20,10 +20,10 @@ exports.getCourse = async(req, res) => {
     values.push(userId);
   }
 
-  // courseType이 존재하는 경우 query 추가
-  if (courseType) {
-    query += ` AND p.course_type = $${values.length + 1}`;
-    values.push(courseType);
+  // isMarathon 존재하는 경우 query 추가
+  if (isMarathon) {
+    query += ` AND p.is_marathon = $${values.length + 1}`;
+    values.push(isMarathon);
   }
 
   // isVisible 존재하는 경우 query 추가

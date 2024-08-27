@@ -6,7 +6,7 @@ const Map = () => {
     <div>
       {/* <img src={test} alt="" /> */}
       MAP
-    </div>
+    </div >
   );
 };
 

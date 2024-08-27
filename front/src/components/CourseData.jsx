@@ -20,7 +20,7 @@ const CourseData = ({data, func}) => {
       </div>
       <div>
         <button className='border border-gray-400 rounded-md p-1'
-        onClick={() => func(data.waypoint, data.center)}>코스 보기</button>
+        onClick={() => func(data.waypoint, data.center, data.level)}>코스 보기</button>
       </div>
     </div>
   )
