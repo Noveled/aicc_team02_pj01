@@ -1,4 +1,4 @@
-const database = require('../database/database');
+const database = require("../database/database");
 
 exports.deleteCourse = async (req, res) => {
   const course_id = req.params.courseId; // URL 로 부터 courseId 를 받음
@@ -12,8 +12,8 @@ exports.deleteCourse = async (req, res) => {
       `,
       [course_id]
     );
-    return res.status(200).json({ message: 'Course Deleted Successfully' });
+    return res.status(200).json({ message: "Course Deleted Successfully" });
   } catch (error) {
-    return res.status(500).json({ message: 'Delete Course Fail' + error });
+    return res.status(500).json({ message: "Delete Course Fail" + error });
   }
 };

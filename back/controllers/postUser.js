@@ -34,7 +34,6 @@ exports.loginUser = async (req, res) => {
       req.body.password,
       rows[0].password_hash
     );
-    
 
     if (!compare) {
       return res.status(401).json({ message: "Password not matched" });
@@ -45,7 +44,7 @@ exports.loginUser = async (req, res) => {
     const token = jwt.sign({ name, email }, process.env.SECRET_KEY, {
       expiresIn: "1d",
     }); // 암호화 될 데이터, 비밀키, 잔존기간
-    console.log('token', token);
+    console.log("token", token);
     res.cookie("token", token, {
       httpOnly: true, // 클라이언트에서 쿠키를 자바스크립트로 접근하지 못하게 함
       sameSite: "None", // CORS 상황에서 쿠키가 전달될 수 있도록 설정

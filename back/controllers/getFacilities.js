@@ -1,4 +1,4 @@
-const database = require('../database/database'); // database.js import
+const database = require("../database/database"); // database.js import
 
 exports.getFacilities = async (req, res) => {
   const fac_type = req.query.fac_type; // 시설 타입

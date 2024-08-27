@@ -1,9 +1,20 @@
-const database = require('../database/database');
-const { v4: uuid4 } = require('uuid');
+const database = require("../database/database");
+const { v4: uuid4 } = require("uuid");
 
-exports.postCourse = async(req, res) => {
-  const { course_name, user_id, content, distance, waypoint, city, is_private, url, center, level } = req.body;
-  
+exports.postCourse = async (req, res) => {
+  const {
+    course_name,
+    user_id,
+    content,
+    distance,
+    waypoint,
+    city,
+    is_private,
+    url,
+    center,
+    level,
+  } = req.body;
+
   // console.log(course_name, user_id, content, distance, JSON.stringify(waypoint), city, is_private, url, center, level);
 
   try {
@@ -11,7 +22,7 @@ exports.postCourse = async(req, res) => {
     const thumbnail_id = uuid4();
 
     // 트랜잭션 시작
-    await database.query('BEGIN');
+    await database.query("BEGIN");
 
     const result = await database.query(
       `WITH new_course AS (
@@ -24,35 +35,35 @@ exports.postCourse = async(req, res) => {
       ((SELECT course_id FROM new_course), $17, $18, $19)
       `,
       [
-        course_name, 
-        user_id, 
-        content, 
-        thumbnail_id, 
-        currentTime, 
-        currentTime, 
-        0, 
-        distance, 
-        0, 
+        course_name,
+        user_id,
+        content,
+        thumbnail_id,
+        currentTime,
+        currentTime,
+        0,
+        distance,
+        0,
         JSON.stringify(waypoint), // JSON.stringify를 통해 JSON 데이터 형식으로 변환
-        city, 
-        false, 
-        true, 
+        city,
+        false,
+        true,
         is_private,
         JSON.stringify(center),
         level,
-        url, 
-        true, 
-        currentTime
+        url,
+        true,
+        currentTime,
       ]
     );
 
     // 트랜잭션 커밋
-    await database.query('COMMIT');
+    await database.query("COMMIT");
 
-    return res.status(201).json({ message: 'Course Created Successfully' });
+    return res.status(201).json({ message: "Course Created Successfully" });
   } catch (error) {
     // 트랜잭션 롤백
-    await database.query('ROLLBACK');
+    await database.query("ROLLBACK");
     return res.status(500).json({ error: error.message });
   }
 };

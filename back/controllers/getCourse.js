@@ -1,6 +1,6 @@
-const database = require('../database/database'); // database.js import 
+const database = require("../database/database"); // database.js import
 
-exports.getCourse = async(req, res) => {
+exports.getCourse = async (req, res) => {
   const userId = req.query.userId; // 유저 아이디
   const isMarathon = req.query.isMarathon; // 마라톤 코스 여부
   const isVisible = req.query.isVisible; // 검색 가능 여부(삭제 여부)
@@ -32,11 +32,10 @@ exports.getCourse = async(req, res) => {
     values.push(isVisible);
   }
 
-
   try {
     const result = await database.query(query, values);
     return res.status(200).json(result.rows);
   } catch (error) {
-    return res.status(500).json({error: error.message});
+    return res.status(500).json({ error: error.message });
   }
 };
