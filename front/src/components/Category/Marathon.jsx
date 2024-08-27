@@ -4,7 +4,7 @@ import CourseItems from "../Filter/CourseItems";
 const Marathon = () => {
   return (
     <div className="marathon">
-      <CourseItems></CourseItems>
+      <CourseItems categoryIdx={2}></CourseItems>
     </div>
   );
 };

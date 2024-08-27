@@ -4,7 +4,7 @@ import React from "react";
 const Map = () => {
   return (
     <div>
-      {/* <img src={test} alt="" /> */}
+      {/* <img src={test} className="w-full" /> */}
       MAP
     </div>
   );

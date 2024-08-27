@@ -1,9 +1,17 @@
 import React from "react";
 
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+
 import HeaderNaviBar from "../NaviBar/HeaderNaviBar";
 import Map from "../Map";
 
 const Detail = () => {
+  const userName = useSelector((state) => state.auth.authData.name);
+
+  const location = useLocation();
+  const item = location.state.item;
+
   return (
     <div className="detail">
       <HeaderNaviBar></HeaderNaviBar>
@@ -12,9 +20,7 @@ const Detail = () => {
         <div></div>
       </div>
 
-      <div className="detail-map">
-        <Map className="detail-map"></Map>
-      </div>
+      <Map className="detail-map"></Map>
     </div>
   );
 };

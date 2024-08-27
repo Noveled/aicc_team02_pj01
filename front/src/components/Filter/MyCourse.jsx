@@ -19,7 +19,7 @@ const MyCourse = () => {
     const fetchGetCourse = async () => {
       try {
         // setLoading(true);
-        await dispatch(fetchGetCourseData(userName)).unwrap();
+        await dispatch(fetchGetCourseData()).unwrap();
       } catch (error) {
         console.log("Failed to fetch items:", error);
       } finally {
@@ -29,14 +29,19 @@ const MyCourse = () => {
     fetchGetCourse();
   }, [dispatch, userName]);
 
-  console.log(getCourseData);
+  const filteredCourse = getCourseData?.filter(
+    (course) => course.user_id === userName
+  );
+  // console.log(filteredCourse);
 
   return (
-    <div>
+    <div className="my-course">
       MyCourse
-      {getCourseData?.map((item, idx) => (
-        <Item key={idx} item={item}></Item>
-      ))}
+      <div className="grid grid-cols-2 w-full">
+        {filteredCourse?.map((item, idx) => (
+          <Item key={idx} item={item}></Item>
+        ))}
+      </div>
     </div>
   );
 };

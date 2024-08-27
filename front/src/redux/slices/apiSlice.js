@@ -5,9 +5,8 @@ import { GET_COURSES_API_URL } from "../../utils/apiUrl";
 import { getRequest } from "../../utils/requestMethod";
 
 const getCourseFetchThunk = (actionType, apiUrl) => {
-  return createAsyncThunk(actionType, async (user_name) => {
-    const fullPath = `${apiUrl}/${user_name}`;
-    return await getRequest(fullPath);
+  return createAsyncThunk(actionType, async () => {
+    return await getRequest(apiUrl);
   });
 };
 

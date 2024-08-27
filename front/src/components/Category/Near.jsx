@@ -4,7 +4,7 @@ import CourseItems from "../Filter/CourseItems";
 const Near = () => {
   return (
     <div className="near-wrapper">
-      <CourseItems></CourseItems>
+      <CourseItems categoryIdx={0}></CourseItems>
     </div>
   );
 };

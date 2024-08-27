@@ -4,7 +4,7 @@ import CourseItems from "../Filter/CourseItems";
 const Distance = () => {
   return (
     <div className="distance-wrapper">
-      <CourseItems></CourseItems>
+      <CourseItems categoryIdx={4}></CourseItems>
     </div>
   );
 };

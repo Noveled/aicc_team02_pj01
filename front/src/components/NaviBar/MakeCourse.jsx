@@ -10,11 +10,14 @@ const MakeCourse = () => {
 
   const [values, setValues] = useState({
     course_name: null,
-    user_name: user.name,
+    user_id: user.name,
     content: null,
     distance: 4,
-    waypoint: "test1",
-    city: "**구",
+    waypoint: "test",
+    city: "관악구",
+    center: "center",
+    level: 2,
+    is_private: false,
   });
 
   const navigate = useNavigate();
@@ -79,7 +82,7 @@ const MakeCourse = () => {
           </div>
 
           <button type="submit" className="btn w-20">
-            코드 등록
+            코스 등록
           </button>
         </form>
       </div>

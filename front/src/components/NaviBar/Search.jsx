@@ -22,11 +22,6 @@ const Search = () => {
           <Neighbor></Neighbor>
         </div>
 
-        <div className="search-item distance">
-          <h4>거리별 코스</h4>
-          <Distance></Distance>
-        </div>
-
         <div className="search-item walk">
           <h4>산책 추천 코스</h4>
           <Walk></Walk>
@@ -35,6 +30,11 @@ const Search = () => {
         <div className="search-item marathon">
           <h4>마라톤 추천 코스</h4>
           <Marathon></Marathon>
+        </div>
+
+        <div className="search-item distance">
+          <h4>거리별 코스</h4>
+          <Distance></Distance>
         </div>
       </div>
       <FooterNaviBar></FooterNaviBar>
