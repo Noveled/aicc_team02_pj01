@@ -9,7 +9,7 @@ exports.postUser = async (req, res) => {
     const values = [req.body.user_name, password_hash, req.body.user_email];
 
     await database.query(
-      "INSERT INTO users (user_name, password_hash, user_email) VALUES ($1, $2, $3)",
+      "INSERT INTO users_table (user_name, password_hash, user_email) VALUES ($1, $2, $3)",
       values
     );
 
@@ -22,7 +22,7 @@ exports.postUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const { rows } = await database.query(
-      "SELECT * FROM users WHERE user_name = $1",
+      "SELECT * FROM users_table WHERE user_name = $1",
       [req.body.user_name]
     );
 
