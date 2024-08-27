@@ -4,7 +4,7 @@ import CourseItems from "../Filter/CourseItems";
 const Walk = () => {
   return (
     <div className="walk-wrapper">
-      <CourseItems></CourseItems>
+      <CourseItems categoryIdx={3}></CourseItems>
     </div>
   );
 };

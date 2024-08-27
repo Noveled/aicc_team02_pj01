@@ -4,7 +4,7 @@ import CourseItems from "../Filter/CourseItems";
 const Neighbor = () => {
   return (
     <div className="neighbor-wrapper">
-      <CourseItems></CourseItems>
+      <CourseItems categoryIdx={1}></CourseItems>
     </div>
   );
 };

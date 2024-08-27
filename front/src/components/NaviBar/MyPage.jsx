@@ -4,6 +4,7 @@ import FooterNaviBar from "./FooterNaviBar";
 
 import { logout } from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const MyPage = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,11 @@ const MyPage = () => {
   return (
     <div className="my-page">
       <div className="my-page-wrapper">
-        <button onClick={handleLogout}>Log out</button>
+        <Link to={"/"}>
+          <button onClick={handleLogout} className="btn">
+            Log out
+          </button>
+        </Link>
       </div>
       <FooterNaviBar></FooterNaviBar>
     </div>
