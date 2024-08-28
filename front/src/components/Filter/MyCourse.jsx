@@ -10,42 +10,32 @@ const MyCourse = () => {
   const dispatch = useDispatch();
 
   const userId = useSelector((state) => state.auth.authData.name);
+  const myCourseData = useSelector((state) => state.api.getCourseData);
 
-  useEffect(() => {
-    dispatch(fetchGetUserData(userId));
-  }, [dispatch]);
-
-  const getCourseData = useSelector((state) => state.api.getCourseData);
-  // const [loading, setLoading] = useState(false);
+  const course = useSelector((state) => state.api);
+  console.log(course);
 
   useEffect(() => {
     if (!userId) {
       return;
     }
 
+    dispatch(fetchGetUserData(userId));
     const fetchGetCourse = async () => {
       try {
-        // setLoading(true);
         await dispatch(fetchGetCourseData()).unwrap();
       } catch (error) {
         console.log("Failed to fetch items:", error);
-      } finally {
-        // setLoading(false);
       }
     };
     fetchGetCourse();
   }, [dispatch, userId]);
 
-  // const filteredCourse = getCourseData?.filter(
-  //   (course) => course.user_id === userName
-  // );
-  // console.log(filteredCourse);
-
   return (
     <div className="my-course">
       MyCourse
       <div className="grid grid-cols-2 w-full">
-        {getCourseData?.map((item, idx) => (
+        {myCourseData?.map((item, idx) => (
           <Item key={idx} item={item}></Item>
         ))}
       </div>
