@@ -3,8 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchGetCourseData, fetchStorageData, fetchWaterData, fetchBusStopData, } from '../redux/slices/apiSlice';
 
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import { Loader } from 'lucide-react';
 import { BusFront } from 'lucide-react';
+import { GlassWater } from 'lucide-react';
+import { ArchiveRestore } from 'lucide-react';
+import { MapPinned } from 'lucide-react';
+import { Eraser } from 'lucide-react';
 import { Crosshair } from 'lucide-react';
 import { Sun } from 'lucide-react';
 import { Plus } from 'lucide-react';
@@ -25,7 +33,15 @@ const MapBase = () => {
   const [storageMarkers, setStorageMarkers] = useState([]);
   const [firstPointMarkers, setFirstPointMarkers] = useState([]);
 
-  
+  // 유저 마커 상태관리
+  const [userMarker, setUserMarker] = useState(); 
+
+  // 클릭 상태 관리
+  const [isClickedZoomIn, setIsClickedZoomIn] = useState(false);
+  const [isClickedZoomOut, setIsClickedZoomOut] = useState(false);
+  const [isClickedPanTo, setIsClickedPanTo] = useState(false);
+
+
   const dispatch = useDispatch();
   const stateCourseData = useSelector((state) => state.api.getCourseData);
   const stateStorageData = useSelector((state) => state.api.storageData);
@@ -53,6 +69,55 @@ const MapBase = () => {
     const kakaoMap = new kakao.maps.Map(mapContainer, mapOptions);
     setMap(kakaoMap);
   }, []);
+
+  useEffect(() => {
+    // 유저 위치도 설정
+    // setUserMarkerPosition(new kakao.maps.LatLng(37.498004414546934, 127.02770621963765));
+
+    const startSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png', // 유저 마커이미지의 주소입니다    
+    startSize = new kakao.maps.Size(50, 45), // 유저 마커이미지의 크기입니다 
+    startOption = { 
+        offset: new kakao.maps.Point(15, 43) // 유저 마커이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
+    };
+    // 유저 마커 이미지를 생성합니다
+    const userMarkerImage = new kakao.maps.MarkerImage(startSrc, startSize, startOption);
+
+    const userMarkerDragSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_drag.png', // 유저 마커의 드래그 이미지 주소입니다    
+      userMarkerSize = new kakao.maps.Size(50, 64), // 유저 마커의 드래그 이미지 크기입니다 
+      userMarkerDragOption = { 
+          offset: new kakao.maps.Point(15, 54) // 유저 마커의 드래그 이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
+      };
+
+    // 유저 마커의 드래그 이미지를 생성합니다
+    const userMarkerDragImage = new kakao.maps.MarkerImage(userMarkerDragSrc, userMarkerSize, userMarkerDragOption);
+
+    // 유저 마커를 생성합니다
+    const userMarker = new kakao.maps.Marker({
+      map: map, // 출발 마커가 지도 위에 표시되도록 설정합니다
+      position: new kakao.maps.LatLng(37.498004414546934, 127.02770621963765),
+      draggable: true, // 출발 마커가 드래그 가능하도록 설정합니다
+      image: userMarkerImage // 유저 마커이미지를 설정합니다
+    });
+
+    setUserMarker(userMarker);
+
+    // 유저 마커에 dragstart 이벤트를 등록합니다
+    kakao.maps.event.addListener(userMarker, 'dragstart', function() {
+      // 유저 마커의 드래그가 시작될 때 마커 이미지를 변경합니다
+      userMarker.setImage(userMarkerDragImage);
+    });
+
+    // 유저 마커에 dragend 이벤트를 등록합니다
+    kakao.maps.event.addListener(userMarker, 'dragend', function() {
+      // 출발 마커의 드래그가 종료될 때 마커 이미지를 원래 이미지로 변경합니다
+      userMarker.setImage(userMarkerImage);
+      // console.log('userMarker', userMarker['n']);
+    });
+
+    userMarker.setMap(map);
+  }, [map]);
+
+
 
   // useEffect(() => {
   //   if (busstopMarkers.length > 0) {
@@ -89,8 +154,44 @@ const MapBase = () => {
       printStorageMarkers(null);  
       printFirstPointMarkers(map);  
       console.log('출발지 마커들만 지도에 표시하도록 설정합니다');
+    } else if (type === 'clear') {
+      printBusstopMarkers(null);
+      printWaterMarkers(null);
+      printStorageMarkers(null);  
+      printFirstPointMarkers(null);  
+      console.log('화면의 마커들 정리');
     }
   }, [type])
+
+  // 버튼 클릭되면 실행
+  useEffect(() => {
+    if (isClickedZoomIn) {
+      const timer = setTimeout(() => {
+        setIsClickedZoomIn(false);
+      }, 200); // 200ms 후에 원래 배경색으로 복원
+      return () => clearTimeout(timer); // 타이머 클리어
+    }
+  }, [isClickedZoomIn]);
+
+  useEffect(() => {
+    if (isClickedZoomOut) {
+      const timer = setTimeout(() => {
+        setIsClickedZoomOut(false);
+      }, 200); // 200ms 후에 원래 배경색으로 복원
+      return () => clearTimeout(timer); // 타이머 클리어
+    }
+  }, [isClickedZoomOut]);
+
+  useEffect(() => {
+    if (isClickedPanTo) {
+      const timer = setTimeout(() => {
+        setIsClickedPanTo(false);
+      }, 200); // 200ms 후에 원래 배경색으로 복원
+      return () => clearTimeout(timer); // 타이머 클리어
+    }
+  }, [isClickedPanTo]);
+
+
 
   const getMarkers = () => {
     // console.log('getMarkers');
@@ -166,7 +267,7 @@ const MapBase = () => {
   // 좌표와 마커이미지를 받아 마커를 생성하여 리턴하는 함수입니다
   const createFirstPointMarker = (course_data, image) => {
     const first_LatLng = course_data['waypoint'][0];
-    console.log(first_LatLng['Ma'], first_LatLng['La']);
+    // console.log(first_LatLng['Ma'], first_LatLng['La']);
     
     let marker = new kakao.maps.Marker({
         position: new kakao.maps.LatLng(first_LatLng['Ma'], first_LatLng['La']),
@@ -320,7 +421,7 @@ const MapBase = () => {
 
   // 출발지 마커들의 지도 표시 여부를 설정하는 함수입니다
   const printFirstPointMarkers = (map) => {        
-    console.log("출발지 마커 표시 중...", firstPointMarkers);
+    // console.log("출발지 마커 표시 중...", firstPointMarkers);
     for (let i = 0; i < firstPointMarkers.length; i++) {  
       firstPointMarkers[i].setMap(map);
     }        
@@ -333,12 +434,37 @@ const MapBase = () => {
   // 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
   const zoomIn = () => {
     map.setLevel(map.getLevel() - 1);
+    setIsClickedZoomIn(true);
   }
 
   // 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
   const zoomOut = () => {
     map.setLevel(map.getLevel() + 1);
+    setIsClickedZoomOut(true);
   }
+
+  const panTo = () => {
+    // 이동할 위도 경도 위치를 생성합니다 
+    var moveLatLon = userMarker['n'];
+    setIsClickedPanTo(true);
+    
+    // 지도 중심을 부드럽게 이동시킵니다
+    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+    map.panTo(moveLatLon);            
+  }        
+
+  const panToUser = () => {
+    panTo();
+  }
+
+  var settings = {
+    // dots: true,
+    infinite: false,
+    speed: 300,
+    slidesToScroll: 4,
+    slidesToShow: 4,
+    variableWidth: true
+  };
 
   // console.log(stateStorageData);
   // console.log(busstopMarkers);
@@ -346,18 +472,20 @@ const MapBase = () => {
 
   return (
     <div>
-      <div id="map" className='relative' style={{width: "2000px", height: "2000px"}}/>
+      <div id="map" className='relative -left-1/2 -top-1/2' style={{width: "800px", height: "800px"}}/>
       
       {/* 내 위치로 이동 */}
       <div className="absolute bottom-24 left-[14px] z-10">
-        <span className='relative flex items-center justify-center w-[40px] h-[40px] bg-white rounded-full border border-gray-200 shadow-lg'>
-          <Crosshair className='text-[#888888]'/>
-          <span className='absolute h-[3px] w-[3px] bg-[#888888] rounded-3xl'></span>
-        </span>
+        <button onClick={() => panToUser()}>
+          <span className='relative flex items-center justify-center w-[40px] h-[40px] bg-white rounded-full border border-gray-200 shadow-lg'>
+            <Crosshair className={`transition-colors duration-200 ${ isClickedPanTo ? 'text-sky-500' : 'text-[#888888]' }`}/>
+            <span className='absolute h-[3px] w-[3px] bg-[#888888] rounded-3xl'></span>
+          </span>
+        </button>
       </div>
 
       {/* 날씨 */}
-      <div className="absolute bottom-36 left-[14px] z-10">
+      <a className="absolute bottom-36 left-[14px] z-10" href="https://weather.naver.com/">
         <span className='relative flex items-center justify-center w-[40px] h-auto p-2 bg-white rounded-full border border-gray-200 shadow-lg'>
           <div className='flex flex-col'>
             <Sun className='text-orange-400'/>
@@ -367,63 +495,80 @@ const MapBase = () => {
             <span className='text-center text-[10px] text-blue-400'>미세</span>
           </div>
         </span>
-      </div>
+      </a>
 
       {/* 줌 인아웃 */}
       <div className='absolute flex flex-col gap-1 top-20 right-3 z-10'>
-        <button className='border border-gray-200 bg-white rounded-full p-1 shadow-lg'
+        <button className={`border border-gray-200 rounded-full p-1 shadow-lg transition-colors duration-200 ${ isClickedZoomIn ? 'bg-gray-200' : 'bg-white' }`}
         onClick={() => zoomIn()}>
           <Plus className='h-[22px] w-[22px] text-[#888888]' />
         </button>
 
-        <button className='border border-gray-200 bg-white rounded-full p-1 shadow-lg'
+        <button className={`border border-gray-200 rounded-full p-1 shadow-lg transition-colors duration-200 ${ isClickedZoomOut ? 'bg-gray-200' : 'bg-white' }`}
         onClick={() => zoomOut()}>
           <Minus  className='h-[22px] w-[22px] text-[#888888]' />
         </button>
-
       </div>
 
-      <div className="text-[12px] font-semibold text-[#232323]" 
-      style={{position: "absolute", display: "flex", gap: "10px", top: "20px", left: "10px", marginTop: "10px", marginLeft: "10px", zIndex: 1}}>
-          <button className='border border-white bg-white rounded-full py-1 px-2 shadow'
+      {/* 카테고리 슬라이더 */}
+      <div className='absolute top-8 z-10 w-[390px] text-[12px] font-semibold text-[#232323]'>
+      <Slider {...settings}>
+        <div className='mx-[2px]'>
+          <button className='border border-gray-200 bg-white rounded-full py-1 px-2 mx-2 shadow'
           onClick={getMarkers}>
             <div className='flex gap-[1px] justify-center items-center'>
               <Loader className='text-orange-400 h-[14px]'/>
               <span className='text-[12px] whitespace-nowrap'>로드</span>
             </div>
           </button>
-          <button className='border border-white bg-white rounded-full py-1 px-2 shadow'
+        </div>
+        <div className='mx-[2px]'>
+          <button className={`{border border-gray-200 bg-white rounded-full py-1 px-2 shadow ${(type === 'busstop') && 'bg-slate-200'}`}
           onClick={() => handleOnClickBtn('busstop')}>
             <div className='flex gap-[1px] justify-center items-center'>
-              <BusFront className='text-blue-400 h-[14px]'/>
-              <span className='text-[12px] whitespace-nowrap'>버스정류장</span>
+              <BusFront className='text-green-500 h-[14px]'/>
+              <span className={`text-[12px] whitespace-nowrap ${(type === 'busstop') && 'text-sky-500'}`}>버스정류장</span>
             </div>
           </button>
-          <button className='border border-white bg-white rounded-full py-1 px-2 shadow'
+        </div>
+        <div className='mx-[2px]'>
+          <button className={`{border border-gray-200 bg-white rounded-full py-1 px-2 shadow ${(type === 'water') && 'bg-slate-200'}`}
           onClick={() => handleOnClickBtn('water')}>
             <div className='flex gap-[1px] justify-center items-center'>
-              <BusFront className='text-blue-400 h-[14px]'/>
-              <span className='text-[12px] whitespace-nowrap'>공원음수대</span>
+              <GlassWater  className='text-blue-500 h-[14px]'/>
+              <span className={`text-[12px] whitespace-nowrap ${(type === 'water') && 'text-sky-500'}`}>공원음수대</span>
             </div>
           </button>
-          <button className='border border-white bg-white rounded-full py-1 px-2 shadow'
+        </div>
+        <div>
+          <button className={`{border border-gray-200 bg-white rounded-full py-1 px-2 shadow ${(type === 'storage') && 'bg-slate-200'}`}
           onClick={() => handleOnClickBtn('storage')}>
             <div className='flex gap-[1px] justify-center items-center'>
-              <BusFront className='text-blue-400 h-[14px]'/>
-              <span className='text-[12px] whitespace-nowrap'>물품보관함</span>
+              <ArchiveRestore className='text-violet-500 h-[14px]'/>
+              <span className={`text-[12px] whitespace-nowrap ${(type === 'storage') && 'text-sky-500'}`}>물품보관함</span>
             </div>
           </button>
-
-          <button className='border border-white bg-white rounded-full py-1 px-2 shadow'
+        </div>
+        <div className='mx-[2px]'>
+          <button className={`{border border-gray-200 bg-white rounded-full py-1 px-2 shadow ${(type === 'point') && 'bg-slate-200'}`}
           onClick={() => handleOnClickBtn('point')}>
             <div className='flex gap-[1px] justify-center items-center'>
-              <BusFront className='text-blue-400 h-[14px]'/>
-              <span className='text-[12px] whitespace-nowrap'>출발지</span>
+              <MapPinned className='text-red-500 h-[14px]'/>
+              <span className={`text-[12px] whitespace-nowrap ${(type === 'point') && 'text-sky-500'}`}>출발지</span>
             </div>
           </button>
-       </div>
-
-       
+        </div>
+        <div className='mx-[2px]'>
+          <button className={`{border border-gray-200 bg-white rounded-full py-1 px-2 shadow ${(type === 'clear') && 'bg-slate-200'}`}
+          onClick={() => handleOnClickBtn('clear')}>
+            <div className='flex gap-[1px] justify-center items-center'>
+              <Eraser className='text-gray-500 h-[14px]'/>
+              <span className={`text-[12px] whitespace-nowrap ${(type === 'clear') && 'text-sky-500'}`}>지우기</span>
+            </div>
+          </button>
+        </div>
+      </Slider>
+      </div>
     </div>
   )
 }
