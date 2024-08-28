@@ -13,7 +13,6 @@ function FooterNavIcon({ icon, linkTo, title, func }) {
     if (currentPage['title'] === title){
       setIsHovered(true);
     }
-    
   }, []);
 
   return (

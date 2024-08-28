@@ -13,6 +13,7 @@ import PolyMap from "./components/PolyMap";
 import DirectionMap from "./components/DirectionMap";
 import FacilitiesMap from "./components/FacilitiesMap";
 import Main from "./components/Main";
+import SliderTest from "./components/SliderTest";
 
 function App() {
   return (
@@ -34,6 +35,8 @@ function App() {
           <Route path="/polyMap" element={<PolyMap />} />
           <Route path="/directMap" element={<DirectionMap />} />
           <Route path="/facilMap" element={<FacilitiesMap />} />
+          <Route path="/slider" element={<SliderTest />} />
+          
         </Routes>
       </BrowserRouter>
     </div>

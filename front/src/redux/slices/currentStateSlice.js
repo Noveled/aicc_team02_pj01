@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // initial state
 const initialState = {
-  currentPage: "주변",
+  currentPage: { title: "주변", },
   isError: false,
 };
 
