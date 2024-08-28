@@ -2,17 +2,24 @@ import React, { useEffect } from "react";
 import Item from "./Item";
 
 import { useDispatch, useSelector } from "react-redux";
+
+import { fetchGetUserData } from "../../redux/slices/userSlice";
 import { fetchGetCourseData } from "../../redux/slices/apiSlice";
 
 const MyCourse = () => {
   const dispatch = useDispatch();
 
-  const userName = useSelector((state) => state.auth.authData.name);
+  const userId = useSelector((state) => state.auth.authData.name);
+
+  useEffect(() => {
+    dispatch(fetchGetUserData(userId));
+  }, [dispatch]);
+
   const getCourseData = useSelector((state) => state.api.getCourseData);
   // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!userName) {
+    if (!userId) {
       return;
     }
 
@@ -27,18 +34,18 @@ const MyCourse = () => {
       }
     };
     fetchGetCourse();
-  }, [dispatch, userName]);
+  }, [dispatch, userId]);
 
-  const filteredCourse = getCourseData?.filter(
-    (course) => course.user_id === userName
-  );
+  // const filteredCourse = getCourseData?.filter(
+  //   (course) => course.user_id === userName
+  // );
   // console.log(filteredCourse);
 
   return (
     <div className="my-course">
       MyCourse
       <div className="grid grid-cols-2 w-full">
-        {filteredCourse?.map((item, idx) => (
+        {getCourseData?.map((item, idx) => (
           <Item key={idx} item={item}></Item>
         ))}
       </div>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FaThumbsUp } from "react-icons/fa6";
 
 const Item = ({ item }) => {
-  console.log(item);
+  // console.log(item);
   return (
     <div className="item p-3">
       <div>
