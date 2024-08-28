@@ -15,10 +15,9 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(require('./routes/getRoutes'));
-app.use(require('./routes/postRoutes'));
-app.use(require('./routes/putRoutes'));
-app.use(require('./routes/deleteRoutes'));
-
+app.use(require("./routes/getRoutes"));
+app.use(require("./routes/postRoutes"));
+app.use(require("./routes/putRoutes"));
+app.use(require("./routes/deleteRoutes"));
 
 app.listen(PORT, () => console.log(`server is running on ${PORT}`)); // 서버실행 메세지
