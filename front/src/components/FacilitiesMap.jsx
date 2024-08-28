@@ -259,7 +259,7 @@ const FacilitiesMap = () => {
   // console.log(carparkMarkers);
   // console.log(storeMarkers);
   // console.log(type);
-
+  console.log(busstopMarkers);
 
   return (
     <div>

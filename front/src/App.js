@@ -12,6 +12,7 @@ import Detail from "./components/Filter/Detail";
 import PolyMap from "./components/PolyMap";
 import DirectionMap from "./components/DirectionMap";
 import FacilitiesMap from "./components/FacilitiesMap";
+import Main from "./components/Main";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
           <Route path="/mypage" element={<MyPage />} />
 
           <Route path="/detail" element={<Detail />} />
-
+          <Route path="/main" element={<Main />} />
           {/* 기능 구현 테스트 페이지 */}
           <Route path="/polyMap" element={<PolyMap />} />
           <Route path="/directMap" element={<DirectionMap />} />
