@@ -4,16 +4,22 @@ import { GET_COURSE_API_URL, GET_Facilities_API_URL } from "../../utils/apiUrl";
 
 import { getRequest } from "../../utils/requestMethod";
 
-const getCourseFetchThunk = (actionType, apiUrl) => {
+const getCourseFetchThunk = (actionType, apiUrl, idx) => {
+  console.log(idx);
   return createAsyncThunk(actionType, async () => {
-    return await getRequest(apiUrl);
+    return await getRequest(apiUrl, idx);
   });
 };
 
-// 코스 정보 api 
+// 코스 정보 api
 export const fetchGetCourseData = getCourseFetchThunk(
   "fetchGetCourse",
   GET_COURSE_API_URL
+);
+
+export const fetchGetMyCourseData = getCourseFetchThunk(
+  "fetchGetMyCourse",
+  GET_COURSE_API_URL + "/userId"
 );
 
 const createFetchThunk = (actionType, apiUrl) => {
@@ -21,7 +27,7 @@ const createFetchThunk = (actionType, apiUrl) => {
   return createAsyncThunk(actionType, async () => {
     return await getRequest(apiUrl);
   });
-}
+};
 
 // 물품보관함
 export const fetchStorageData = createFetchThunk(
@@ -54,6 +60,7 @@ const apiSlice = createSlice({
   name: "api",
   initialState: {
     getCourseData: null,
+    getMyCourseData: null,
     storageData: null,
     waterData: null,
     busStopData: null,
@@ -64,6 +71,12 @@ const apiSlice = createSlice({
     builder
       .addCase(fetchGetCourseData.fulfilled, handleFulfilled("getCourseData"))
       .addCase(fetchGetCourseData.rejected, handleRejected)
+      .addCase(
+        fetchGetMyCourseData.fulfilled,
+        handleFulfilled("getMyCourseData")
+      )
+      .addCase(fetchGetMyCourseData.rejected, handleRejected)
+
       .addCase(fetchStorageData.fulfilled, handleFulfilled("storageData"))
       .addCase(fetchStorageData.rejected, handleRejected)
       .addCase(fetchWaterData.fulfilled, handleFulfilled("waterData"))

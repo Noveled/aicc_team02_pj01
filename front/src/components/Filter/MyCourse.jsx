@@ -4,16 +4,19 @@ import Item from "./Item";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchGetUserData } from "../../redux/slices/userSlice";
-import { fetchGetCourseData } from "../../redux/slices/apiSlice";
+import { fetchGetMyCourseData } from "../../redux/slices/apiSlice";
 
 const MyCourse = () => {
   const dispatch = useDispatch();
 
   const userId = useSelector((state) => state.auth.authData.name);
-  const myCourseData = useSelector((state) => state.api.getCourseData);
+  const myCourseData = useSelector((state) => state.api.getMyCourseData);
 
-  const course = useSelector((state) => state.api);
-  console.log(course);
+  const user = useSelector((state) => state.user.data);
+
+  if (user !== null) {
+    console.log(user[0].user_table_idx);
+  }
 
   useEffect(() => {
     if (!userId) {
@@ -23,7 +26,7 @@ const MyCourse = () => {
     dispatch(fetchGetUserData(userId));
     const fetchGetCourse = async () => {
       try {
-        await dispatch(fetchGetCourseData()).unwrap();
+        await dispatch(fetchGetMyCourseData(3)).unwrap();
       } catch (error) {
         console.log("Failed to fetch items:", error);
       }
