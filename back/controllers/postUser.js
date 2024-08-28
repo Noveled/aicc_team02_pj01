@@ -27,8 +27,8 @@ exports.postUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const { rows } = await database.query(
-      "SELECT * FROM users_table WHERE user_name = $1",
-      [req.body.user_name]
+      "SELECT * FROM users_table WHERE user_id = $1",
+      [req.body.user_id]
     );
 
     if (!rows.length) {
@@ -37,14 +37,14 @@ exports.loginUser = async (req, res) => {
 
     const compare = await bcrypt.compare(
       req.body.password,
-      rows[0].password_hash
+      rows[0].user_password_hash
     );
 
     if (!compare) {
       return res.status(401).json({ message: "Password not matched" });
     }
 
-    const name = rows[0].user_name;
+    const name = rows[0].user_id;
     const email = rows[0].user_email;
     const token = jwt.sign({ name, email }, process.env.SECRET_KEY, {
       expiresIn: "1d",

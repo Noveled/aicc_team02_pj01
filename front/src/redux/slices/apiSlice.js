@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { GET_COURSES_API_URL, GET_Facilities_API_URL } from "../../utils/apiUrl";
+import { GET_COURSE_API_URL, GET_Facilities_API_URL } from "../../utils/apiUrl";
 
 import { getRequest } from "../../utils/requestMethod";
 
@@ -10,10 +10,10 @@ const getCourseFetchThunk = (actionType, apiUrl) => {
   });
 };
 
-// 코스 정보 api 
+// 코스 정보 api
 export const fetchGetCourseData = getCourseFetchThunk(
   "fetchGetCourse",
-  GET_COURSES_API_URL
+  GET_COURSE_API_URL
 );
 
 const createFetchThunk = (actionType, apiUrl) => {
@@ -21,7 +21,7 @@ const createFetchThunk = (actionType, apiUrl) => {
   return createAsyncThunk(actionType, async () => {
     return await getRequest(apiUrl);
   });
-}
+};
 
 // 물품보관함
 export const fetchStorageData = createFetchThunk(

@@ -1,8 +1,5 @@
-const GET_COURSES_API_URL = "http://localhost:8080/get_course";
+const GET_COURSE_API_URL = "http://localhost:8080/get_course";
 
-const GET_Facilities_API_URL = "http://localhost:8080/get_facilities"
+const GET_Facilities_API_URL = "http://localhost:8080/get_facilities";
 
-export { 
-  GET_COURSES_API_URL,
-  GET_Facilities_API_URL,
- };
+export { GET_COURSE_API_URL, GET_Facilities_API_URL };
