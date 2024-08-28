@@ -1,13 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
 import { GET_COURSE_API_URL, GET_Facilities_API_URL } from "../../utils/apiUrl";
-
 import { getRequest } from "../../utils/requestMethod";
 
-const getCourseFetchThunk = (actionType, apiUrl, idx) => {
-  console.log(idx);
+const getCourseFetchThunk = (actionType, apiUrl) => {
   return createAsyncThunk(actionType, async () => {
-    return await getRequest(apiUrl, idx);
+    return await getRequest(apiUrl);
   });
 };
 
@@ -15,11 +12,6 @@ const getCourseFetchThunk = (actionType, apiUrl, idx) => {
 export const fetchGetCourseData = getCourseFetchThunk(
   "fetchGetCourse",
   GET_COURSE_API_URL
-);
-
-export const fetchGetMyCourseData = getCourseFetchThunk(
-  "fetchGetMyCourse",
-  GET_COURSE_API_URL + "/userId"
 );
 
 const createFetchThunk = (actionType, apiUrl) => {
@@ -71,11 +63,6 @@ const apiSlice = createSlice({
     builder
       .addCase(fetchGetCourseData.fulfilled, handleFulfilled("getCourseData"))
       .addCase(fetchGetCourseData.rejected, handleRejected)
-      .addCase(
-        fetchGetMyCourseData.fulfilled,
-        handleFulfilled("getMyCourseData")
-      )
-      .addCase(fetchGetMyCourseData.rejected, handleRejected)
 
       .addCase(fetchStorageData.fulfilled, handleFulfilled("storageData"))
       .addCase(fetchStorageData.rejected, handleRejected)

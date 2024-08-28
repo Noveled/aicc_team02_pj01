@@ -5,6 +5,8 @@ import { GET_USER_API_URL } from "../../utils/apiUrl";
 import { getRequest } from "../../utils/requestMethod";
 
 const getUserFetchThunk = (actionType, apiUrl) => {
+  console.log('actionType', actionType);
+  console.log('apiUrl', apiUrl);
   return createAsyncThunk(actionType, async (userId) => {
     const fullPath = `${apiUrl}/${userId}`;
     return await getRequest(fullPath);
@@ -26,7 +28,7 @@ const handleRejected = (state, action) => {
 };
 
 const userSlice = createSlice({
-  name: "api",
+  name: "user",
   initialState: {
     data: null,
     isError: false,
