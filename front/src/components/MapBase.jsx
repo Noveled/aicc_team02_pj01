@@ -3,6 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchGetCourseData, fetchStorageData, fetchWaterData, fetchBusStopData, } from '../redux/slices/apiSlice';
 
+import { Loader } from 'lucide-react';
+import { BusFront } from 'lucide-react';
+import { Crosshair } from 'lucide-react';
+import { Sun } from 'lucide-react';
+import { Plus } from 'lucide-react';
+import { Minus } from 'lucide-react';
 
 const { kakao } = window;
 
@@ -324,40 +330,100 @@ const MapBase = () => {
     setType(type)
   }
 
+  // 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
+  const zoomIn = () => {
+    map.setLevel(map.getLevel() - 1);
+  }
+
+  // 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
+  const zoomOut = () => {
+    map.setLevel(map.getLevel() + 1);
+  }
+
   // console.log(stateStorageData);
   // console.log(busstopMarkers);
   // console.log(firstPointMarkers);
 
   return (
     <div>
-      <h2>Facilities Map</h2>
-      <div id="map" className='relative' style={{width: "800px", height: "800px"}}/>
-      <div className="bg-slate-100" style={{position: "absolute", display: "flex", gap: "10px", top: "20px", left: "10px", marginTop: "10px", marginLeft: "10px", zIndex: 1}}>
-          <button className='border border-gray-400 rounded-md p-1'
+      <div id="map" className='relative' style={{width: "2000px", height: "2000px"}}/>
+      
+      {/* 내 위치로 이동 */}
+      <div className="absolute bottom-24 left-[14px] z-10">
+        <span className='relative flex items-center justify-center w-[40px] h-[40px] bg-white rounded-full border border-gray-200 shadow-lg'>
+          <Crosshair className='text-[#888888]'/>
+          <span className='absolute h-[3px] w-[3px] bg-[#888888] rounded-3xl'></span>
+        </span>
+      </div>
+
+      {/* 날씨 */}
+      <div className="absolute bottom-36 left-[14px] z-10">
+        <span className='relative flex items-center justify-center w-[40px] h-auto p-2 bg-white rounded-full border border-gray-200 shadow-lg'>
+          <div className='flex flex-col'>
+            <Sun className='text-orange-400'/>
+            <span className='font-bold'>33°</span>
+            <span className='w-6 h-[2px] min-w-max
+            rounded-md shadow-md bg-[#0ea5e9]'></span>
+            <span className='text-center text-[10px] text-blue-400'>미세</span>
+          </div>
+        </span>
+      </div>
+
+      {/* 줌 인아웃 */}
+      <div className='absolute flex flex-col gap-1 top-20 right-3 z-10'>
+        <button className='border border-gray-200 bg-white rounded-full p-1 shadow-lg'
+        onClick={() => zoomIn()}>
+          <Plus className='h-[22px] w-[22px] text-[#888888]' />
+        </button>
+
+        <button className='border border-gray-200 bg-white rounded-full p-1 shadow-lg'
+        onClick={() => zoomOut()}>
+          <Minus  className='h-[22px] w-[22px] text-[#888888]' />
+        </button>
+
+      </div>
+
+      <div className="text-[12px] font-semibold text-[#232323]" 
+      style={{position: "absolute", display: "flex", gap: "10px", top: "20px", left: "10px", marginTop: "10px", marginLeft: "10px", zIndex: 1}}>
+          <button className='border border-white bg-white rounded-full py-1 px-2 shadow'
           onClick={getMarkers}>
-            주변 검색하기
+            <div className='flex gap-[1px] justify-center items-center'>
+              <Loader className='text-orange-400 h-[14px]'/>
+              <span className='text-[12px] whitespace-nowrap'>로드</span>
+            </div>
           </button>
-          
-          <button className='border border-gray-400 rounded-md p-1'
+          <button className='border border-white bg-white rounded-full py-1 px-2 shadow'
           onClick={() => handleOnClickBtn('busstop')}>
-            버스정류장
+            <div className='flex gap-[1px] justify-center items-center'>
+              <BusFront className='text-blue-400 h-[14px]'/>
+              <span className='text-[12px] whitespace-nowrap'>버스정류장</span>
+            </div>
           </button>
-          <button className='border border-gray-400 rounded-md p-1'
+          <button className='border border-white bg-white rounded-full py-1 px-2 shadow'
           onClick={() => handleOnClickBtn('water')}>
-            공원음수대
+            <div className='flex gap-[1px] justify-center items-center'>
+              <BusFront className='text-blue-400 h-[14px]'/>
+              <span className='text-[12px] whitespace-nowrap'>공원음수대</span>
+            </div>
           </button>
-          <button className='border border-gray-400 rounded-md p-1'
+          <button className='border border-white bg-white rounded-full py-1 px-2 shadow'
           onClick={() => handleOnClickBtn('storage')}>
-            물품보관함
+            <div className='flex gap-[1px] justify-center items-center'>
+              <BusFront className='text-blue-400 h-[14px]'/>
+              <span className='text-[12px] whitespace-nowrap'>물품보관함</span>
+            </div>
           </button>
 
-          <button className='border border-gray-400 rounded-md p-1'
+          <button className='border border-white bg-white rounded-full py-1 px-2 shadow'
           onClick={() => handleOnClickBtn('point')}>
-            출발지
+            <div className='flex gap-[1px] justify-center items-center'>
+              <BusFront className='text-blue-400 h-[14px]'/>
+              <span className='text-[12px] whitespace-nowrap'>출발지</span>
+            </div>
           </button>
-
-
        </div>
+
+       
     </div>
   )
 }

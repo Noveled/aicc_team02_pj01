@@ -17,7 +17,7 @@ export const fetchGetCourseData = getCourseFetchThunk(
 );
 
 const createFetchThunk = (actionType, apiUrl) => {
-  console.log('apiUrl', apiUrl);
+  // console.log('apiUrl', apiUrl);
   return createAsyncThunk(actionType, async () => {
     return await getRequest(apiUrl);
   });

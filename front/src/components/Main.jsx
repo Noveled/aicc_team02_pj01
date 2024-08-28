@@ -21,7 +21,7 @@ const Main = () => {
         </div>
       </div>
       {/* 화면 하단에 내비 바 출력 */}
-      {/* <FooterNaviBar></FooterNaviBar>  */}
+      <FooterNaviBar></FooterNaviBar> 
     </div>
   );
 };

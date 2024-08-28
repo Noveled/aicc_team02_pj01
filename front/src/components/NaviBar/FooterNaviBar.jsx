@@ -1,25 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeCurrentPage } from "../../redux/slices/currentStateSlice";
+
+import { MapPin } from 'lucide-react';
+import { Flag } from 'lucide-react';
+import { Inbox } from 'lucide-react';
+import { Route } from 'lucide-react';
+import { CircleUserRound } from 'lucide-react';
+import FooterNavIcon from "./FooterNavIcon";
 
 const FooterNaviBar = () => {
+  const dispatch = useDispatch();
+  const currentPage = useSelector((state) => state.currentState.currentPage);
+
+  const handleChangePage = (pageName) => {
+    dispatch(changeCurrentPage(pageName));
+  };
+  
+  // console.log('currentPage', currentPage);
   return (
-    <div className="footer-navi">
-      <div className="footer-wrapper flex justify-between px-4">
-        <button className="search btn">
-          <Link to={"/search"}>탐색</Link>
-        </button>
+    <div className="footer-navi shadow">
+      <div className="footer-wrapper grid grid-cols-5">
+        <FooterNavIcon icon={<MapPin />} linkTo="/main" title="주변" func={handleChangePage} />
 
-        <button className="make-course btn">
-          <Link to={"/make_course"}>코스만들기</Link>
-        </button>
+        <FooterNavIcon icon={<Flag />} linkTo="/search" title="코스" func={handleChangePage} />
+        
+        <FooterNavIcon icon={<Route />} linkTo="/make_course" title="코스등록" func={handleChangePage} />
 
-        <button className="box btn">
-          <Link to={"/box"}>보관함</Link>
-        </button>
+        <FooterNavIcon icon={<Inbox />} linkTo="/box" title="보관함" func={handleChangePage} />
 
-        <button className="my-page btn">
-          <Link to={"/mypage"}>마이페이지</Link>
-        </button>
+        <FooterNavIcon icon={<CircleUserRound />} linkTo="/mypage" title="MY" func={handleChangePage} />
       </div>
     </div>
   );
