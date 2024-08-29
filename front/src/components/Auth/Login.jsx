@@ -4,6 +4,8 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
+import { updateUserInfo } from "../../redux/slices/userInfoSlice";
+
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -31,7 +33,22 @@ const Login = () => {
       .then((res) => {
         if (res.status === 201) {
           const decoded = jwtDecode(res.data.token);
+          // console.log(decoded['name']);
           dispatch(login({ authData: decoded }));
+
+          axios
+            .get(`http://localhost:8080/get_user/${decoded['name']}`)
+            .then((res) => {
+              if (res.status === 200) {
+                console.log('res.data', res.data[0]);
+                dispatch(updateUserInfo(res.data[0]));
+              } else {
+                alert('유저 정보 업데이트 실패');
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+          });
           navigate("/");
         } else {
           alert("로그인에 실패하였습니다.");

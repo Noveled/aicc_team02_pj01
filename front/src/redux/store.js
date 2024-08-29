@@ -3,6 +3,7 @@ import authReducer from "./slices/authSlice";
 import apiReducer from "./slices/apiSlice";
 import userReducer from "./slices/userSlice";
 import currentStateReducer from "./slices/currentStateSlice";
+import userInfoReducer from "./slices/userInfoSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     api: apiReducer,
     user: userReducer,
     currentState: currentStateReducer,
+    userInfoState: userInfoReducer,
   },
 });
 

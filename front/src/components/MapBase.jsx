@@ -62,7 +62,7 @@ const MapBase = () => {
   useEffect(() => {
     const mapContainer = document.getElementById('map');
     const mapOptions = {
-      center: new kakao.maps.LatLng(37.498004414546934, 127.02770621963765), // 지도의 중심좌표 
+      center: new kakao.maps.LatLng(37.48081191757761, 126.88385603954914), // 지도의 중심좌표 
       level: 3 // 지도의 확대 레벨 
     };
 
@@ -94,7 +94,7 @@ const MapBase = () => {
     // 유저 마커를 생성합니다
     const userMarker = new kakao.maps.Marker({
       map: map, // 출발 마커가 지도 위에 표시되도록 설정합니다
-      position: new kakao.maps.LatLng(37.498004414546934, 127.02770621963765),
+      position: new kakao.maps.LatLng(37.48071191757761, 126.88145603954914),
       draggable: true, // 출발 마커가 드래그 가능하도록 설정합니다
       image: userMarkerImage // 유저 마커이미지를 설정합니다
     });
@@ -469,10 +469,11 @@ const MapBase = () => {
   // console.log(stateStorageData);
   // console.log(busstopMarkers);
   // console.log(firstPointMarkers);
+  // console.log(userMarker);
 
   return (
     <div>
-      <div id="map" className='relative -left-1/2 -top-1/2' style={{width: "800px", height: "800px"}}/>
+      <div id="map" className='relative' style={{width: "800px", height: "800px"}}/>
       
       {/* 내 위치로 이동 */}
       <div className="absolute bottom-24 left-[14px] z-10">

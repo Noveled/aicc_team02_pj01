@@ -21,11 +21,11 @@ const MyCourse = () => {
   // const myCourseData = useSelector((state) => state.api.getMyCourseData);
 
   const user = useSelector((state) => state.user.data);
-
+  console.log('user', user);
   useEffect(() => {
-    console.log(`http://localhost:8080/get_user/${userId}`);
+    console.log(`http://localhost:8080/get_course?${user[0].user_table_idx}`);
     axios
-    .get(`http://localhost:8080/get_user/${userId}`)
+    .get(`http://localhost:8080/get_course?${user[0].user_table_idx}`)
     .then((res) => {
       // console.log(res);
       if (res.status === 200) {
