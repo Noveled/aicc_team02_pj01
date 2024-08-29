@@ -3,8 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Item = ({ item }) => {
-  console.log(item);
-
   return (
     <div className="item w-full p-3 overflow-x-auto">
       <div className="rounded-lg p-2 bg-sky-200 w-full">
