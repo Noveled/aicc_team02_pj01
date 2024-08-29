@@ -7,7 +7,7 @@ import MapBase from "./MapBase";
 const Main = () => {
   return (
     <div className="main w-full h-[100vh]">
-      <div className="h-[95vh] overflow-y-scroll">
+      <div className="h-[93vh] overflow-y-scroll">
         {/* 상단에 오늘의 추천 코스 보여주기 */}
         {/* <Recommend></Recommend> */}
         <div className="mapContainer">

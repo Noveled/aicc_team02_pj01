@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import Item from "./Item";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  fetchGetUserJoinCourseData,
-  fetchGetUsersJoinCourseData,
-} from "../../redux/slices/apiSlice";
+import { fetchGetUserJoinCourseData } from "../../redux/slices/apiSlice";
 import { fetchGetUsersData } from "../../redux/slices/usersSlice";
 
 const MyCourse = () => {
@@ -15,14 +11,12 @@ const MyCourse = () => {
 
   const userId = useSelector((state) => state.auth.authData.name);
   const myCourseData = useSelector((state) => state.api.myCourse);
-  console.log(myCourseData);
 
   useEffect(() => {
     if (!userId) {
       return;
     }
 
-    console.log(userId);
     dispatch(fetchGetUsersData());
     const fetchGetCourse = async () => {
       try {
@@ -35,9 +29,8 @@ const MyCourse = () => {
   }, [dispatch, userId]);
 
   return (
-    <div className="my-course">
-      MyCourse
-      <div className="grid grid-cols-2 w-full">
+    <div className="my-course bg-sky-100">
+      <div className="grid place-items-center grid-cols-2 w-full">
         {myCourseData?.map((item, idx) => (
           <Item key={idx} item={item}></Item>
         ))}

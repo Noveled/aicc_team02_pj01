@@ -26,12 +26,22 @@ const Box = () => {
 
   return (
     <div className="box">
-      <div className="box-wrapper h-[95vh] overflow-y-scroll">
-        <div className="flex justify-between">
-          <button onClick={handleMyCourse} className="btn">
+      <div className="box-wrapper h-[93vh] overflow-y-scroll">
+        <div className="flex">
+          <button
+            onClick={handleMyCourse}
+            className={`py-4 basis-1/2 shrink-0 text-xl text-gray-500 hover:font-bold ${
+              myCourse && "border-b-2 border-sky-500 text-sky-500"
+            }`}
+          >
             나의 코스
           </button>
-          <button onClick={handleLike} className="btn">
+          <button
+            onClick={handleLike}
+            className={`py-4 basis-1/2 shrink-0 text-xl text-gray-500 hover:font-bold ${
+              like && "border-b-2 border-sky-500 text-sky-500"
+            }`}
+          >
             즐겨찾기
           </button>
         </div>

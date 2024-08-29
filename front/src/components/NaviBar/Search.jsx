@@ -11,7 +11,7 @@ import FooterNaviBar from "./FooterNaviBar";
 const Search = () => {
   return (
     <div className="search">
-      <div className="search-wrapper flex flex-col gap-y-10 p-4 h-[95vh] overflow-y-scroll">
+      <div className="search-wrapper flex flex-col gap-y-10 p-4 h-[93vh] overflow-y-scroll">
         <div className="search-item near">
           <h4>근처 추천 코스</h4>
           <Near></Near>
