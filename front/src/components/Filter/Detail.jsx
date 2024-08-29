@@ -18,6 +18,14 @@ const Detail = () => {
 
       <div className="detail-wrapper">
         <div></div>
+        {/* <div className="flex text-sm gap-4">
+          <button>
+            <FaEdit />
+          </button>
+          <button onClick={deleteItem}>
+            <FaTrash />
+          </button>
+        </div> */}
       </div>
 
       <Map className="detail-map"></Map>
