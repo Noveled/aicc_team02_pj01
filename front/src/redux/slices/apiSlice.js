@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GET_COURSE_API_URL, GET_Facilities_API_URL } from "../../utils/apiUrl";
+import {
+  GET_COURSE_API_URL,
+  GET_Facilities_API_URL,
+  GET_USER_JOIN_COURSE_API_URL,
+  GET_USERS_JOIN_COURSE_API_URL,
+} from "../../utils/apiUrl";
 import { getRequest } from "../../utils/requestMethod";
 
 const getCourseFetchThunk = (actionType, apiUrl) => {
@@ -8,10 +13,27 @@ const getCourseFetchThunk = (actionType, apiUrl) => {
   });
 };
 
+const getUserJoinCourseFetchThunk = (actionType, apiUrl) => {
+  return createAsyncThunk(actionType, async (userId) => {
+    const fullPath = `${apiUrl}/${userId}`;
+    return await getRequest(fullPath);
+  });
+};
+
 // 코스 정보 api
 export const fetchGetCourseData = getCourseFetchThunk(
   "fetchGetCourse",
   GET_COURSE_API_URL
+);
+
+export const fetchGetUserJoinCourseData = getUserJoinCourseFetchThunk(
+  "fetchGetUserJoinCourse",
+  GET_USER_JOIN_COURSE_API_URL
+);
+
+export const fetchGetUsersJoinCourseData = getCourseFetchThunk(
+  "fetchGetUsersJoinCourse",
+  GET_USERS_JOIN_COURSE_API_URL
 );
 
 const createFetchThunk = (actionType, apiUrl) => {
@@ -52,7 +74,8 @@ const apiSlice = createSlice({
   name: "api",
   initialState: {
     getCourseData: null,
-    getMyCourseData: null,
+    myCourse: null,
+    usersCourse: null,
     storageData: null,
     waterData: null,
     busStopData: null,
@@ -63,6 +86,16 @@ const apiSlice = createSlice({
     builder
       .addCase(fetchGetCourseData.fulfilled, handleFulfilled("getCourseData"))
       .addCase(fetchGetCourseData.rejected, handleRejected)
+      .addCase(
+        fetchGetUserJoinCourseData.fulfilled,
+        handleFulfilled("myCourse")
+      )
+      .addCase(fetchGetUserJoinCourseData.rejected, handleRejected)
+      .addCase(
+        fetchGetUsersJoinCourseData.fulfilled,
+        handleFulfilled("usersCourse")
+      )
+      .addCase(fetchGetUsersJoinCourseData.rejected, handleRejected)
 
       .addCase(fetchStorageData.fulfilled, handleFulfilled("storageData"))
       .addCase(fetchStorageData.rejected, handleRejected)
