@@ -22,13 +22,13 @@ const currentStateSlice = createSlice({
     // 동기 액션으로 currentPage 변경
     changeCurrentPage: (state, action) => {
       state.currentPage = action.payload;
-      Cookies.set('currentPage', JSON.stringify(action.payload.currentPage), {
+      Cookies.set('currentPage', JSON.stringify(action.payload), {
         expires: 1, // 1일 쿠키 유효기간
       });
     },
     changeMapInfo: (state, action) => {
       state.mapInfo = action.payload;
-      Cookies.set('mapInfo', JSON.stringify(action.payload.mapInfo), {
+      Cookies.set('mapInfo', JSON.stringify(action.payload), {
         expires: 1, // 1일 쿠키 유효기간
       });
     }

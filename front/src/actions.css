@@ -1,15 +1,15 @@
 .makeCoursePop {
   position: fixed;
-  bottom: 500px; /* 팝업창 화면 아래로 숨김 */
+  bottom: -100vh; /* 팝업창 화면 아래로 숨김 */
   left: 0px; 
   width: 390px;
-  height: 100vh;
-  /* background-color: #333; */
+  height: 90vh;
   border-right: 2px solid darkgray;
   color: white;
-  transition: left 0.3s ease; /* 슬라이드 애니메이션 */
+  transition: bottom 0.5s ease; /* 슬라이드 애니메이션 */
 }
 
 .makeCoursePop.open {
-  left: 0; /* 코스 상세 팝업 화면에 표시 */
+  bottom: 0; /* 팝업 화면에 표시 */
+  transition: bottom 0.5s ease; /* 슬라이드 애니메이션 */
 }

@@ -1,6 +1,7 @@
 const database = require("../database/database");
 const { v4: uuid4 } = require("uuid");
 
+// 코스 생성 엔드포인트
 exports.postCourse = async (req, res) => {
   const {
     course_name,
@@ -67,3 +68,4 @@ exports.postCourse = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+

@@ -454,6 +454,7 @@ const MapBase = () => {
   const panTo = () => {
     // 이동할 위도 경도 위치를 생성합니다 
     var moveLatLon = userMarker['n'];
+    // new kakao.maps.LatLng(33.452613, 126.570888);
     setIsClickedPanTo(true);
     
     // 지도 중심을 부드럽게 이동시킵니다
@@ -481,7 +482,7 @@ const MapBase = () => {
 
   return (
     <div>
-      <div id="map" className='relative' style={{width: "800px", height: "900px"}}/>
+      <div id="map" className='relative' style={{width: "400px", height: "900px"}}/>
       
       {/* 내 위치로 이동 */}
       <div className="absolute bottom-24 left-[14px] z-10">

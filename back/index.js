@@ -20,4 +20,7 @@ app.use(require("./routes/postRoutes"));
 app.use(require("./routes/putRoutes"));
 app.use(require("./routes/deleteRoutes"));
 
+// 서버 경로 설정 (이미지 업로드 파일 접근)
+app.use('/uploads', express.static('uploads'));
+
 app.listen(PORT, () => console.log(`server is running on ${PORT}`)); // 서버실행 메세지
