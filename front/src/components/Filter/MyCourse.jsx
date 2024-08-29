@@ -33,7 +33,7 @@ const MyCourse = () => {
       if (res.status === 200) {
         // navigate('/login');
         // console.log(res.data);
-        setMyCourseData(res.data);
+        // setMyCourseData(res.data);
       } else {
         alert('내 코스 불러오기 실패했습니다.');
       }
@@ -43,7 +43,7 @@ const MyCourse = () => {
     });
   }, []);
 
-  console.log('myCourseData', myCourseData);
+  // console.log('myCourseData', myCourseData);
     
 
   
@@ -73,9 +73,9 @@ const MyCourse = () => {
     <div className="my-course">
       MyCourse
       <div className="grid grid-cols-2 w-full">
-        {myCourseData?.map((item, idx) => (
+        {/* {myCourseData?.map((item, idx) => (
           <Item key={idx} item={item}></Item>
-        ))}
+        ))} */}
       </div>
     </div>
   );

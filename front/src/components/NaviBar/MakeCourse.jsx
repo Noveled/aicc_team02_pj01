@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { changeCurrentPage } from "../../redux/slices/currentStateSlice";
+import { changeMapInfo } from "../../redux/slices/currentStateSlice";
+
+import axios from 'axios';
 
 import { ChevronLeft } from 'lucide-react';
 import { PenLine } from 'lucide-react';
@@ -16,7 +20,10 @@ const MakeCourse = () => {
   const dispatch = useDispatch();
   // const [userData, setUserData] = useState();
   const userData = useSelector((state) => state.userInfoState);
-  console.log('userData', userData);
+  const mapInfo = useSelector((state) => state.currentState.mapInfo);
+  // console.log(mapInfo);
+
+  // console.log('userData', userData);
 
   // 마커 이미지
   const startSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png';
@@ -29,9 +36,17 @@ const MakeCourse = () => {
   const [linePath, setLinePath] = useState([]); // 폴리라인
   const [isMakeCoursePop, setIsMakeCoursePop] = useState(false); // 등록창 팝업 여부
 
+  // 거리 랜덤 등록
+  const getRandomNum = (min, max) => {
+    let random_num = Math.random() * (max - min) + min;
+    
+    return ( Math.round(random_num * 100) / 100 );
+  }
+
   // 코스 등록시 필요한 값
   const [values, setValues] = useState({
     course_name: '',
+    content: '',
     user_id: '', 
     distance: '',
     waypoint: linePath,
@@ -82,10 +97,12 @@ const MakeCourse = () => {
 
   // 맵 api 불러오고 클릭 이벤트 리스너 추가
   useEffect(() => {
+    // console.log(mapInfo.center['Ma'], mapInfo.center['La']);
+    // console.log(mapInfo.lv);
     const mapContainer = document.getElementById('map');
     const mapOptions = {
-      center: new kakao.maps.LatLng(37.48081191757761, 126.88385603954914),
-      level: 3,
+      center: new kakao.maps.LatLng(mapInfo.center['Ma'], mapInfo.center['La']),
+      level: mapInfo.lv,
     };
 
     const kakaoMap = new kakao.maps.Map(mapContainer, mapOptions);
@@ -97,6 +114,20 @@ const MakeCourse = () => {
       addLinePath(position);
     });
   }, []);
+
+  useEffect(() => {
+    // 마우스 드래그로 지도 이동이 완료되었을 때 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+    if (map) {
+      kakao.maps.event.addListener(map, 'dragend', function() {        
+        
+        // 지도 중심좌표를 얻어옵니다 
+        const latlng = map.getCenter(); 
+        const mapLv = map.getLevel();
+        dispatch(changeMapInfo({center: latlng, lv: mapLv}));
+
+      });
+    }
+  }, [map])
 
   // values의 waypoint, center, level 값 갱신 &
   // 맵 위에 마커, 폴리라인 그리기
@@ -150,17 +181,49 @@ const MakeCourse = () => {
 
   const handlePostCourse = (e) => {
     e.preventDefault();
-    console.log(values);
-  }
+    console.log('userData.userInfo.user_table_idx', userData.userInfo.user_table_idx);
+    setValues({ ...values, user_id: userData.userInfo.user_table_idx, distance: getRandomNum(1, 21) });
+    console.log('values', values);
 
+    e.preventDefault();
+
+    if (
+      !values.course_name ||
+      !values.content ||
+      !values.city ||
+      !values.url
+    ) {
+      alert('입력값을 확인해주세요.');
+      return;
+    }
+    if (values.waypoint.length === 0) {
+      alert('지도를 클릭해 코스를 입력해주세요.');
+      return;
+    }
+
+    axios
+      .post('http://localhost:8080/make_course', values)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 201) {
+          console.log(res);
+          alert('코스등록이 완료되었습니다.');
+        } else {
+          alert('코스등록에 실패했습니다.');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <div className="make-course">
       {/* 헤더 영역 */}
       <div className="absolute w-full flex justify-between items-center py-4 px-6 z-10">
-        <div>
-          <ChevronLeft className="w-8 h-8" />
-        </div>
+        <Link to={"/main"} onClick={() => dispatch(changeCurrentPage({title: '주변'}))}>
+          <ChevronLeft className="w-8 h-8 cursor-pointer" />
+        </Link>
         <div className="relative">
           <span className='absolute flex justify-center items-center h-[36px] w-[36px] bg-sky-500 rounded-3xl -bottom-1 -left-2'>
             <PenLine className="text-white" />
@@ -195,28 +258,6 @@ const MakeCourse = () => {
       </div>
 
   
-
-      {/* {
-  "course_name": "버스 런",
-  "user_id": 1,
-  "content" : "버스모양 코스입니다. 코스가 길어 숙련자에게 추천합니다.",
-  "thumbnail_id" : "uuid000123",
-  "created_at": "2024-08-22 15:33:53.157317",
-  "updated_at": "2024-08-22 15:33:53.157317",
-  "liked": 0,
-  "distance": 34.123,
-  "viewcount": 0,
-  "waypoint": [{"La":126.57148654813169,"Ma":33.44908974922391},{"La":126.57156669275028,"Ma":33.450289156520846},{"La":126.57324468173204,"Ma":33.4502588789353},{"La":126.574075036090391},{"La":126.571566696,"Ma":33.44981093306277},{"La":126.57374621326552,"Ma":33.448872137126685},{"La":126.57179813467792,"Ma":33.44915393774874}],
-  "city" : "가산",
-  "is_private": true,
-  "is_marathon" : false,
-  "is_visible" : true,
-  "center": [{"La":126.57179813467792,"Ma":33.44915393774874}],
-  "level": 3,
-  "url" : "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/cnoC/image/seSzn5Nk0N2rORlkkrKe0N4wAKY",
-  "is_primary" : true,
-  "img_created_at" : "2024-08-22 15:33:53.157317"
-} */}
       {/* 코스 등록 상세 페이지 */}
       <button className="absolute w-full flex items-center justify-center p-2 bottom-4 z-10"
       onClick={() => toggleMakeCoursePop()} >
@@ -226,7 +267,7 @@ const MakeCourse = () => {
       </button>
 
       <div className={`makeCoursePop flex flex-col bg-slate-600 text-lg z-50 ${toggleMakeCoursePop ? 'open' : ''}`} onSubmit={handlePostCourse} >
-      <form className="flex flex-col gap-2 py-2" > 
+      <form className="flex flex-col gap-2 py-2 text-black" > 
         <input
           className="border border-gray-400 rounded-md"
           type="text"
