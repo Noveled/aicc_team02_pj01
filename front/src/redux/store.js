@@ -10,7 +10,7 @@ const store = configureStore({
     auth: authReducer,
     api: apiReducer,
     user: userReducer,
-    user: usersReducer,
+    users: usersReducer,
     currentState: currentStateReducer,
   },
 });
