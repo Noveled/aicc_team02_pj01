@@ -4,6 +4,7 @@ import apiReducer from "./slices/apiSlice";
 import userReducer from "./slices/userSlice";
 import usersReducer from "./slices/usersSlice";
 import currentStateReducer from "./slices/currentStateSlice";
+import userInfoReducer from "./slices/userInfoSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     user: userReducer,
     users: usersReducer,
     currentState: currentStateReducer,
+    userInfoState: userInfoReducer,
   },
 });
 

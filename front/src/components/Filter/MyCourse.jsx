@@ -11,6 +11,7 @@ const MyCourse = () => {
 
   const userId = useSelector((state) => state.auth.authData.name);
   const myCourseData = useSelector((state) => state.api.myCourse);
+  console.log(myCourseData);
 
   useEffect(() => {
     if (!userId) {
@@ -29,8 +30,9 @@ const MyCourse = () => {
   }, [dispatch, userId]);
 
   return (
-    <div className="my-course bg-sky-100">
-      <div className="grid place-items-center grid-cols-2 w-full">
+    <div className="my-course">
+      MyCourse
+      <div className="grid grid-cols-2 w-full">
         {myCourseData?.map((item, idx) => (
           <Item key={idx} item={item}></Item>
         ))}

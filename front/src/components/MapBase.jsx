@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchGetCourseData, fetchStorageData, fetchWaterData, fetchBusStopData, } from '../redux/slices/apiSlice';
+import { changeMapInfo } from "../redux/slices/currentStateSlice";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -22,6 +23,7 @@ const { kakao } = window;
 
 const MapBase = () => {
   const [map, setMap] = useState(null);
+  const mapInfo = useSelector((state) => state.currentState.mapInfo);
   const [infoOverlay, setInfoOverlay] = useState([]);
   // 각 마커가 표시될 좌표 배열
 
@@ -41,7 +43,6 @@ const MapBase = () => {
   const [isClickedZoomOut, setIsClickedZoomOut] = useState(false);
   const [isClickedPanTo, setIsClickedPanTo] = useState(false);
 
-
   const dispatch = useDispatch();
   const stateCourseData = useSelector((state) => state.api.getCourseData);
   const stateStorageData = useSelector((state) => state.api.storageData);
@@ -56,14 +57,11 @@ const MapBase = () => {
     dispatch(fetchBusStopData());
   }, [dispatch]);
 
-  // console.log(stateCourseData);
-  // console.log(stateStorageData);
-
   useEffect(() => {
     const mapContainer = document.getElementById('map');
     const mapOptions = {
-      center: new kakao.maps.LatLng(37.498004414546934, 127.02770621963765), // 지도의 중심좌표 
-      level: 3 // 지도의 확대 레벨 
+      center: new kakao.maps.LatLng(mapInfo.center['Ma'], mapInfo.center['La']),
+      level: mapInfo.lv,
     };
 
     const kakaoMap = new kakao.maps.Map(mapContainer, mapOptions);
@@ -71,9 +69,6 @@ const MapBase = () => {
   }, []);
 
   useEffect(() => {
-    // 유저 위치도 설정
-    // setUserMarkerPosition(new kakao.maps.LatLng(37.498004414546934, 127.02770621963765));
-
     const startSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png', // 유저 마커이미지의 주소입니다    
     startSize = new kakao.maps.Size(50, 45), // 유저 마커이미지의 크기입니다 
     startOption = { 
@@ -94,7 +89,7 @@ const MapBase = () => {
     // 유저 마커를 생성합니다
     const userMarker = new kakao.maps.Marker({
       map: map, // 출발 마커가 지도 위에 표시되도록 설정합니다
-      position: new kakao.maps.LatLng(37.498004414546934, 127.02770621963765),
+      position: new kakao.maps.LatLng(37.48071191757761, 126.88145603954914),
       draggable: true, // 출발 마커가 드래그 가능하도록 설정합니다
       image: userMarkerImage // 유저 마커이미지를 설정합니다
     });
@@ -115,6 +110,19 @@ const MapBase = () => {
     });
 
     userMarker.setMap(map);
+
+    // 마우스 드래그로 지도 이동이 완료되었을 때 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+    if (map) {
+      kakao.maps.event.addListener(map, 'dragend', function() {        
+        
+        // 지도 중심좌표를 얻어옵니다 
+        const latlng = map.getCenter(); 
+        const mapLv = map.getLevel();
+        dispatch(changeMapInfo({center: latlng, lv: mapLv}));
+
+      });
+    }
+    
   }, [map]);
 
 
@@ -469,10 +477,11 @@ const MapBase = () => {
   // console.log(stateStorageData);
   // console.log(busstopMarkers);
   // console.log(firstPointMarkers);
+  // console.log(userMarker);
 
   return (
     <div>
-      <div id="map" className='relative -left-1/2 -top-1/2' style={{width: "800px", height: "800px"}}/>
+      <div id="map" className='relative' style={{width: "800px", height: "900px"}}/>
       
       {/* 내 위치로 이동 */}
       <div className="absolute bottom-24 left-[14px] z-10">
