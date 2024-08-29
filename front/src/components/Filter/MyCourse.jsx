@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import Item from "./Item";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchGetUserData } from "../../redux/slices/userSlice";
-import { fetchGetCourseData } from "../../redux/slices/apiSlice";
+import {
+  fetchGetUserJoinCourseData,
+  fetchGetUsersJoinCourseData,
+} from "../../redux/slices/apiSlice";
+import { fetchGetUsersData } from "../../redux/slices/usersSlice";
 
 const MyCourse = () => {
   const dispatch = useDispatch();
-  const [myCourseData, setMyCourseData] = useState();
 
   const userId = useSelector((state) => state.auth.authData.name);
   const userData = useSelector((state) => state.auth.authData);
@@ -21,11 +23,11 @@ const MyCourse = () => {
   // const myCourseData = useSelector((state) => state.api.getMyCourseData);
 
   const user = useSelector((state) => state.user.data);
-  console.log('user', user);
+
   useEffect(() => {
-    console.log(`http://localhost:8080/get_course?${user[0].user_table_idx}`);
+    console.log(`http://localhost:8080/get_user/${userId}`);
     axios
-    .get(`http://localhost:8080/get_course?${user[0].user_table_idx}`)
+    .get(`http://localhost:8080/get_user/${userId}`)
     .then((res) => {
       // console.log(res);
       if (res.status === 200) {
@@ -56,10 +58,10 @@ const MyCourse = () => {
     }
 
     console.log(userId);
-    dispatch(fetchGetUserData(userId));
+    dispatch(fetchGetUsersData());
     const fetchGetCourse = async () => {
       try {
-        await dispatch(fetchGetCourseData()).unwrap();
+        await dispatch(fetchGetUserJoinCourseData(userId)).unwrap();
       } catch (error) {
         console.log("Failed to fetch items:", error);
       }

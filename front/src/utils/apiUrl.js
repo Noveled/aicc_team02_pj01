@@ -1,6 +1,18 @@
 const GET_COURSE_API_URL = "http://localhost:8080/get_course";
 const GET_USER_API_URL = "http://localhost:8080/get_user";
+const GET_USERS_API_URL = "http://localhost:8080/get_users";
+const GET_USER_JOIN_COURSE_API_URL =
+  "http://localhost:8080/get_user_join_course";
+const GET_USERS_JOIN_COURSE_API_URL =
+  "http://localhost:8080/get_users_join_course";
 
 const GET_Facilities_API_URL = "http://localhost:8080/get_facilities";
 
-export { GET_COURSE_API_URL, GET_Facilities_API_URL, GET_USER_API_URL };
+export {
+  GET_COURSE_API_URL,
+  GET_Facilities_API_URL,
+  GET_USER_API_URL,
+  GET_USERS_API_URL,
+  GET_USER_JOIN_COURSE_API_URL,
+  GET_USERS_JOIN_COURSE_API_URL,
+};
