@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 const Register = () => {
@@ -25,23 +26,23 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!values.user_id) {
-      alert("아이디를 입력해주세요");
+      toast.error("아이디를 입력해주세요");
       return;
     }
     if (!values.user_email) {
-      alert("이메일을 입력해주세요");
+      toast.error("이메일을 입력해주세요");
       return;
     }
     if (!values.password) {
-      alert("패스워드를 입력해주세요");
+      toast.error("패스워드를 입력해주세요");
       return;
     }
     if (!values.user_name) {
-      alert("닉네임을 입력해주세요");
+      toast.error("닉네임을 입력해주세요");
       return;
     }
     if (values.ck_pw !== values.password) {
-      alert("비밀번호가 일치하지 않습니다");
+      toast.error("비밀번호가 일치하지 않습니다");
       return;
     }
 
@@ -49,9 +50,10 @@ const Register = () => {
       .post("http://localhost:8080/register", values)
       .then((res) => {
         if (res.status === 201) {
+          toast.success("회원가입 되었습니다.");
           navigate("/login");
         } else {
-          alert("회원가입에 실패하였습니다.");
+          toast.error("회원가입에 실패하였습니다.");
         }
       })
       .catch((error) => {

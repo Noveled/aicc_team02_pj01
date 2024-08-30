@@ -42,9 +42,9 @@ const Detail = () => {
                 <ChevronLeft className="w-10 h-10 cursor-pointer" />
               </button>
               <div className="flex items-center gap-x-4">
-                <Link to={"/update_course"} state={{ item: detail }}>
+                {/* <Link to={"/update_course"} state={{ item: detail }}>
                   <FilePenLine className="w-7 h-7 cursor-pointer" />
-                </Link>
+                </Link> */}
                 <button onClick={deleteItem}>
                   <Trash className="w-7 h-7 cursor-pointer" />
                 </button>

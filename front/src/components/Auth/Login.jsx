@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import axios from "axios";
+
 import { login } from "../../redux/slices/authSlice";
 import { updateUserInfo } from "../../redux/slices/userInfoSlice";
-
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -21,11 +22,11 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!values.user_id) {
-      alert("아이디를 입력해주세요");
+      toast.error("아이디를 입력해주세요");
       return;
     }
     if (!values.password) {
-      alert("패스워드를 입력해주세요");
+      toast.error("패스워드를 입력해주세요");
       return;
     }
     axios
@@ -37,21 +38,21 @@ const Login = () => {
           dispatch(login({ authData: decoded }));
 
           axios
-            .get(`http://localhost:8080/get_user/${decoded['name']}`)
+            .get(`http://localhost:8080/get_user/${decoded["name"]}`)
             .then((res) => {
               if (res.status === 200) {
-                console.log('res.data', res.data[0]);
+                console.log("res.data", res.data[0]);
                 dispatch(updateUserInfo(res.data[0]));
               } else {
-                alert('유저 정보 업데이트 실패');
+                toast.error("유저 정보 업데이트 실패");
               }
             })
             .catch((error) => {
               console.log(error);
-          });
+            });
           navigate("/");
         } else {
-          alert("로그인에 실패하였습니다.");
+          toast.error("로그인에 실패하였습니다.");
         }
       })
       .catch((error) => {
