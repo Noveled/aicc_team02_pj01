@@ -5,6 +5,7 @@ import {
   GET_Facilities_API_URL,
   GET_USER_JOIN_COURSE_API_URL,
   GET_USERS_JOIN_COURSE_API_URL,
+  UPDATE_COURSE_API_URL,
 } from "../../utils/apiUrl";
 import { deleteRequest, getRequest } from "../../utils/requestMethod";
 
@@ -31,6 +32,25 @@ const deleteItemFetchThunk = (actionType, apiUrl) => {
   });
 };
 
+const updateItemFetchThunk = (actionType, apiUrl) => {
+  return createAsyncThunk(actionType, async (updateData, id) => {
+    const fullPath = `${apiUrl}/${id}`;
+    const options = {
+      body: JSON.stringify(updateData), // 표준 JSON 문자열로 변환
+    };
+    return await getRequest(fullPath, options);
+  });
+};
+
+// const updateItemFetchThunk = (actionType, apiUrl) => {
+//   return createAsyncThunk(actionType, async (updateData) => {
+//     const options = {
+//       body: JSON.stringify(updateData), // 표준 JSON 문자열로 변환
+//     };
+//     return await putRequest(apiUrl, options);
+//   });
+// };
+
 // 코스 정보 api
 export const fetchGetCourseData = getCourseFetchThunk(
   "fetchGetCourse",
@@ -50,6 +70,11 @@ export const fetchGetUsersJoinCourseData = getCourseFetchThunk(
 export const fetchDeleteCourse = deleteItemFetchThunk(
   "fetchDeleteCourse",
   DELETE_COURSE_API_URL
+);
+
+export const fetchUpdateCourse = updateItemFetchThunk(
+  "fetchUpdateCourse",
+  UPDATE_COURSE_API_URL
 );
 
 const createFetchThunk = (actionType, apiUrl) => {
@@ -93,6 +118,7 @@ const apiSlice = createSlice({
     myCourse: null,
     usersCourse: null,
     deleteCourse: null,
+    updateCourse: null,
     storageData: null,
     waterData: null,
     busStopData: null,
@@ -116,6 +142,8 @@ const apiSlice = createSlice({
 
       .addCase(fetchDeleteCourse.fulfilled, handleFulfilled("deleteCourse"))
       .addCase(fetchDeleteCourse.rejected, handleRejected)
+      .addCase(fetchUpdateCourse.fulfilled, handleFulfilled("updateCourse"))
+      .addCase(fetchUpdateCourse.rejected, handleRejected)
 
       .addCase(fetchStorageData.fulfilled, handleFulfilled("storageData"))
       .addCase(fetchStorageData.rejected, handleRejected)

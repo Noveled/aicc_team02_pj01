@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ChevronLeft, FilePenLine, Trash } from "lucide-react";
@@ -10,15 +10,14 @@ import { toast } from "react-toastify";
 const Detail = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const detail = location.state.item;
-  console.log(detail);
 
   const back = () => {
     window.history.back();
   };
 
   const user = useSelector((state) => state.userInfoState.userInfo);
-  console.log(user);
 
   const deleteItem = async () => {
     const confirm = window.confirm("아이템을 삭제하시겠습니까?");
@@ -26,13 +25,12 @@ const Detail = () => {
     try {
       await dispatch(fetchDeleteCourse(detail.course_id)).unwrap();
       toast.success("아이템이 삭제되었습니다.");
+      navigate("/box");
     } catch (error) {
       toast.error("아이템 삭제에 실패했습니다.");
       console.log(error);
     }
   };
-
-  const updateItem = () => {};
 
   return (
     <div className="detail">
@@ -44,9 +42,9 @@ const Detail = () => {
                 <ChevronLeft className="w-10 h-10 cursor-pointer" />
               </button>
               <div className="flex items-center gap-x-4">
-                <button onClick={updateItem}>
+                {/* <Link to={"/update_course"} state={{ item: detail }}>
                   <FilePenLine className="w-7 h-7 cursor-pointer" />
-                </button>
+                </Link> */}
                 <button onClick={deleteItem}>
                   <Trash className="w-7 h-7 cursor-pointer" />
                 </button>

@@ -7,6 +7,7 @@ import Login from "./components/Auth/Login";
 import Search from "./components/NaviBar/Search";
 import Box from "./components/NaviBar/Box";
 import MakeCourse from "./components/NaviBar/MakeCourse";
+import UpdateCourse from "./components/Filter/UpdateCourse";
 import MyPage from "./components/NaviBar/MyPage";
 import Detail from "./components/Filter/Detail";
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/box" element={<Box />} />
           <Route path="/make_course" element={<MakeCourse />} />
+          <Route path="/update_course" element={<UpdateCourse />} />
           <Route path="/mypage" element={<MyPage />} />
 
           <Route path="/detail" element={<Detail />} />

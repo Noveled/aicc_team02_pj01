@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { changeCurrentPage } from "../../redux/slices/currentStateSlice";
+import { useLocation } from "react-router-dom";
 import { changeMapInfo } from "../../redux/slices/currentStateSlice";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -13,9 +12,10 @@ import "../../actions.css";
 //
 const { kakao } = window;
 
-const MakeCourse = () => {
-  // useNavigate 훅 생성
-  const navigate = useNavigate();
+const UpdateCourse = () => {
+  // course detail 정보 가져오기
+  const location = useLocation();
+  const course_info = location.state.item;
   // 유저 정보 불러오기
   const dispatch = useDispatch();
   // const [userData, setUserData] = useState();
@@ -25,8 +25,6 @@ const MakeCourse = () => {
 
   // console.log('userData', userData);
 
-  // 기본 업로드 이미지
-  const defaultImgUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ6HV-Q89MQyGPRXVkF-O4g9UGALROyOxwcRKoUFjaDTwS6hKsRZ3OqhkDBaYNa2ObR9E&usqp=CAU'; // 기본 이미지 URL
   // 마커 이미지
   const startSrc =
     "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png";
@@ -45,7 +43,11 @@ const MakeCourse = () => {
   const [isClickedZoomIn, setIsClickedZoomIn] = useState(false); // 줌인 색상
   const [isClickedZoomOut, setIsClickedZoomOut] = useState(false); // 줌아웃 색상
   // 이미지 업로드
-  const [uploadImgUrl, setUploadImgUrl] = useState("");
+  const [uploadImgUrl, setUploadImgUrl] = useState(course_info.img_url);
+
+  const back = () => {
+    window.history.back();
+  };
 
   const onchangeImageUpload = (e) => {
     const { files } = e.target;
@@ -81,16 +83,16 @@ const MakeCourse = () => {
 
   // 코스 등록시 필요한 값
   const [values, setValues] = useState({
-    course_name: "",
-    content: "",
-    user_id: "",
-    distance: 0,
-    waypoint: linePath,
-    city: "",
-    is_private: false,
-    url: "",
-    center: "",
-    level: "",
+    course_name: course_info.course_name || "",
+    content: course_info.content || "",
+    distance: course_info.distance || 0,
+    waypoint: course_info.waypoint || linePath,
+    city: course_info.city || "강동구",
+    is_visible: course_info.is_visible,
+    is_private: course_info.is_private || false,
+    url: course_info.img_url || "",
+    center: course_info.center || "",
+    level: course_info.level || "",
   });
 
   // 마커, 폴리라인 추가
@@ -174,27 +176,6 @@ const MakeCourse = () => {
   // 유저 id 미리 집어넣기
   useEffect(() => {
     setValues({ ...values, user_id: userData.userInfo.user_table_idx });
-  }, []);
-
-  useEffect(() => {
-    // 스크롤 비활성화
-    document.body.style.overflow = 'hidden';
-
-    const preventScroll = (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-    };
-
-    window.addEventListener('scroll', preventScroll);
-    document.addEventListener('touchmove', preventScroll, { passive: false });
-
-    return () => {
-      // 컴포넌트 언마운트 시 스크롤 복원
-      document.body.style.overflow = '';
-
-      window.removeEventListener('scroll', preventScroll);
-      document.removeEventListener('touchmove', preventScroll);
-    };
   }, []);
 
   useEffect(() => {
@@ -335,7 +316,7 @@ const MakeCourse = () => {
     e.preventDefault();
 
     if (!values.course_name || !values.content || !values.url) {
-      alert("입력값을 확인해주세요.");
+      toast.error("입력값을 확인해주세요.");
       return;
     }
     if (values.waypoint.length < 2) {
@@ -344,7 +325,10 @@ const MakeCourse = () => {
     }
 
     axios
-      .post("http://localhost:8080/make_course", values)
+      .post(
+        `http://localhost:8080/update_course/${course_info.course_id}`,
+        values
+      )
       .then((res) => {
         console.log(res);
         if (res.status === 201) {
@@ -354,11 +338,11 @@ const MakeCourse = () => {
           setValues({
             course_name: "",
             content: "",
-            user_id: "",
             distance: "",
-            waypoint: linePath,
-            city: "강동구",
-            is_private: false,
+            waypoint: "",
+            city: "",
+            is_visible: "",
+            is_private: "",
             url: "",
             center: "",
             level: "",
@@ -367,11 +351,11 @@ const MakeCourse = () => {
           // 마커도 초기화
           clearAllMarkers();
 
-          alert("코스등록이 완료되었습니다.");
+          toast.success("코스수정이 완료되었습니다.");
           // 페이지 이동
-          navigate("/box");
+          back();
         } else {
-          toast.error("코스등록에 실패했습니다.");
+          toast.error("코스수정에 실패했습니다.");
         }
       })
       .catch((error) => {
@@ -379,18 +363,15 @@ const MakeCourse = () => {
       });
   };
 
-  // console.log(values);
+  console.log(values);
 
   return (
     <div className="make-course relative">
       {/* 헤더 영역 */}
       <div className="absolute top-4 left-0 w-full flex justify-between items-center py-4 px-6 z-10">
-        <Link
-          to={"/main"}
-          onClick={() => dispatch(changeCurrentPage({ title: "주변" }))}
-        >
+        <button onClick={back}>
           <ChevronLeft className="w-8 h-8 cursor-pointer" />
-        </Link>
+        </button>
         <div className="relative w-full">
           <div className="absolute flex gap-2 bg-sky-500 rounded-3xl p-1 -left-2 bottom-6">
             <PenLine className="text-white w-3 h-3" />
@@ -463,105 +444,99 @@ const MakeCourse = () => {
       >
         <div className="w-4/5 py-2 flex items-center justify-center bg-white rounded-full border border-gray-200 shadow-lg">
           <span className="text-xl font-bold text-[#232323]">
-            코스 정보 입력하기
+            코스 수정하기
           </span>
         </div>
       </button>
 
       <div
-        className={`makeCoursePop flex flex-col  bg-slate-600 text-lg z-50 rounded-t-2xl overflow-auto`}
+        className={`makeCoursePop flex flex-col bg-slate-600 text-lg z-50`}
         onSubmit={handlePostCourse}
       >
-        <div className="flex flex-col w-full h-full p-4">
-          <button className="flex justify-end" onClick={() => toggleMakeCoursePop()}>
+        <div className="flex flex-col p-4 ">
+          <button
+            className="flex justify-end"
+            onClick={() => toggleMakeCoursePop()}
+          >
             <X />
           </button>
-          <form className="flex flex-col w-full h-full gap-2 py-2 text-black">
-
-            <div className="flex flex-col">
-              <span className="text-base font-semibold py-1">코스명</span>
-              <input
-                className="border border-gray-400 rounded-md"
-                type="text"
-                name="course_name"
-                placeholder="코스 이름을 입력"
-                value={values.course_name}
-                onChange={(e) =>
-                  setValues({ ...values, course_name: e.target.value })
-                }
-              />
-            </div>
-            
+          <form className="flex flex-col gap-2 py-2 text-black">
+            <input
+              className="border border-gray-400 rounded-md"
+              type="text"
+              name="course_name"
+              placeholder={"코스 이름을 입력"}
+              value={values.course_name}
+              onChange={(e) =>
+                setValues({ ...values, course_name: e.target.value })
+              }
+            />
 
             {/* 이미지 업로드 */}
             <img
-              className="w-full"
+              className="w-full max-h-[440px] object-cover"
               src={uploadImgUrl}
-              alt="Preview"
+              alt=""
               img="img"
             />
             <input
               type="file"
               accept="image/*"
-              onChange={onchangeImageUpload} 
+              onChange={onchangeImageUpload}
             />
 
-            <div className="flex flex-col">
-              <span className="text-base font-semibold py-1">코스 설명</span>
-              <textarea
-                className="border w-full h-[180px] border-gray-400 rounded-md resize-none"
-                type="text"
-                name="content"
-                placeholder="코스 설명"
-                value={values.content}
-                onChange={(e) =>
-                  setValues({ ...values, content: e.target.value })
-                }
-              />
-            </div>
+            <textarea
+              className="border border-gray-400 rounded-md"
+              type="text"
+              name="content"
+              placeholder="코스 설명"
+              value={values.content}
+              onChange={(e) =>
+                setValues({ ...values, content: e.target.value })
+              }
+            />
 
-            <div className="flex flex-col">
-                <span className="text-base font-semibold py-1">지역</span>
-              <div>
-                <select
-                  name="city"
-                  id="city"
-                  className="form-control"
-                  value={values.city}
-                  onChange={(e) => setValues({ ...values, city: e.target.value })}
-                >
-                  <option value="" disabled>선택</option>
-                  <option value="강남구">강남구</option>
-                  <option value="강동구">강동구</option>
-                  <option value="강북구">강북구</option>
-                  <option value="강서구">강서구</option>
-                  <option value="관악구">관악구</option>
-                  <option value="광진구">광진구</option>
-                  <option value="구로구">구로구</option>
-                  <option value="금천구">금천구</option>
-                  <option value="노원구">노원구</option>
-                  <option value="도봉구">도봉구</option>
-                  <option value="동대문구">동대문구</option>
-                  <option value="동작구">동작구</option>
-                  <option value="마포구">마포구</option>
-                  <option value="서대문구">서대문구</option>
-                  <option value="서초구">서초구</option>
-                  <option value="성동구">성동구</option>
-                  <option value="성북구">성북구</option>
-                  <option value="송파구">송파구</option>
-                  <option value="양천구">양천구</option>
-                  <option value="영등포구">영등포구</option>
-                  <option value="용산구">용산구</option>
-                  <option value="은평구">은평구</option>
-                  <option value="종로구">종로구</option>
-                  <option value="중구">중구</option>
-                  <option value="중랑구">중랑구</option>
-                </select>
-              </div>
+            <div className="city">
+              <label htmlFor="city">
+                <span>지역</span>
+              </label>
+              <select
+                name="city"
+                id="city"
+                className="form-control"
+                value={values.city}
+                onChange={(e) => setValues({ ...values, city: e.target.value })}
+              >
+                <option value="강남구">강남구</option>
+                <option value="강동구">강동구</option>
+                <option value="강북구">강북구</option>
+                <option value="강서구">강서구</option>
+                <option value="관악구">관악구</option>
+                <option value="광진구">광진구</option>
+                <option value="구로구">구로구</option>
+                <option value="금천구">금천구</option>
+                <option value="노원구">노원구</option>
+                <option value="도봉구">도봉구</option>
+                <option value="동대문구">동대문구</option>
+                <option value="동작구">동작구</option>
+                <option value="마포구">마포구</option>
+                <option value="서대문구">서대문구</option>
+                <option value="서초구">서초구</option>
+                <option value="성동구">성동구</option>
+                <option value="성북구">성북구</option>
+                <option value="송파구">송파구</option>
+                <option value="양천구">양천구</option>
+                <option value="영등포구">영등포구</option>
+                <option value="용산구">용산구</option>
+                <option value="은평구">은평구</option>
+                <option value="종로구">종로구</option>
+                <option value="중구">중구</option>
+                <option value="중랑구">중랑구</option>
+              </select>
             </div>
 
             <div>
-              <span className="text-base font-semibold py-1">비밀글 여부 </span>
+              <span>비밀글 여부 </span>
               <input
                 className="border border-gray-400 rounded-md"
                 type="checkbox"
@@ -572,18 +547,11 @@ const MakeCourse = () => {
                 }
               />
             </div>
-            {/* <input
-            className="border border-gray-400 rounded-md"
-            type="text"
-            name="url"
-            placeholder="이미지 URL"
-            value={values.url}
-            onChange={(e) => setValues({ ...values, url: e.target.value })}
-          /> */}
 
             <input
               className="border border-gray-400 bg-orange-300 rounded-md px-2 cursor-pointer"
               type="submit"
+              value="수정"
             ></input>
           </form>
         </div>
@@ -592,4 +560,4 @@ const MakeCourse = () => {
   );
 };
 
-export default MakeCourse;
+export default UpdateCourse;

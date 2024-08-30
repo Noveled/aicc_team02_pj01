@@ -2,36 +2,41 @@ import React, { useEffect } from "react";
 import Item from "./Item";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchGetCourseData } from "../../redux/slices/apiSlice";
+
+import { fetchGetUserJoinCourseData } from "../../redux/slices/apiSlice";
+import { fetchGetUsersData } from "../../redux/slices/usersSlice";
 
 const Like = () => {
   const dispatch = useDispatch();
 
-  const userName = useSelector((state) => state.auth.authData.name);
-  const getCourseData = useSelector((state) => state.api.getCourseData);
+  const userId = useSelector((state) => state.auth.authData.name);
+  const myCourse = useSelector((state) => state.api.myCourse);
 
   useEffect(() => {
-    if (!userName) {
+    if (!userId) {
       return;
     }
 
+    dispatch(fetchGetUsersData());
     const fetchGetCourse = async () => {
       try {
-        // setLoading(true);
-        await dispatch(fetchGetCourseData()).unwrap();
+        await dispatch(fetchGetUserJoinCourseData(userId)).unwrap();
       } catch (error) {
         console.log("Failed to fetch items:", error);
-      } finally {
-        // setLoading(false);
       }
     };
     fetchGetCourse();
-  }, [dispatch, userName]);
+  }, [dispatch, userId]);
 
   return (
-    <div className="like">
-      즐겨찾기
-      {/* <Item></Item> */}
+    <div className="my-course bg-sky-100">
+      <div className="grid grid-cols-2 w-full">
+        {myCourse
+          ?.filter((item) => item.is_visible === true)
+          ?.map((item, idx) => (
+            <Item key={idx} item={item}></Item>
+          ))}
+      </div>
     </div>
   );
 };
