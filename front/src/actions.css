@@ -3,7 +3,7 @@
   bottom: -100vh; /* 팝업창 화면 아래로 숨김 */
   left: 0px; 
   width: 390px;
-  height: 90vh;
+  height: 93vh;
   border-right: 2px solid darkgray;
   color: white;
   transition: bottom 0.5s ease; /* 슬라이드 애니메이션 */
