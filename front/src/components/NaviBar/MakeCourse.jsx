@@ -551,13 +551,14 @@ const MakeCourse = () => {
             value={values.url}
             onChange={(e) => setValues({ ...values, url: e.target.value })}
           /> */}
-
-            <input
-              className="border border-gray-400 bg-orange-300 rounded-md px-2 cursor-pointer"
-              type="submit"
-            ></input>
-          </form>
-        </div>
+          
+          
+          <input
+            className="border border-gray-400 bg-orange-300 rounded-md px-2 cursor-pointer"
+            type="submit"
+          ></input>
+        </form>
+      </div>
       </div>
     </div>
   );
