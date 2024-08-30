@@ -37,7 +37,10 @@ const Distance = () => {
       course.is_private === false
   );
   const overTenCourse = courseData?.filter(
-    (course) => course.distance >= 10 && course.is_private === false
+    (course) =>
+      course.distance >= 10 &&
+      course.is_private === false &&
+      course.is_visible === true
   );
 
   return (

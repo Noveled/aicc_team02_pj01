@@ -61,7 +61,7 @@
 }
 
 .my-course {
-  height: calc(100% - 7vh);
+  min-height: calc(100% - 7vh);
 }
 
 .category-items {
@@ -69,24 +69,20 @@
   flex-shrink: 0;
 }
 
-/* detail style */
-.detail-wrapper {
+/* detail-header style */
+.detail-header {
+  background: #475569;
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50vh;
-  padding: 1rem;
-}
-
-.detail-map {
-  width: 100%;
-  height: 50vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -100;
-  overflow-y: hidden;
+  top: 10px;
+  left: 15%;
+  width: 70%;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 20px;
+  color: #ccc;
 }
 
 /* footer navi bar style */

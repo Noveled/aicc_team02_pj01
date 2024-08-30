@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
 import Intro from "./components/Intro";
 import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
@@ -14,6 +16,8 @@ import DirectionMap from "./components/DirectionMap";
 import FacilitiesMap from "./components/FacilitiesMap";
 import Main from "./components/Main";
 import SliderTest from "./components/SliderTest";
+
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -36,8 +40,8 @@ function App() {
           <Route path="/directMap" element={<DirectionMap />} />
           <Route path="/facilMap" element={<FacilitiesMap />} />
           <Route path="/slider" element={<SliderTest />} />
-          
         </Routes>
+        <ToastContainer position="top-center" autoClose={1500} theme="light" />
       </BrowserRouter>
     </div>
   );

@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
+  DELETE_COURSE_API_URL,
   GET_COURSE_API_URL,
   GET_Facilities_API_URL,
   GET_USER_JOIN_COURSE_API_URL,
   GET_USERS_JOIN_COURSE_API_URL,
 } from "../../utils/apiUrl";
-import { getRequest } from "../../utils/requestMethod";
+import { deleteRequest, getRequest } from "../../utils/requestMethod";
 
 const getCourseFetchThunk = (actionType, apiUrl) => {
   return createAsyncThunk(actionType, async () => {
@@ -17,6 +18,16 @@ const getUserJoinCourseFetchThunk = (actionType, apiUrl) => {
   return createAsyncThunk(actionType, async (userId) => {
     const fullPath = `${apiUrl}/${userId}`;
     return await getRequest(fullPath);
+  });
+};
+
+const deleteItemFetchThunk = (actionType, apiUrl) => {
+  return createAsyncThunk(actionType, async (id) => {
+    const options = {
+      method: "DELETE",
+    };
+    const fullPath = `${apiUrl}/${id}`;
+    return await deleteRequest(fullPath, options);
   });
 };
 
@@ -34,6 +45,11 @@ export const fetchGetUserJoinCourseData = getUserJoinCourseFetchThunk(
 export const fetchGetUsersJoinCourseData = getCourseFetchThunk(
   "fetchGetUsersJoinCourse",
   GET_USERS_JOIN_COURSE_API_URL
+);
+
+export const fetchDeleteCourse = deleteItemFetchThunk(
+  "fetchDeleteCourse",
+  DELETE_COURSE_API_URL
 );
 
 const createFetchThunk = (actionType, apiUrl) => {
@@ -76,6 +92,7 @@ const apiSlice = createSlice({
     getCourseData: null,
     myCourse: null,
     usersCourse: null,
+    deleteCourse: null,
     storageData: null,
     waterData: null,
     busStopData: null,
@@ -96,6 +113,9 @@ const apiSlice = createSlice({
         handleFulfilled("usersCourse")
       )
       .addCase(fetchGetUsersJoinCourseData.rejected, handleRejected)
+
+      .addCase(fetchDeleteCourse.fulfilled, handleFulfilled("deleteCourse"))
+      .addCase(fetchDeleteCourse.rejected, handleRejected)
 
       .addCase(fetchStorageData.fulfilled, handleFulfilled("storageData"))
       .addCase(fetchStorageData.rejected, handleRejected)

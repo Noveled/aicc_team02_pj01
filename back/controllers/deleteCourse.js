@@ -8,7 +8,7 @@ exports.deleteCourse = async (req, res) => {
   try {
     const result = await database.query(
       `
-      UPDATE running_course_table SET is_visible = false WHERE course_id = $1_
+      UPDATE running_course_table SET is_visible = false WHERE course_id = $1
       `,
       [course_id]
     );

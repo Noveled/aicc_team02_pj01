@@ -10,8 +10,7 @@ const MyCourse = () => {
   const dispatch = useDispatch();
 
   const userId = useSelector((state) => state.auth.authData.name);
-  const myCourseData = useSelector((state) => state.api.myCourse);
-  // console.log(myCourseData);
+  const myCourse = useSelector((state) => state.api.myCourse);
 
   useEffect(() => {
     if (!userId) {
@@ -32,9 +31,11 @@ const MyCourse = () => {
   return (
     <div className="my-course bg-sky-100">
       <div className="grid grid-cols-2 w-full">
-        {myCourseData?.map((item, idx) => (
-          <Item key={idx} item={item}></Item>
-        ))}
+        {myCourse
+          ?.filter((item) => item.is_visible === true)
+          ?.map((item, idx) => (
+            <Item key={idx} item={item}></Item>
+          ))}
       </div>
     </div>
   );

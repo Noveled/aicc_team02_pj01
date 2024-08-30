@@ -28,7 +28,10 @@ const Near = () => {
   }, [dispatch, userId]);
 
   const nearCourse = courseData?.filter(
-    (course) => course.city === "강남구" && course.is_private === false
+    (course) =>
+      course.city === "강남구" &&
+      course.is_private === false &&
+      course.is_visible === true
   );
 
   return (

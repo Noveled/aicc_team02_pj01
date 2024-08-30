@@ -28,7 +28,10 @@ const Walk = () => {
   }, [dispatch, userId]);
 
   const walkCourse = courseData?.filter(
-    (course) => course.distance <= 5 && course.is_private === false
+    (course) =>
+      course.distance <= 5 &&
+      course.is_private === false &&
+      course.is_visible === true
   );
 
   return (
