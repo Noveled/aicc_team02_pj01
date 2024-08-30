@@ -357,7 +357,7 @@ const MakeCourse = () => {
             user_id: "",
             distance: "",
             waypoint: linePath,
-            city: "강동구",
+            city: "",
             is_private: false,
             url: "",
             center: "",
@@ -367,7 +367,8 @@ const MakeCourse = () => {
           // 마커도 초기화
           clearAllMarkers();
 
-          alert("코스등록이 완료되었습니다.");
+          toast.success("코스등록이 완료되었습니다.");
+          dispatch(changeCurrentPage({ title: "보관함" }))
           // 페이지 이동
           navigate("/box");
         } else {
@@ -495,8 +496,8 @@ const MakeCourse = () => {
 
             {/* 이미지 업로드 */}
             <img
-              className="w-full"
-              src={uploadImgUrl}
+              className="w-full h-[240px] overflow-hidden object-fit"
+              src={uploadImgUrl || defaultImgUrl}
               alt="Preview"
               img="img"
             />
