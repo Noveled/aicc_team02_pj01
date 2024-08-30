@@ -7,7 +7,7 @@ const Item = ({ item }) => {
     <div className="item w-full p-3 overflow-x-auto">
       <div className="rounded-lg p-2 bg-sky-200 w-full">
         <Link to={"/detail"} state={{ item: item }}>
-          <div className="flex flex-col gap-y-1 min-w-[155px]">
+          <div className="flex flex-col gap-y-1">
             <div className="h-[155px]">
               <img
                 src={item.img_url}

@@ -28,7 +28,10 @@ const Marathon = () => {
   }, [dispatch, userId]);
 
   const marathonCourse = courseData?.filter(
-    (course) => course.is_marathon === true && course.is_private === false
+    (course) =>
+      course.is_marathon === true &&
+      course.is_private === false &&
+      course.is_visible === true
   );
 
   return (

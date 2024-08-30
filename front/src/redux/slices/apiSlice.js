@@ -23,9 +23,11 @@ const getUserJoinCourseFetchThunk = (actionType, apiUrl) => {
 
 const deleteItemFetchThunk = (actionType, apiUrl) => {
   return createAsyncThunk(actionType, async (id) => {
-    console.log(apiUrl);
+    const options = {
+      method: "DELETE",
+    };
     const fullPath = `${apiUrl}/${id}`;
-    return await deleteRequest(fullPath);
+    return await deleteRequest(fullPath, options);
   });
 };
 

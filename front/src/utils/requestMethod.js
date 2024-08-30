@@ -10,8 +10,8 @@ export async function getRequest(url) {
 }
 
 /* ====== Common Delete Request Function ====== */
-export async function deleteRequest(url) {
-  return await fetch(url).then((response) => {
+export async function deleteRequest(url, options) {
+  return await fetch(url, options).then((response) => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

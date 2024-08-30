@@ -28,7 +28,10 @@ const Neighbor = () => {
   }, [dispatch, userId]);
 
   const neighborCourse = courseData?.filter(
-    (course) => course.city === "강북구" && course.is_private === false
+    (course) =>
+      course.city === "강북구" &&
+      course.is_private === false &&
+      course.is_visible === true
   );
 
   return (
