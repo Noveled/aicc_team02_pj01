@@ -517,7 +517,7 @@ const MakeCourse = () => {
           
           <input
             className="border border-gray-400 bg-orange-300 rounded-md px-2 cursor-pointer"
-            type="submit"
+            type="submit" value={"등록"}
           ></input>
         </form>
       </div>
