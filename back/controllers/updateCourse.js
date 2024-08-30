@@ -20,6 +20,7 @@ exports.updateCourse = async (req, res) => {
 
   const currentTime = new Date(); // 현재 날짜와 시간을 가져옵니다.
   const img_created_at = currentTime;
+  updated_at = currentTime;
 
   console.log(course_id);
   try {
@@ -51,7 +52,7 @@ exports.updateCourse = async (req, res) => {
       ]
     );
 
-    return res.status(200).json({ message: "Task Updated Successfully" });
+    return res.status(200).json({ message: "Course Updated Successfully" });
   } catch (error) {
     return res.status(500).json({ message: "Updated Completed Fail" + error });
   }

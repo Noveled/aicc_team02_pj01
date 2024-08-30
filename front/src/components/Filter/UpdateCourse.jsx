@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { changeCurrentPage } from "../../redux/slices/currentStateSlice";
+import { useLocation } from "react-router-dom";
 import { changeMapInfo } from "../../redux/slices/currentStateSlice";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -13,9 +12,10 @@ import "../../actions.css";
 //
 const { kakao } = window;
 
-const MakeCourse = () => {
-  // useNavigate 훅 생성
-  const navigate = useNavigate();
+const UpdateCourse = () => {
+  // course detail 정보 가져오기
+  const location = useLocation();
+  const course_info = location.state.item;
   // 유저 정보 불러오기
   const dispatch = useDispatch();
   // const [userData, setUserData] = useState();
@@ -43,7 +43,11 @@ const MakeCourse = () => {
   const [isClickedZoomIn, setIsClickedZoomIn] = useState(false); // 줌인 색상
   const [isClickedZoomOut, setIsClickedZoomOut] = useState(false); // 줌아웃 색상
   // 이미지 업로드
-  const [uploadImgUrl, setUploadImgUrl] = useState("");
+  const [uploadImgUrl, setUploadImgUrl] = useState(course_info.img_url);
+
+  const back = () => {
+    window.history.back();
+  };
 
   const onchangeImageUpload = (e) => {
     const { files } = e.target;
@@ -79,16 +83,16 @@ const MakeCourse = () => {
 
   // 코스 등록시 필요한 값
   const [values, setValues] = useState({
-    course_name: "",
-    content: "",
-    user_id: "",
-    distance: 0,
-    waypoint: linePath,
-    city: "강동구",
-    is_private: false,
-    url: "",
-    center: "",
-    level: "",
+    course_name: course_info.course_name || "",
+    content: course_info.content || "",
+    distance: course_info.distance || 0,
+    waypoint: course_info.waypoint || linePath,
+    city: course_info.city || "강동구",
+    is_visible: course_info.is_visible,
+    is_private: course_info.is_private || false,
+    url: course_info.img_url || "",
+    center: course_info.center || "",
+    level: course_info.level || "",
   });
 
   // 마커, 폴리라인 추가
@@ -321,7 +325,10 @@ const MakeCourse = () => {
     }
 
     axios
-      .post("http://localhost:8080/make_course", values)
+      .post(
+        `http://localhost:8080/update_course/${course_info.course_id}`,
+        values
+      )
       .then((res) => {
         console.log(res);
         if (res.status === 201) {
@@ -331,11 +338,11 @@ const MakeCourse = () => {
           setValues({
             course_name: "",
             content: "",
-            user_id: "",
             distance: "",
-            waypoint: linePath,
-            city: "강동구",
-            is_private: false,
+            waypoint: "",
+            city: "",
+            is_visible: "",
+            is_private: "",
             url: "",
             center: "",
             level: "",
@@ -344,11 +351,11 @@ const MakeCourse = () => {
           // 마커도 초기화
           clearAllMarkers();
 
-          toast.success("코스등록이 완료되었습니다.");
+          toast.success("코스수정이 완료되었습니다.");
           // 페이지 이동
-          navigate("/box");
+          back();
         } else {
-          toast.error("코스등록에 실패했습니다.");
+          toast.error("코스수정에 실패했습니다.");
         }
       })
       .catch((error) => {
@@ -362,12 +369,9 @@ const MakeCourse = () => {
     <div className="make-course relative">
       {/* 헤더 영역 */}
       <div className="absolute top-4 left-0 w-full flex justify-between items-center py-4 px-6 z-10">
-        <Link
-          to={"/main"}
-          onClick={() => dispatch(changeCurrentPage({ title: "주변" }))}
-        >
+        <button onClick={back}>
           <ChevronLeft className="w-8 h-8 cursor-pointer" />
-        </Link>
+        </button>
         <div className="relative w-full">
           <div className="absolute flex gap-2 bg-sky-500 rounded-3xl p-1 -left-2 bottom-6">
             <PenLine className="text-white w-3 h-3" />
@@ -440,7 +444,7 @@ const MakeCourse = () => {
       >
         <div className="w-4/5 py-2 flex items-center justify-center bg-white rounded-full border border-gray-200 shadow-lg">
           <span className="text-xl font-bold text-[#232323]">
-            코스 등록하기
+            코스 수정하기
           </span>
         </div>
       </button>
@@ -461,7 +465,7 @@ const MakeCourse = () => {
               className="border border-gray-400 rounded-md"
               type="text"
               name="course_name"
-              placeholder="코스 이름을 입력"
+              placeholder={"코스 이름을 입력"}
               value={values.course_name}
               onChange={(e) =>
                 setValues({ ...values, course_name: e.target.value })
@@ -472,7 +476,7 @@ const MakeCourse = () => {
             <img
               className="w-full max-h-[440px] object-cover"
               src={uploadImgUrl}
-              alt="Preview"
+              alt=""
               img="img"
             />
             <input
@@ -543,18 +547,11 @@ const MakeCourse = () => {
                 }
               />
             </div>
-            {/* <input
-            className="border border-gray-400 rounded-md"
-            type="text"
-            name="url"
-            placeholder="이미지 URL"
-            value={values.url}
-            onChange={(e) => setValues({ ...values, url: e.target.value })}
-          /> */}
 
             <input
               className="border border-gray-400 bg-orange-300 rounded-md px-2 cursor-pointer"
               type="submit"
+              value="수정"
             ></input>
           </form>
         </div>
@@ -563,4 +560,4 @@ const MakeCourse = () => {
   );
 };
 
-export default MakeCourse;
+export default UpdateCourse;
