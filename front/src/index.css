@@ -69,20 +69,18 @@
   flex-shrink: 0;
 }
 
-/* detail-header style */
+/* detail style */
 .detail-header {
-  background: #475569;
+  background: #eee;
+  height: 2.5rem;
   display: flex;
-  justify-content: space-between;
-  justify-items: center;
-  position: fixed;
-  top: 10px;
-  left: 15%;
-  width: 70%;
-  height: 40px;
-  padding: 0 20px;
-  border-radius: 20px;
-  color: #ccc;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+}
+
+.detail-content {
+  overflow-wrap: break-word;
 }
 
 /* footer navi bar style */

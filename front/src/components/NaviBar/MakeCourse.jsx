@@ -26,7 +26,8 @@ const MakeCourse = () => {
   // console.log('userData', userData);
 
   // 기본 업로드 이미지
-  const defaultImgUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ6HV-Q89MQyGPRXVkF-O4g9UGALROyOxwcRKoUFjaDTwS6hKsRZ3OqhkDBaYNa2ObR9E&usqp=CAU'; // 기본 이미지 URL
+  const defaultImgUrl =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ6HV-Q89MQyGPRXVkF-O4g9UGALROyOxwcRKoUFjaDTwS6hKsRZ3OqhkDBaYNa2ObR9E&usqp=CAU"; // 기본 이미지 URL
   // 마커 이미지
   const startSrc =
     "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png";
@@ -178,22 +179,22 @@ const MakeCourse = () => {
 
   useEffect(() => {
     // 스크롤 비활성화
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
 
     const preventScroll = (event) => {
       event.preventDefault();
       event.stopPropagation();
     };
 
-    window.addEventListener('scroll', preventScroll);
-    document.addEventListener('touchmove', preventScroll, { passive: false });
+    window.addEventListener("scroll", preventScroll);
+    document.addEventListener("touchmove", preventScroll, { passive: false });
 
     return () => {
       // 컴포넌트 언마운트 시 스크롤 복원
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
 
-      window.removeEventListener('scroll', preventScroll);
-      document.removeEventListener('touchmove', preventScroll);
+      window.removeEventListener("scroll", preventScroll);
+      document.removeEventListener("touchmove", preventScroll);
     };
   }, []);
 
@@ -368,7 +369,7 @@ const MakeCourse = () => {
           clearAllMarkers();
 
           toast.success("코스등록이 완료되었습니다.");
-          dispatch(changeCurrentPage({ title: "보관함" }))
+          dispatch(changeCurrentPage({ title: "보관함" }));
           // 페이지 이동
           navigate("/box");
         } else {
@@ -474,11 +475,13 @@ const MakeCourse = () => {
         onSubmit={handlePostCourse}
       >
         <div className="flex flex-col w-full h-full p-4">
-          <button className="flex justify-end" onClick={() => toggleMakeCoursePop()}>
+          <button
+            className="flex justify-end"
+            onClick={() => toggleMakeCoursePop()}
+          >
             <X />
           </button>
           <form className="flex flex-col w-full h-full gap-2 py-2 text-black">
-
             <div className="flex flex-col">
               <span className="text-base font-semibold py-1">코스명</span>
               <input
@@ -492,7 +495,6 @@ const MakeCourse = () => {
                 }
               />
             </div>
-            
 
             {/* 이미지 업로드 */}
             <img
@@ -504,7 +506,7 @@ const MakeCourse = () => {
             <input
               type="file"
               accept="image/*"
-              onChange={onchangeImageUpload} 
+              onChange={onchangeImageUpload}
             />
 
             <div className="flex flex-col">
@@ -522,16 +524,20 @@ const MakeCourse = () => {
             </div>
 
             <div className="flex flex-col">
-                <span className="text-base font-semibold py-1">지역</span>
+              <span className="text-base font-semibold py-1">지역</span>
               <div>
                 <select
                   name="city"
                   id="city"
                   className="form-control"
                   value={values.city}
-                  onChange={(e) => setValues({ ...values, city: e.target.value })}
+                  onChange={(e) =>
+                    setValues({ ...values, city: e.target.value })
+                  }
                 >
-                  <option value="" disabled>선택</option>
+                  <option value="" disabled>
+                    선택
+                  </option>
                   <option value="강남구">강남구</option>
                   <option value="강동구">강동구</option>
                   <option value="강북구">강북구</option>

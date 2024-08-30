@@ -29,7 +29,7 @@ const MyCourse = () => {
   }, [dispatch, userId]);
 
   return (
-    <div className="my-course bg-sky-100">
+    <div className="my-course bg-sky-50">
       <div className="grid grid-cols-2 w-full">
         {myCourse
           ?.filter((item) => item.is_visible === true)

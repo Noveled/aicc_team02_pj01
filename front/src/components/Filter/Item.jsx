@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Item = ({ item }) => {
   return (
     <div className="item w-full p-3 overflow-x-auto">
-      <div className="rounded-lg p-2 bg-sky-200 w-full">
+      <div className="rounded-lg p-2 bg-sky-200 w-full text-gray-700">
         <Link to={"/detail"} state={{ item: item }}>
           <div className="flex flex-col gap-y-1">
             <div className="h-[155px]">
@@ -18,7 +18,7 @@ const Item = ({ item }) => {
             <h5 className="truncate">제목: {item.course_name}</h5>
             <p className="truncate">내용: {item.content}</p>
             <div className="flex justify-between gap-x-[2px]">
-              <div className="text-xs truncate">지역구: {item.city}</div>
+              <div className="text-xs truncate">지역: {item.city}</div>
               <div className="text-xs truncate">작성자: {item.user_name}</div>
             </div>
             <div className="flex justify-between">
