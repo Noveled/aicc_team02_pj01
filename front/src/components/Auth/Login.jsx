@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -60,6 +60,10 @@ const Login = () => {
       });
   };
 
+  const signUp = () => {
+    navigate("/register");
+  };
+
   return (
     <div>
       <h2>Sign-In</h2>
@@ -92,13 +96,13 @@ const Login = () => {
             onChange={(e) => setValues({ ...values, password: e.target.value })}
           />
         </div>
-        <button type="submit" className="btn w-[20%]">
+        <button type="submit" className="auth-btn w-[20%]">
           Sign In
         </button>
         {/* <p>Agree to our Terms and Policies</p> */}
-        <button className="btn w-40">
-          <Link to="/register">Create Account</Link>
-        </button>
+        <div className="auth-btn cursor-pointer" onClick={signUp}>
+          Create Account
+        </div>
       </form>
     </div>
   );

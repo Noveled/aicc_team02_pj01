@@ -12,19 +12,25 @@
 .auth-form {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  row-gap: 0.5rem;
 }
 
 .form-control {
-  border: solid 1px;
+  border: solid 1px #666;
   border-radius: 4px;
-  margin: 0 4px;
-  padding: 0 4px;
+  padding: 0.5rem;
 }
 
-.btn {
-  border-radius: 4px;
-  background: #bbb;
+.auth-btn {
+  width: 100%;
+  border-radius: 0.5rem;
+  _background: #bbb;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .map {
