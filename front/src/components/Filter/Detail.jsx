@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ChevronLeft, Sparkle } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { GiDiamonds } from "react-icons/gi";
 
 import { fetchDeleteCourse } from "../../redux/slices/apiSlice";
@@ -33,23 +33,23 @@ const Detail = () => {
     }
   };
 
+  const updateItem = async () => {};
+
   return (
     <div className="detail">
       <div className="detail-wrapper">
-        <div className="relative shadow-[0_1px_6px_5px_rgba(0,0,0,0.2)]">
-          {user.user_id === detail.user_id ? (
-            <div className="detail-header">
-              <button onClick={back} className="fixed left-[1rem] top-0">
-                <ChevronLeft className="w-[2.5rem] h-[2.5rem] cursor-pointer items-center" />
-              </button>
-              <div className="text-xl">코스 상세페이지</div>
-            </div>
-          ) : (
-            <div className="detail-header">
-              <div className="text-xl">코스 상세페이지</div>
-            </div>
-          )}
-        </div>
+        {user.user_id === detail.user_id ? (
+          <div className="detail-header">
+            <button onClick={back} className="fixed left-[1rem] top-[0.25rem]">
+              <ChevronLeft className="w-[2.5rem] h-[2.5rem] cursor-pointer items-center" />
+            </button>
+            <div className="text-xl">코스 상세페이지</div>
+          </div>
+        ) : (
+          <div className="detail-header">
+            <div className="text-xl">코스 상세페이지</div>
+          </div>
+        )}
 
         <div className="h-[50vh]">
           <img
@@ -59,12 +59,13 @@ const Detail = () => {
           />
         </div>
 
-        <div className="fixed bottom-0 left-0 w-full h-[50vh] bg-[#eee] pt-3 px-3 pb-8 text-gray-800 rounded-t-xl shadow-[0_-1px_6px_5px_rgba(0,0,0,0.1)]">
+        <div className="fixed bottom-0 left-0 w-full h-[50vh] bg-[#eee] pt-3 px-3 pb-8 text-gray-800 rounded-t-xl shadow-[0_-1px_6px_5px_rgba(0,0,0,0.2)]">
           <div className="flex flex-col justify-between h-full text-base">
             <div className="flex flex-col justify-between">
               <h5 className="font-bold p-4">제목: {detail.course_name}</h5>
               <hr className="bg-purple-600 h-[2px]" />
             </div>
+
             <div className="flex flex-col gap-y-1 text-sm">
               <div className="flex items-center gap-x-2">
                 <GiDiamonds className="w-4 h-4 text-yellow-500" />
@@ -83,14 +84,17 @@ const Detail = () => {
                 지역구: {detail.city}
               </div>
             </div>
-            <div className="detail-content h-[40%] p-3 bg-purple-200 rounded-md overflow-y-scroll">
-              <p className="whitespace-break-spaces indent-4">
-                {detail.content}
-              </p>
+
+            <div className="h-[40%] p-3 bg-purple-200 rounded-md overflow-y-scroll text-gray-700 break-words">
+              <p className="indent-4">{detail.content}</p>
             </div>
+
             {user.user_id === detail.user_id ? (
-              <div className="flex justify-between gap-x-4">
-                <button className="w-full bg-yellow-300 py-2 rounded-xl hover:bg-yellow-400 hover:shadow-md">
+              <div className="flex justify-between gap-x-4 font-semibold">
+                <button
+                  onClick={updateItem}
+                  className="w-full bg-yellow-300 py-2 rounded-xl hover:bg-yellow-400 hover:shadow-md hover:"
+                >
                   수정
                 </button>
                 <button

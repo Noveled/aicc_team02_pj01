@@ -8,14 +8,9 @@ import { fetchGetUsersData } from "../../redux/slices/usersSlice";
 const Neighbor = () => {
   const dispatch = useDispatch();
 
-  const userId = useSelector((state) => state.auth.authData.name);
   const courseData = useSelector((state) => state.api.usersCourse);
 
   useEffect(() => {
-    if (!userId) {
-      return;
-    }
-
     dispatch(fetchGetUsersData());
     const fetchGetCourse = async () => {
       try {
@@ -25,7 +20,7 @@ const Neighbor = () => {
       }
     };
     fetchGetCourse();
-  }, [dispatch, userId]);
+  }, [dispatch]);
 
   const neighborCourse = courseData?.filter(
     (course) =>

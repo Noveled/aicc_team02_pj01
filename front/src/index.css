@@ -37,27 +37,29 @@
 }
 
 /* search style */
-.search-item {
+.search-items {
   display: flex;
   flex-direction: column;
-  row-gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #bae6fd;
 }
 
 .search-title {
   text-align: center;
   color: #0284c7;
   font-weight: bold;
-  padding-top: 1rem;
+  padding: 0.5rem 0;
 }
 
-.search-content {
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #bae6fd;
+.distance-btn {
+  width: 100%;
+  padding: 0.5rem 0;
+  border-radius: 9999px;
+  box-shadow: 0 1px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
-.distance-title {
-  color: #0284c7;
-  padding-left: 10%;
+.distance-btn:hover {
+  background: #7dd3fc;
 }
 
 .my-course {
@@ -69,18 +71,22 @@
   flex-shrink: 0;
 }
 
+/* item style */
+.item-gradiant:hover {
+  /* bg-gradient-to-br from-sky-200 to-sky-300; */
+  background: linear-gradient(-30deg, #7dd3fc, #bae6fd);
+}
+
 /* detail style */
 .detail-header {
   background: #eee;
-  height: 2.5rem;
+  height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #333;
-}
-
-.detail-content {
-  overflow-wrap: break-word;
+  position: relative;
+  box-shadow: 0 1px 6px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* footer navi bar style */
