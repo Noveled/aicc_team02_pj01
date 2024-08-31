@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+
 import { fetchGetUsersData } from "../../redux/slices/usersSlice";
+import AuthHeader from "./AuthHeader";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -16,6 +19,10 @@ const Register = () => {
 
   const id_check = () => {
     const compareId = document.getElementById("id").value;
+    if (!compareId) {
+      toast.error("아이디를 입력해주세요");
+      return;
+    }
     // 사용자 ID가 존재하는지 확인
     const isIdTaken = users?.some((user) => user.user_id === compareId);
 
@@ -119,20 +126,28 @@ const Register = () => {
   };
 
   return (
-    <div className="register h-full">
-      <div className="register-wrapper px-10 h-full">
-        <h2 className="py-6 font-bold text-2xl">회원가입</h2>
+    <div className="register h-[100vh] bg-gradient-to-b from-violet-400 to-purple-500 bg">
+      {/* <div className="h-[30vh]">
+        <div className="flex justify-center items-center font-bold text-2xl h-[10vh] text-purple-700">
+          회원가입
+        </div>
+        <div className="h-[20vh] py-8 flex justify-center items-center">
+          <FaWalking className="w-full h-full text-purple-600" />
+        </div>
+      </div> */}
+      <AuthHeader title="회원가입"></AuthHeader>
+      <div className="register-wrapper px-10 h-[70vh]">
         <form
           onSubmit={handleSubmit}
-          className="w-full h-full flex flex-col justify-between gap-y-6"
+          className="w-full h-full flex flex-col justify-between pb-10"
         >
           <div className="auth-form">
             <div className="flex justify-between">
               <label htmlFor="user_id" className="px-2">
-                id
+                <strong>id</strong>
               </label>
               <div
-                className="text-xs rounded bg-purple-100 px-4 cursor-pointer flex items-center"
+                className="text-xs rounded bg-purple-200 px-4 cursor-pointer flex items-center"
                 onClick={id_check}
               >
                 아이디 중복확인
@@ -152,7 +167,7 @@ const Register = () => {
 
           <div className="auth-form">
             <label htmlFor="password" className="px-2">
-              Password
+              <strong>Password</strong>
             </label>
             <input
               type="password"
@@ -167,7 +182,7 @@ const Register = () => {
 
           <div className="auth-form">
             <label htmlFor="check-password" className="px-2">
-              Check password
+              <strong>Check password</strong>
             </label>
             <input
               type="password"
@@ -180,7 +195,7 @@ const Register = () => {
 
           <div className="auth-form">
             <label htmlFor="user_email" className="px-2">
-              Email
+              <strong>Email</strong>
             </label>
             <input
               type="email"
@@ -195,7 +210,7 @@ const Register = () => {
 
           <div className="auth-form">
             <label htmlFor="user_name" className="px-2">
-              Nick Name
+              <strong>Nick Name</strong>
             </label>
             <input
               type="user_name"
@@ -208,23 +223,23 @@ const Register = () => {
             />
           </div>
 
-          <div className="flex justify-between gap-x-8 py-4">
+          <div className="flex justify-between gap-x-4 py-4">
             <button
               type="submit"
-              className="auth-btn bg-purple-500 shadow text-white hover:font-bold"
+              className="auth-btn text-sm bg-green-400 shadow text-white hover:font-bold"
             >
               가입하기
             </button>
 
             <div
-              className="auth-btn cursor-pointer bg-amber-400 text-slate-100 hover:font-bold"
+              className="auth-btn text-sm cursor-pointer bg-amber-400 text-slate-100 hover:font-bold"
               onClick={login}
             >
-              로그인하기
+              로그인
             </div>
 
             <div
-              className="auth-btn cursor-pointer  bg-red-400 shadow text-white hover:font-bold"
+              className="auth-btn text-sm cursor-pointer  bg-red-400 shadow text-white hover:font-bold"
               onClick={cancelSignUp}
             >
               가입취소
