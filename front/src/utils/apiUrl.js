@@ -10,6 +10,7 @@ const GET_Facilities_API_URL = "http://localhost:8080/get_facilities";
 
 const DELETE_COURSE_API_URL = "http://localhost:8080/delete_course";
 const UPDATE_COURSE_API_URL = "http://localhost:8080/update_course";
+const UPDATE_VIEWCOUNT_API_URL = "http://localhost:8080/update_viewcount";
 
 export {
   GET_COURSE_API_URL,
@@ -20,4 +21,5 @@ export {
   GET_USERS_JOIN_COURSE_API_URL,
   DELETE_COURSE_API_URL,
   UPDATE_COURSE_API_URL,
+  UPDATE_VIEWCOUNT_API_URL,
 };

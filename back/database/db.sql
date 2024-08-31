@@ -59,3 +59,10 @@ CREATE TABLE facilities_table (
     longitude DECIMAL(9, 6),
 	fac_type VARCHAR(100) NOT NULL
 );
+
+CREATE TABLE view_table (
+    view_id SERIAL PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    course_id INT NOT NULL,
+    CONSTRAINT user_and_course UNIQUE(user_id, course_id)
+)

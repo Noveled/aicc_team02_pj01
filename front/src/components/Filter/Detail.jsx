@@ -1,24 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ChevronLeft } from "lucide-react";
 import { GiDiamonds } from "react-icons/gi";
 
-import { fetchDeleteCourse } from "../../redux/slices/apiSlice";
+import {
+  fetchDeleteCourse,
+  fetchUpdateViewcount,
+} from "../../redux/slices/apiSlice";
 import { toast } from "react-toastify";
 
 const Detail = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+
   const detail = location.state.item;
+  const user = useSelector((state) => state.userInfoState.userInfo);
+  const view_data = {
+    user_id: user.user_id,
+    course_id: detail.course_id,
+  };
+  console.log(detail, user, view_data);
+
+  const options = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(view_data),
+  };
+
+  useEffect(() => {
+    dispatch(fetchUpdateViewcount(options));
+  }, [dispatch]);
 
   const back = () => {
     window.history.back();
   };
-
-  const user = useSelector((state) => state.userInfoState.userInfo);
 
   const deleteItem = async () => {
     const confirm = window.confirm("아이템을 삭제하시겠습니까?");
