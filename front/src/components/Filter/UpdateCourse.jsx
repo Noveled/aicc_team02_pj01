@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { changeCurrentPage } from "../../redux/slices/currentStateSlice";
 import { changeMapInfo } from "../../redux/slices/currentStateSlice";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -8,14 +9,18 @@ import axios from "axios";
 import { ChevronLeft, PenLine, Plus, Minus, X } from "lucide-react";
 
 import "../../actions.css";
+import { fetchUpdateCourse } from "../../redux/slices/apiSlice";
 
 //
 const { kakao } = window;
 
 const UpdateCourse = () => {
-  // course detail 정보 가져오기
   const location = useLocation();
-  const course_info = location.state.item;
+  const course_info = location.state;
+  // console.log(course_info);
+
+  // useNavigate 훅 생성
+  const navigate = useNavigate();
   // 유저 정보 불러오기
   const dispatch = useDispatch();
   // const [userData, setUserData] = useState();
@@ -25,6 +30,9 @@ const UpdateCourse = () => {
 
   // console.log('userData', userData);
 
+  // 기본 업로드 이미지
+  const defaultImgUrl =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ6HV-Q89MQyGPRXVkF-O4g9UGALROyOxwcRKoUFjaDTwS6hKsRZ3OqhkDBaYNa2ObR9E&usqp=CAU"; // 기본 이미지 URL
   // 마커 이미지
   const startSrc =
     "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png";
@@ -43,11 +51,9 @@ const UpdateCourse = () => {
   const [isClickedZoomIn, setIsClickedZoomIn] = useState(false); // 줌인 색상
   const [isClickedZoomOut, setIsClickedZoomOut] = useState(false); // 줌아웃 색상
   // 이미지 업로드
-  const [uploadImgUrl, setUploadImgUrl] = useState(course_info.img_url);
+  const [uploadImgUrl, setUploadImgUrl] = useState("");
 
-  const back = () => {
-    window.history.back();
-  };
+  const handleBack = () => window.history.back();
 
   const onchangeImageUpload = (e) => {
     const { files } = e.target;
@@ -83,12 +89,13 @@ const UpdateCourse = () => {
 
   // 코스 등록시 필요한 값
   const [values, setValues] = useState({
+    course_id: course_info.course_id,
     course_name: course_info.course_name || "",
     content: course_info.content || "",
+    user_id: course_info.user_id || "",
     distance: course_info.distance || 0,
     waypoint: course_info.waypoint || linePath,
-    city: course_info.city || "강동구",
-    is_visible: course_info.is_visible,
+    city: course_info.city || "",
     is_private: course_info.is_private || false,
     url: course_info.img_url || "",
     center: course_info.center || "",
@@ -173,9 +180,35 @@ const UpdateCourse = () => {
     });
   }, []);
 
-  // 유저 id 미리 집어넣기
+  // 로그인 여부 체크 겸 유저 id 미리 집어넣기
   useEffect(() => {
+    if (userData.userInfo === null) {
+      toast.error("로그인이 필요한 서비스입니다.");
+      navigate("/login");
+      return;
+    }
     setValues({ ...values, user_id: userData.userInfo.user_table_idx });
+  }, []);
+
+  useEffect(() => {
+    // 스크롤 비활성화
+    document.body.style.overflow = "hidden";
+
+    const preventScroll = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+
+    window.addEventListener("scroll", preventScroll);
+    document.addEventListener("touchmove", preventScroll, { passive: false });
+
+    return () => {
+      // 컴포넌트 언마운트 시 스크롤 복원
+      document.body.style.overflow = "";
+
+      window.removeEventListener("scroll", preventScroll);
+      document.removeEventListener("touchmove", preventScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -308,7 +341,8 @@ const UpdateCourse = () => {
     console.log("isMakeCoursePop Click :", isMakeCoursePop);
     setIsMakeCoursePop(!isMakeCoursePop);
   };
-  const handlePostCourse = (e) => {
+
+  const handleUpdateCourse = async (e) => {
     e.preventDefault();
     // console.log('userData.userInfo.user_table_idx', userData.userInfo.user_table_idx);
     console.log("values", values);
@@ -316,7 +350,7 @@ const UpdateCourse = () => {
     e.preventDefault();
 
     if (!values.course_name || !values.content || !values.url) {
-      toast.error("입력값을 확인해주세요.");
+      alert("입력값을 확인해주세요.");
       return;
     }
     if (values.waypoint.length < 2) {
@@ -324,52 +358,24 @@ const UpdateCourse = () => {
       return;
     }
 
-    axios
-      .post(
-        `http://localhost:8080/update_course/${course_info.course_id}`,
-        values
-      )
-      .then((res) => {
-        console.log(res);
-        if (res.status === 201) {
-          console.log(res);
-
-          // 값 초기화
-          setValues({
-            course_name: "",
-            content: "",
-            distance: "",
-            waypoint: "",
-            city: "",
-            is_visible: "",
-            is_private: "",
-            url: "",
-            center: "",
-            level: "",
-          });
-
-          // 마커도 초기화
-          clearAllMarkers();
-
-          toast.success("코스수정이 완료되었습니다.");
-          // 페이지 이동
-          back();
-        } else {
-          toast.error("코스수정에 실패했습니다.");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      await dispatch(fetchUpdateCourse(values)).unwrap();
+      toast.success("코스가 수정되었습니다.");
+      handleBack();
+    } catch (error) {
+      console.log("Error update course:", error);
+      toast.error("코스 수정에 실패했습니다.");
+    }
+    // dispatch(fetchUpdateCourse(course_info.course_id));
   };
 
-  console.log(values);
+  // console.log(values);
 
   return (
     <div className="make-course relative">
       {/* 헤더 영역 */}
       <div className="absolute top-4 left-0 w-full flex justify-between items-center py-4 px-6 z-10">
-        <button onClick={back}>
+        <button onClick={handleBack}>
           <ChevronLeft className="w-8 h-8 cursor-pointer" />
         </button>
         <div className="relative w-full">
@@ -444,39 +450,42 @@ const UpdateCourse = () => {
       >
         <div className="w-4/5 py-2 flex items-center justify-center bg-white rounded-full border border-gray-200 shadow-lg">
           <span className="text-xl font-bold text-[#232323]">
-            코스 수정하기
+            코스 정보 수정하기
           </span>
         </div>
       </button>
 
       <div
-        className={`makeCoursePop flex flex-col bg-slate-600 text-lg z-50`}
-        onSubmit={handlePostCourse}
+        className={`makeCoursePop flex flex-col  bg-slate-600 text-lg z-50 rounded-t-2xl overflow-auto`}
+        onSubmit={handleUpdateCourse}
       >
-        <div className="flex flex-col p-4 ">
+        <div className="flex flex-col w-full h-full p-4">
           <button
             className="flex justify-end"
             onClick={() => toggleMakeCoursePop()}
           >
             <X />
           </button>
-          <form className="flex flex-col gap-2 py-2 text-black">
-            <input
-              className="border border-gray-400 rounded-md"
-              type="text"
-              name="course_name"
-              placeholder={"코스 이름을 입력"}
-              value={values.course_name}
-              onChange={(e) =>
-                setValues({ ...values, course_name: e.target.value })
-              }
-            />
+          <form className="flex flex-col w-full h-full gap-2 py-2 text-black">
+            <div className="flex flex-col">
+              <span className="text-base font-semibold py-1">코스명</span>
+              <input
+                className="border border-gray-400 rounded-md"
+                type="text"
+                name="course_name"
+                placeholder="코스 이름을 입력"
+                value={values.course_name}
+                onChange={(e) =>
+                  setValues({ ...values, course_name: e.target.value })
+                }
+              />
+            </div>
 
             {/* 이미지 업로드 */}
             <img
-              className="w-full max-h-[440px] object-cover"
-              src={uploadImgUrl}
-              alt=""
+              className="w-full h-[240px] overflow-hidden object-fit"
+              src={uploadImgUrl || defaultImgUrl}
+              alt="Preview"
               img="img"
             />
             <input
@@ -485,58 +494,66 @@ const UpdateCourse = () => {
               onChange={onchangeImageUpload}
             />
 
-            <textarea
-              className="border border-gray-400 rounded-md"
-              type="text"
-              name="content"
-              placeholder="코스 설명"
-              value={values.content}
-              onChange={(e) =>
-                setValues({ ...values, content: e.target.value })
-              }
-            />
+            <div className="flex flex-col">
+              <span className="text-base font-semibold py-1">코스 설명</span>
+              <textarea
+                className="border w-full h-[180px] border-gray-400 rounded-md resize-none"
+                type="text"
+                name="content"
+                placeholder="코스 설명"
+                value={values.content}
+                onChange={(e) =>
+                  setValues({ ...values, content: e.target.value })
+                }
+              />
+            </div>
 
-            <div className="city">
-              <label htmlFor="city">
-                <span>지역</span>
-              </label>
-              <select
-                name="city"
-                id="city"
-                className="form-control"
-                value={values.city}
-                onChange={(e) => setValues({ ...values, city: e.target.value })}
-              >
-                <option value="강남구">강남구</option>
-                <option value="강동구">강동구</option>
-                <option value="강북구">강북구</option>
-                <option value="강서구">강서구</option>
-                <option value="관악구">관악구</option>
-                <option value="광진구">광진구</option>
-                <option value="구로구">구로구</option>
-                <option value="금천구">금천구</option>
-                <option value="노원구">노원구</option>
-                <option value="도봉구">도봉구</option>
-                <option value="동대문구">동대문구</option>
-                <option value="동작구">동작구</option>
-                <option value="마포구">마포구</option>
-                <option value="서대문구">서대문구</option>
-                <option value="서초구">서초구</option>
-                <option value="성동구">성동구</option>
-                <option value="성북구">성북구</option>
-                <option value="송파구">송파구</option>
-                <option value="양천구">양천구</option>
-                <option value="영등포구">영등포구</option>
-                <option value="용산구">용산구</option>
-                <option value="은평구">은평구</option>
-                <option value="종로구">종로구</option>
-                <option value="중구">중구</option>
-                <option value="중랑구">중랑구</option>
-              </select>
+            <div className="flex flex-col">
+              <span className="text-base font-semibold py-1">지역</span>
+              <div>
+                <select
+                  name="city"
+                  id="city"
+                  className="form-control"
+                  value={values.city}
+                  onChange={(e) =>
+                    setValues({ ...values, city: e.target.value })
+                  }
+                >
+                  <option value="" disabled>
+                    선택
+                  </option>
+                  <option value="강남구">강남구</option>
+                  <option value="강동구">강동구</option>
+                  <option value="강북구">강북구</option>
+                  <option value="강서구">강서구</option>
+                  <option value="관악구">관악구</option>
+                  <option value="광진구">광진구</option>
+                  <option value="구로구">구로구</option>
+                  <option value="금천구">금천구</option>
+                  <option value="노원구">노원구</option>
+                  <option value="도봉구">도봉구</option>
+                  <option value="동대문구">동대문구</option>
+                  <option value="동작구">동작구</option>
+                  <option value="마포구">마포구</option>
+                  <option value="서대문구">서대문구</option>
+                  <option value="서초구">서초구</option>
+                  <option value="성동구">성동구</option>
+                  <option value="성북구">성북구</option>
+                  <option value="송파구">송파구</option>
+                  <option value="양천구">양천구</option>
+                  <option value="영등포구">영등포구</option>
+                  <option value="용산구">용산구</option>
+                  <option value="은평구">은평구</option>
+                  <option value="종로구">종로구</option>
+                  <option value="중구">중구</option>
+                  <option value="중랑구">중랑구</option>
+                </select>
+              </div>
             </div>
 
             <div>
-              <span>비밀글 여부 </span>
+              <span className="text-base font-semibold py-1">비밀글 여부 </span>
               <input
                 className="border border-gray-400 rounded-md"
                 type="checkbox"
@@ -551,7 +568,7 @@ const UpdateCourse = () => {
             <input
               className="border border-gray-400 bg-orange-300 rounded-md px-2 cursor-pointer"
               type="submit"
-              value="수정"
+              value={"수정"}
             ></input>
           </form>
         </div>

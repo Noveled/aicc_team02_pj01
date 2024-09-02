@@ -12,6 +12,7 @@ import {
   deleteRequest,
   getRequest,
   patchRequest,
+  putRequest,
 } from "../../utils/requestMethod";
 
 const getCourseFetchThunk = (actionType, apiUrl) => {
@@ -44,23 +45,13 @@ const updateViewcountFetchThunk = (actionType, apiUrl) => {
 };
 
 const updateItemFetchThunk = (actionType, apiUrl) => {
-  return createAsyncThunk(actionType, async (updateData, id) => {
-    const fullPath = `${apiUrl}/${id}`;
+  return createAsyncThunk(actionType, async (updateData) => {
     const options = {
       body: JSON.stringify(updateData), // 표준 JSON 문자열로 변환
     };
-    return await getRequest(fullPath, options);
+    return await putRequest(apiUrl, options);
   });
 };
-
-// const updateItemFetchThunk = (actionType, apiUrl) => {
-//   return createAsyncThunk(actionType, async (updateData) => {
-//     const options = {
-//       body: JSON.stringify(updateData), // 표준 JSON 문자열로 변환
-//     };
-//     return await putRequest(apiUrl, options);
-//   });
-// };
 
 // 코스 정보 api
 export const fetchGetCourseData = getCourseFetchThunk(

@@ -28,3 +28,21 @@ export async function patchRequest(url, options) {
     return response.json();
   });
 }
+
+/* ====== Common Put Request Function ====== */
+export async function putRequest(url, options) {
+  console.log(url);
+  const defaultOptions = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    ...options,
+  };
+  return await fetch(url, defaultOptions).then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  });
+}

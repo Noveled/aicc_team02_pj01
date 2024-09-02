@@ -2,11 +2,11 @@ const database = require("../database/database");
 const { v4: uuid4 } = require("uuid");
 
 exports.updateCourse = async (req, res) => {
-  const course_id = req.params.courseId;
+  // const course_id = req.params.courseId;
   const {
+    course_id,
     course_name,
     content,
-    updated_at,
     distance,
     waypoint,
     city,
@@ -20,9 +20,8 @@ exports.updateCourse = async (req, res) => {
 
   const currentTime = new Date(); // 현재 날짜와 시간을 가져옵니다.
   const img_created_at = currentTime;
-  updated_at = currentTime;
 
-  console.log(course_id);
+  // console.log(course_id);
   try {
     const result = await database.query(
       `WITH updated_course AS (
@@ -38,7 +37,7 @@ exports.updateCourse = async (req, res) => {
         course_name,
         content,
         thumbnail_id,
-        updated_at,
+        currentTime,
         distance,
         JSON.stringify(waypoint),
         city,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ChevronLeft } from "lucide-react";
 import { GiDiamonds } from "react-icons/gi";
@@ -37,8 +37,6 @@ const Detail = () => {
     },
     body: JSON.stringify(viewData),
   };
-
-  console.log(user.user_id, detail.course_id);
 
   useEffect(() => {
     dispatch(fetchUpdateViewcount(options));
@@ -174,7 +172,7 @@ const Detail = () => {
               <hr className="bg-purple-600 h-[2px]" />
             </div>
 
-            <div className="overflow-y-scroll pb-10">
+            <div className="overflow-y-scroll pb-12">
               <div className="grid grid-cols-2 gap-x-2 pb-4">
                 <div className="flex flex-col justify-between text-sm h-[183px]">
                   <div className="flex items-center gap-x-2">
@@ -215,12 +213,11 @@ const Detail = () => {
       <div className="fixed bottom-0 left-0 w-full z-50 p-4 bg-[#eee]">
         {isUserOwner ? (
           <div className="flex justify-between gap-x-4 font-semibold">
-            <button
-              onClick={() => {}}
-              className="w-full bg-yellow-300 py-2 rounded-xl hover:bg-yellow-400 hover:shadow-md"
-            >
-              수정
-            </button>
+            <Link className="w-full" to={"/update_course"} state={detail}>
+              <button className="w-full bg-yellow-300 py-2 rounded-xl hover:bg-yellow-400 hover:shadow-md">
+                수정
+              </button>
+            </Link>
             <button
               onClick={handleDelete}
               className="w-full bg-red-300 py-2 rounded-xl hover:bg-red-400 hover:shadow-md"

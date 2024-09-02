@@ -106,7 +106,7 @@ const Category = ({ title }) => {
   return (
     <div className="search-items">
       <h4 className="search-title">{title}</h4>
-      <div className="search-content">
+      <div className="search-content overflow-x-scroll">
         {title === "거리별 코스" && (
           <div className="flex justify-between px-4 gap-4">
             <button
