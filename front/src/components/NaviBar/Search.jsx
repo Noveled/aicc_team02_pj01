@@ -1,51 +1,23 @@
 import React from "react";
 
 // Components
-import Near from "../Category/Near";
-import Neighbor from "../Category/Neighbor";
-import Distance from "../Category/Distance";
-import Walk from "../Category/Walk";
-import Marathon from "../Category/Marathon";
 import FooterNaviBar from "./FooterNaviBar";
+import Category from "./Category";
 
 const Search = () => {
+  const category_title = [
+    "근처 추천 코스",
+    "지역 추천 코스",
+    "산책 추천 코스",
+    "마라톤 추천 코스",
+    "거리별 코스",
+  ];
   return (
     <div className="search">
       <div className="search-wrapper flex flex-col h-[93vh] overflow-y-scroll">
-        <div className="search-items near">
-          <h4 className="search-title">근처 추천 코스</h4>
-          <div className="search-content">
-            <Near></Near>
-          </div>
-        </div>
-
-        <div className="search-items neighbor">
-          <h4 className="search-title">지역 추천 코스</h4>
-          <div className="search-content">
-            <Neighbor></Neighbor>
-          </div>
-        </div>
-
-        <div className="search-items walk">
-          <h4 className="search-title">산책 추천 코스</h4>
-          <div className="search-content">
-            <Walk></Walk>
-          </div>
-        </div>
-
-        <div className="search-items marathon">
-          <h4 className="search-title">마라톤 추천 코스</h4>
-          <div className="search-content">
-            <Marathon></Marathon>
-          </div>
-        </div>
-
-        <div className="search-items distance">
-          <h4 className="search-title">거리별 코스</h4>
-          <div className="search-content">
-            <Distance></Distance>
-          </div>
-        </div>
+        {category_title.map((title, index) => (
+          <Category key={index} title={title}></Category>
+        ))}
       </div>
       <FooterNaviBar></FooterNaviBar>
     </div>

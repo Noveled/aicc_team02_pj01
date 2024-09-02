@@ -15,8 +15,8 @@ exports.updateViewCount = async (req, res) => {
 
     // 두 번째 쿼리: running_course_table의 viewcount 업데이트
     await client.query(
-      "UPDATE running_course_table SET viewcount = (SELECT COUNT(*) FROM view_table WHERE course_id = $1) WHERE course_id = $2",
-      [course_id, course_id]
+      "UPDATE running_course_table SET viewcount = (SELECT COUNT(*) FROM view_table WHERE course_id = $1) WHERE course_id = $1",
+      [course_id]
     );
 
     await client.query("COMMIT"); // 트랜잭션 커밋
