@@ -31,7 +31,8 @@ const Box = () => {
           <button
             onClick={handleMyCourse}
             className={`py-4 basis-1/2 shrink-0 text-xl text-gray-500 hover:font-bold ${
-              myCourse && "border-b-2 border-sky-500 text-sky-500"
+              myCourse &&
+              "border-b-2 border-purple-500 text-purple-500 font-bold"
             }`}
           >
             나의 코스
@@ -39,7 +40,7 @@ const Box = () => {
           <button
             onClick={handleLike}
             className={`py-4 basis-1/2 shrink-0 text-xl text-gray-500 hover:font-bold ${
-              like && "border-b-2 border-sky-500 text-sky-500"
+              like && "border-b-2 border-purple-500 text-purple-500 font-bold"
             }`}
           >
             즐겨찾기

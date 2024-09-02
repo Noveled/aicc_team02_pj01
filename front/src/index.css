@@ -82,7 +82,7 @@
 /* item style */
 .item-gradiant:hover {
   /* bg-gradient-to-br from-sky-200 to-sky-300; */
-  background: linear-gradient(-30deg, #7dd3fc, #bae6fd);
+  background: linear-gradient(-30deg, #d8b4fe, #e9d5ff);
 }
 
 /* detail style */
