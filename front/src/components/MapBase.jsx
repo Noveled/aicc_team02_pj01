@@ -492,8 +492,8 @@ const MapBase = () => {
       <div className="absolute bottom-24 left-[14px] z-10">
         <button onClick={() => panToUser()}>
           <span className='relative flex items-center justify-center w-[40px] h-[40px] bg-white rounded-full border border-gray-200 shadow-lg'>
-            <Crosshair className={`transition-colors duration-200 ${ isClickedPanTo ? 'text-sky-500' : 'text-[#888888]' }`}/>
-            <span className='absolute h-[3px] w-[3px] bg-[#888888] rounded-3xl'></span>
+            <Crosshair className={`transition-colors duration-200 ${ isClickedPanTo ? 'text-[#7c5ecf]' : 'text-[#c8b5fc]' }`}/>
+            <span className='absolute h-[3px] w-[3px] bg-[#c8b5fc] rounded-3xl'></span>
           </span>
         </button>
       </div>
@@ -515,12 +515,12 @@ const MapBase = () => {
       <div className='absolute flex flex-col gap-1 top-20 right-3 z-10'>
         <button className={`border border-gray-200 rounded-full p-1 shadow-lg transition-colors duration-200 ${ isClickedZoomIn ? 'bg-gray-200' : 'bg-white' }`}
         onClick={() => zoomIn()}>
-          <Plus className='h-[22px] w-[22px] text-[#888888]' />
+          <Plus className='h-[22px] w-[22px] text-[#c8b5fc]' />
         </button>
 
         <button className={`border border-gray-200 rounded-full p-1 shadow-lg transition-colors duration-200 ${ isClickedZoomOut ? 'bg-gray-200' : 'bg-white' }`}
         onClick={() => zoomOut()}>
-          <Minus  className='h-[22px] w-[22px] text-[#888888]' />
+          <Minus  className='h-[22px] w-[22px] text-[#c8b5fc]' />
         </button>
       </div>
 

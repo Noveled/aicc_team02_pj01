@@ -8,6 +8,8 @@ import axios from "axios";
 
 import { ChevronLeft, PenLine, Plus, Minus, X, RotateCcw, UndoDot  } from "lucide-react";
 
+import baseimg from '../../assets/images/baseimg.png'
+
 import "../../actions.css";
 
 //
@@ -26,8 +28,8 @@ const MakeCourse = () => {
   // console.log('userData', userData);
 
   // 기본 업로드 이미지
-  const defaultImgUrl =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ6HV-Q89MQyGPRXVkF-O4g9UGALROyOxwcRKoUFjaDTwS6hKsRZ3OqhkDBaYNa2ObR9E&usqp=CAU"; // 기본 이미지 URL
+  // const defaultImgUrl =
+  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ6HV-Q89MQyGPRXVkF-O4g9UGALROyOxwcRKoUFjaDTwS6hKsRZ3OqhkDBaYNa2ObR9E&usqp=CAU"; // 기본 이미지 URL
   // 마커 이미지
   const startSrc =
     "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png";
@@ -457,7 +459,7 @@ const MakeCourse = () => {
 
       {/* 현재 총 거리 */}
       <div className="absolute flex items-center justify-center p-2 bg-white rounded-full border border-gray-200 shadow-lg bottom-[150px] left-3 z-10">
-        <span className="text-xl font-bold text-[#232323]">
+        <span className="text-xl font-bold text-[#111111]">
           {calculateDist()}
           <span className="text-base text-[#7c5ecf]">KM</span>
         </span>
@@ -476,7 +478,7 @@ const MakeCourse = () => {
       </button>
 
       <div
-        className={`makeCoursePop flex flex-col  bg-slate-600 text-lg z-50 rounded-t-2xl overflow-auto`}
+        className={`makeCoursePop flex flex-col  bg-white text-lg z-50 border-t-2 border-[#7c5ecf] rounded-t-2xl overflow-auto`}
         onSubmit={handlePostCourse}
       >
         <div className="flex flex-col w-full h-full p-4">
@@ -484,13 +486,13 @@ const MakeCourse = () => {
             className="flex justify-end"
             onClick={() => toggleMakeCoursePop()}
           >
-            <X />
+            <X className="text-[#888888]"/>
           </button>
-          <form className="flex flex-col w-full h-full gap-2 py-2 text-black">
+          <form className="flex flex-col w-full h-full gap-2 text-[#111111]">
             <div className="flex flex-col">
               <span className="text-base font-semibold py-1">코스명</span>
               <input
-                className="border border-gray-400 rounded-md"
+                className="border border-gray-[#888888] rounded-md"
                 type="text"
                 name="course_name"
                 placeholder="코스 이름을 입력"
@@ -503,8 +505,8 @@ const MakeCourse = () => {
 
             {/* 이미지 업로드 */}
             <img
-              className="w-full h-[240px] overflow-hidden object-fit"
-              src={uploadImgUrl || defaultImgUrl}
+              className="w-full h-[240px] border border-gray-[#888888] rounded-md overflow-hidden object-fit"
+              src={uploadImgUrl || baseimg}
               alt="Preview"
               img="img"
             />
@@ -517,7 +519,7 @@ const MakeCourse = () => {
             <div className="flex flex-col">
               <span className="text-base font-semibold py-1">코스 설명</span>
               <textarea
-                className="border w-full h-[180px] border-gray-400 rounded-md resize-none"
+                className="border rounded-md w-full h-[180px] resize-none"
                 type="text"
                 name="content"
                 placeholder="코스 설명"
@@ -594,7 +596,7 @@ const MakeCourse = () => {
           /> */}
 
             <input
-              className="border border-gray-400 bg-orange-300 rounded-md px-2 cursor-pointer"
+              className="border border-none text-white py-1 bg-[#7c5ecf] rounded-md px-2 cursor-pointer"
               type="submit"
             ></input>
           </form>

@@ -59,7 +59,7 @@ const Recommend = () => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="recommendCoursePop absolute rounded-lg w-11/12 top-8 px-8 pt-4 bg-purple-500 text-white shadow-lg z-50">
+      <div className="recommendCoursePop absolute rounded-lg w-11/12 top-8 px-8 pt-4 bg-[#7c5ecf] text-white shadow-lg z-50">
         <div className="box-border text-xl text-center font-semibold">오늘의 추천 코스</div>
         <Slider className="w-full my-4" {...sliderSettings}>
           <div className="mx-[2px] w-[370px] p-1">

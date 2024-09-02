@@ -161,15 +161,15 @@ const Detail = () => {
             <button onClick={handleBack} className="fixed left-[1rem]">
               <ChevronLeft className="w-[2.5rem] h-[2.5rem]" />
             </button>
-            <div className="text-xl">코스 상세페이지</div>
+            <div className="text-xl text-[#7c5ecf] font-bold">코스 상세페이지</div>
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 w-full h-[50vh] bg-[#eee] pt-3 px-3 pb-8 text-gray-800 rounded-t-xl shadow-[0_-1px_6px_5px_rgba(0,0,0,0.2)] z-10">
+        <div className="fixed bottom-0 left-0 w-full h-[50vh] bg-white pt-3 px-3 pb-8 text-gray-800 rounded-t-xl shadow-[0_-1px_6px_5px_rgba(0,0,0,0.2)] z-10">
           <div className=" flex flex-col gap-4 h-full text-base">
             <div className=" flex flex-col justify-between w-full">
-              <h5 className="font-bold p-4">제목: {detail.course_name}</h5>
-              <hr className="bg-purple-600 h-[2px]" />
+              <h5 className="text-[#111111] font-bold p-4">제목: {detail.course_name}</h5>
+              <hr className="bg-[#7c5ecf] h-[2px]" />
             </div>
 
             <div className="overflow-y-scroll pb-12">
@@ -177,19 +177,19 @@ const Detail = () => {
                 <div className="flex flex-col justify-between text-sm h-[183px]">
                   <div className="flex items-center gap-x-2">
                     <GiDiamonds className="w-4 h-4 text-yellow-500" />
-                    작성자: {detail.user_name}
+                    <span className="text-[#888888]">작성자: {detail.user_name}</span>
                   </div>
                   <div className="flex items-center gap-x-2">
                     <GiDiamonds className="w-4 h-4 text-yellow-500" />
-                    조회수: {detail.viewcount}
+                    <span className="text-[#888888]">조회수: {detail.viewcount}</span>
                   </div>
                   <div className="flex items-center gap-x-2">
                     <GiDiamonds className="w-4 h-4 text-yellow-500" />
-                    거리: {detail.distance}km
+                    <span className="text-[#888888]">거리: {detail.distance}km</span>
                   </div>
                   <div className="flex items-center gap-x-2">
                     <GiDiamonds className="w-4 h-4 text-yellow-500" />
-                    지역구: {detail.city}
+                    <span className="text-[#888888]">지역구: {detail.city}</span>
                   </div>
                 </div>
 
@@ -197,12 +197,12 @@ const Detail = () => {
                   <img
                     src={detail.img_url}
                     alt="코스 이미지"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full border border-gray-[#888888] rounded-md object-cover"
                   />
                 </div>
               </div>
 
-              <div className="p-3 bg-purple-200 rounded-md h-fit text-gray-700 break-words">
+              <div className="p-3 bg-purple-200 rounded-md h-fit text-[#888888] break-words">
                 <p className="indent-4 h-full">{detail.content}</p>
               </div>
             </div>
@@ -210,7 +210,7 @@ const Detail = () => {
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-0 w-full z-50 p-4 bg-[#eee]">
+      <div className="fixed bottom-0 left-0 w-full z-50 p-4 bg-white">
         {isUserOwner ? (
           <div className="flex justify-between gap-x-4 font-semibold">
             <Link className="w-full" to={"/update_course"} state={detail}>

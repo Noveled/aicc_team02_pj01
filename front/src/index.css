@@ -87,7 +87,7 @@
 
 /* detail style */
 .detail-header {
-  background: #eee;
+  background: white;
   height: 3rem;
   display: flex;
   justify-content: center;
@@ -360,7 +360,7 @@
 @layer components {
   .footer-navi-topsquare {
     @apply absolute w-8 h-[2px] min-w-max -top-[1px]
-            rounded-md shadow-md bg-[#7c5ecf]
+            rounded-md shadow-md bg-violet-600
             transition-all duration-300 scale-0 origin-center;
   }
 }
