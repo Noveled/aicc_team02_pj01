@@ -19,7 +19,7 @@ const MyPage = () => {
     <div className="my-page">
       <div className="my-page-wrapper">
         <Link to={"/"}>
-          <button onClick={handleLogout} className="btn">
+          <button onClick={handleLogout} className="">
             Log out
           </button>
         </Link>

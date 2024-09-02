@@ -9,7 +9,7 @@ import { fetchGetUsersData } from "../../redux/slices/usersSlice";
 const MyCourse = () => {
   const dispatch = useDispatch();
 
-  const userId = useSelector((state) => state.auth.authData.name);
+  const userId = useSelector((state) => state.userInfoState.userInfo.user_id);
   const myCourse = useSelector((state) => state.api.myCourse);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const MyCourse = () => {
   }, [dispatch, userId]);
 
   return (
-    <div className="my-course bg-sky-100">
+    <div className="my-course bg-sky-50">
       <div className="grid grid-cols-2 w-full">
         {myCourse
           ?.filter((item) => item.is_visible === true)

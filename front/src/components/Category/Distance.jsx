@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Item from "../Filter/Item";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -7,15 +7,11 @@ import { fetchGetUsersData } from "../../redux/slices/usersSlice";
 
 const Distance = () => {
   const dispatch = useDispatch();
-
-  const userId = useSelector((state) => state.auth.authData.name);
-  const courseData = useSelector((state) => state.api.usersCourse);
+  const tmp = useSelector((state) => state.api.usersCourse);
+  const [courseData, setCourseData] = useState();
+  const [dis, setDis] = useState(0);
 
   useEffect(() => {
-    if (!userId) {
-      return;
-    }
-
     dispatch(fetchGetUsersData());
     const fetchGetCourse = async () => {
       try {
@@ -25,52 +21,62 @@ const Distance = () => {
       }
     };
     fetchGetCourse();
-  }, [dispatch, userId]);
+  }, [dispatch]);
 
-  const toFiveCourse = courseData?.filter(
-    (course) => course.distance < 5 && course.is_private === false
-  );
-  const fromFivetoTenCourse = courseData?.filter(
-    (course) =>
-      course.distance >= 5 &&
-      course.distance < 10 &&
-      course.is_private === false
-  );
-  const overTenCourse = courseData?.filter(
-    (course) =>
-      course.distance >= 10 &&
-      course.is_private === false &&
-      course.is_visible === true
-  );
+  useEffect(() => {
+    if (dis === 0) {
+      setCourseData(
+        tmp?.filter(
+          (course) => course.distance < 5 && course.is_private === false
+        )
+      );
+    } else if (dis === 5) {
+      setCourseData(
+        tmp?.filter(
+          (course) =>
+            course.distance >= 5 &&
+            course.distance < 10 &&
+            course.is_private === false
+        )
+      );
+    } else {
+      setCourseData(
+        tmp?.filter(
+          (course) =>
+            course.distance >= 10 &&
+            course.is_private === false &&
+            course.is_visible === true
+        )
+      );
+    }
+  }, [dis, tmp]);
 
   return (
     <div className="distance-wrapper">
-      <div className="py-2">
-        <div className="distance-title">5km 미만</div>
-        <div className="flex overflow-x-auto w-full">
-          {toFiveCourse?.map((item, idx) => (
-            <div className="category-items w-[195px]">
-              <Item key={idx} item={item}></Item>
-            </div>
-          ))}
-        </div>
+      <div className="flex justify-between px-4 gap-4">
+        <button
+          className={`distance-btn ${dis === 0 ? "bg-sky-300" : "bg-sky-200"}`}
+          onClick={() => setDis(0)}
+        >
+          5km 미만
+        </button>
+        <button
+          className={`distance-btn ${dis === 5 ? "bg-sky-300" : "bg-sky-200"}`}
+          onClick={() => setDis(5)}
+        >
+          5~10km
+        </button>
+        <button
+          className={`distance-btn ${dis === 10 ? "bg-sky-300" : "bg-sky-200"}`}
+          onClick={() => setDis(10)}
+        >
+          10km 이상
+        </button>
       </div>
 
       <div className="py-2">
-        <div className="distance-title">5~10km</div>
         <div className="flex overflow-x-auto w-full">
-          {fromFivetoTenCourse?.map((item, idx) => (
-            <div className="category-items w-[195px]">
-              <Item key={idx} item={item}></Item>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="py-2">
-        <div className="distance-title">10km 이상</div>
-        <div className="flex overflow-x-auto w-full">
-          {overTenCourse?.map((item, idx) => (
+          {courseData?.map((item, idx) => (
             <div className="category-items w-[195px]">
               <Item key={idx} item={item}></Item>
             </div>

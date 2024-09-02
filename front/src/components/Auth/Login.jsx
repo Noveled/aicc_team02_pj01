@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import AuthHeader from "./AuthHeader";
+import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
+
+import { GiRunningShoe } from "react-icons/gi";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -56,24 +59,28 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        toast.error(error.response.data.message);
       });
   };
 
+  const signUp = () => {
+    navigate("/register");
+  };
+
   return (
-    <div>
-      <h2>Sign-In</h2>
+    <div className="login h-[100vh] bg-gradient-to-b from-violet-400 to-purple-500 bg">
+      <AuthHeader title="로그인"></AuthHeader>
       <form
         onSubmit={handleSubmit}
-        className="w-full p-4 flex flex-col gap-y-4"
+        className="w-full px-10 flex flex-col justify-between h-[35vh]"
       >
         <div className="auth-form">
-          <label htmlFor="user_id">
+          <label htmlFor="user_id" className="px-2">
             <strong>id</strong>
           </label>
           <input
             type="text"
-            placeholder="Enter Your ID..."
+            placeholder="아이디를 입력하세요"
             name="user_id"
             className="form-control"
             onChange={(e) => setValues({ ...values, user_id: e.target.value })}
@@ -81,25 +88,35 @@ const Login = () => {
         </div>
 
         <div className="auth-form">
-          <label htmlFor="password">
+          <label htmlFor="password" className="px-2">
             <strong>Password</strong>
           </label>
           <input
             type="password"
-            placeholder="Enter Your Password..."
+            placeholder="비밀번호를 입력하세요"
             name="password"
             className="form-control"
             onChange={(e) => setValues({ ...values, password: e.target.value })}
           />
         </div>
-        <button type="submit" className="btn w-[20%]">
-          Sign In
-        </button>
-        {/* <p>Agree to our Terms and Policies</p> */}
-        <button className="btn w-40">
-          <Link to="/register">Create Account</Link>
-        </button>
+        <div className="flex flex-col gap-4 py-4">
+          <button
+            type="submit"
+            className="auth-btn w-[20%] bg-[#B3E0FF] hover:bg-gradient-to-b from-sky-200 to-sky-300 bg"
+          >
+            Sign In
+          </button>
+          <div
+            className="auth-btn cursor-pointer bg-[#F5A3B1] hover:bg-gradient-to-b from-pink-200 to-pink-300"
+            onClick={signUp}
+          >
+            Create Account
+          </div>
+        </div>
       </form>
+      <div className="h-[35vh] pb-10 flex justify-center items-center">
+        <GiRunningShoe className="w-[50%] h-[50%] text-purple-50" />
+      </div>
     </div>
   );
 };

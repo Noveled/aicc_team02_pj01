@@ -6,8 +6,13 @@ import {
   GET_USER_JOIN_COURSE_API_URL,
   GET_USERS_JOIN_COURSE_API_URL,
   UPDATE_COURSE_API_URL,
+  UPDATE_VIEWCOUNT_API_URL,
 } from "../../utils/apiUrl";
-import { deleteRequest, getRequest } from "../../utils/requestMethod";
+import {
+  deleteRequest,
+  getRequest,
+  patchRequest,
+} from "../../utils/requestMethod";
 
 const getCourseFetchThunk = (actionType, apiUrl) => {
   return createAsyncThunk(actionType, async () => {
@@ -29,6 +34,12 @@ const deleteItemFetchThunk = (actionType, apiUrl) => {
     };
     const fullPath = `${apiUrl}/${id}`;
     return await deleteRequest(fullPath, options);
+  });
+};
+
+const updateViewcountFetchThunk = (actionType, apiUrl) => {
+  return createAsyncThunk(actionType, async (options) => {
+    return await patchRequest(apiUrl, options);
   });
 };
 
@@ -77,6 +88,11 @@ export const fetchUpdateCourse = updateItemFetchThunk(
   UPDATE_COURSE_API_URL
 );
 
+export const fetchUpdateViewcount = updateViewcountFetchThunk(
+  "fetchUpdateViewcount",
+  UPDATE_VIEWCOUNT_API_URL
+);
+
 const createFetchThunk = (actionType, apiUrl) => {
   // console.log('apiUrl', apiUrl);
   return createAsyncThunk(actionType, async () => {
@@ -119,6 +135,7 @@ const apiSlice = createSlice({
     usersCourse: null,
     deleteCourse: null,
     updateCourse: null,
+    updateViewcount: null,
     storageData: null,
     waterData: null,
     busStopData: null,
@@ -139,6 +156,12 @@ const apiSlice = createSlice({
         handleFulfilled("usersCourse")
       )
       .addCase(fetchGetUsersJoinCourseData.rejected, handleRejected)
+
+      .addCase(
+        fetchUpdateViewcount.fulfilled,
+        handleFulfilled("updateViewcount")
+      )
+      .addCase(fetchUpdateViewcount.rejected, handleRejected)
 
       .addCase(fetchDeleteCourse.fulfilled, handleFulfilled("deleteCourse"))
       .addCase(fetchDeleteCourse.rejected, handleRejected)
