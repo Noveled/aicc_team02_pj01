@@ -48,12 +48,12 @@
   display: flex;
   flex-direction: column;
   padding: 0.5rem 0;
-  border-bottom: 1px solid #bae6fd;
+  border-bottom: 1px solid #c8b5fc;
 }
 
 .search-title {
   text-align: center;
-  color: #0284c7;
+  color: #7c5ecf;
   font-weight: bold;
   padding: 0.5rem 0;
 }
@@ -66,7 +66,7 @@
 }
 
 .distance-btn:hover {
-  background: #7dd3fc;
+  background: #7c5ecf;
 }
 
 .my-course {
@@ -359,7 +359,7 @@
 @layer components {
   .footer-navi-topsquare {
     @apply absolute w-8 h-[2px] min-w-max -top-[1px]
-            rounded-md shadow-md bg-[#0ea5e9]
+            rounded-md shadow-md bg-[#7c5ecf]
             transition-all duration-300 scale-0 origin-center;
   }
 }

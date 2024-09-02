@@ -20,7 +20,7 @@ function FooterNavIcon({ icon, linkTo, title, func }) {
       <Link to={linkTo}>
         <div
           className={`flex flex-col justify-center items-center tracking-wide text-[#888888] 
-            ${isHovered && 'text-sky-500'}`}
+            ${isHovered && 'text-[#7c5ece]'}`}
         >
           {icon}
           <span className="text-[12px] pt-[1px]">{title}</span>

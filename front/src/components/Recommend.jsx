@@ -58,24 +58,32 @@ const Recommend = () => {
   };
 
   return (
-    <div className="recommendCoursePop absolute rounded-lg top-8 w-full px-8 pt-4 bg-purple-500 text-white shadow-lg z-50">
-      <X onClick={handleClose} className="absolute top-2 right-2 cursor-pointer" />
-      <div className="box-border text-2xl text-center font-semibold mb-2">오늘의 추천 코스</div>
-      <Slider className="w-full my-4" {...sliderSettings}>
-        <div className="mx-[2px] w-[370px] p-1">
-          <img className="w-full" src={banner_001} alt="추천 코스 1" />
+    <div className="flex justify-center items-center">
+      <div className="recommendCoursePop absolute rounded-lg w-11/12 top-8 px-8 pt-4 bg-purple-500 text-white shadow-lg z-50">
+        <div className="box-border text-xl text-center font-semibold">오늘의 추천 코스</div>
+        <Slider className="w-full my-4" {...sliderSettings}>
+          <div className="mx-[2px] w-[370px] p-1">
+            <img className="w-full" src={banner_001} alt="추천 코스 1" />
+          </div>
+          <div className="mx-[2px] w-[370px] p-1">
+            <img className="w-full" src={banner_002} alt="추천 코스 2" />
+          </div>
+          <div className="mx-[2px] w-[370px] p-1">
+            <img className="w-full" src={banner_003} alt="추천 코스 3" />
+          </div>
+        </Slider>
+        <div className="flex gap-2 justify-center">
+          <button onClick={handleTodayClose} className="box-border border border-gray-200 rounded-3xl p-1 text-[12px] right-2 text-right font-semibold my-2">
+            1일 동안 보지 않기
+          </button>
+          <button onClick={handleClose} className="box-border border border-gray-200 rounded-3xl px-2 py-1 text-[12px] right-2 text-right font-semibold my-2">
+            닫기
+          </button>
         </div>
-        <div className="mx-[2px] w-[370px] p-1">
-          <img className="w-full" src={banner_002} alt="추천 코스 2" />
-        </div>
-        <div className="mx-[2px] w-[370px] p-1">
-          <img className="w-full" src={banner_003} alt="추천 코스 3" />
-        </div>
-      </Slider>
-      <button onClick={handleTodayClose} className="box-border border border-gray-200 rounded-3xl p-1 text-[12px] right-2 text-right font-semibold mb-2">
-        1일 동안 보지 않기
-      </button>
+        
+      </div>
     </div>
+    
   );
 };
 

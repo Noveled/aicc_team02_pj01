@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Item = ({ item }) => {
   return (
     <div className="item w-full p-3 overflow-x-auto">
-      <div className="rounded-lg p-2 bg-sky-200 w-full text-gray-700 shadow item-gradiant">
+      <div className="rounded-lg p-3 border border-[#c8b5fc] w-full text-gray-700 shadow item-gradiant">
         <Link to={"/detail"} state={{ item: item }}>
           <div className="flex flex-col gap-y-1">
             <div className="h-[155px]">

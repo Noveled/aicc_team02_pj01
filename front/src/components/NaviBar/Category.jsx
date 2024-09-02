@@ -111,7 +111,7 @@ const Category = ({ title }) => {
           <div className="flex justify-between px-4 gap-4">
             <button
               className={`distance-btn ${
-                dis === 0 ? "bg-sky-300" : "bg-sky-200"
+                dis === 0 ? "bg-[#7c5ecf]" : "bg-[#c8b5fc]"
               }`}
               onClick={() => setDis(0)}
             >
@@ -119,7 +119,7 @@ const Category = ({ title }) => {
             </button>
             <button
               className={`distance-btn ${
-                dis === 5 ? "bg-sky-300" : "bg-sky-200"
+                dis === 5 ? "bg-[#7c5ecf]" : "bg-[#c8b5fc]"
               }`}
               onClick={() => setDis(5)}
             >
@@ -127,7 +127,7 @@ const Category = ({ title }) => {
             </button>
             <button
               className={`distance-btn ${
-                dis === 10 ? "bg-sky-300" : "bg-sky-200"
+                dis === 10 ? "bg-[#7c5ecf]" : "bg-[#c8b5fc]"
               }`}
               onClick={() => setDis(10)}
             >
