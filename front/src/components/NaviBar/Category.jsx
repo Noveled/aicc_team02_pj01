@@ -14,7 +14,7 @@ const Category = ({ title }) => {
   const dispatch = useDispatch();
 
   const [dis, setDis] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showCourse, setShowCourse] = useState();
   const courseData = useSelector((state) => state.api.usersCourse);
 
@@ -135,9 +135,9 @@ const Category = ({ title }) => {
             </button>
           </div>
         )}
-        <div className="flex w-full">
+        <div className="flex w-full text-violet-300">
           {loading ? (
-            <SkeletonTheme baseColor="#202020" highlightColor="#444">
+            <SkeletonTheme baseColor="#ddd6fe" highlightColor="#c4b5fd">
               <ItemLoadingSkeleton></ItemLoadingSkeleton>
               <ItemLoadingSkeleton></ItemLoadingSkeleton>
             </SkeletonTheme>

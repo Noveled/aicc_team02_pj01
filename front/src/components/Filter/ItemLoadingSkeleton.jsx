@@ -5,7 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 const ItemLoadingSkeleton = () => {
   return (
     <div className="item w-full p-3 overflow-x-auto">
-      <div className="rounded-lg p-2 w-full border border-gray-700">
+      <div className="rounded-lg p-2 w-full border border-purple-300">
         <div className="flex flex-col gap-y-1">
           <div className="h-[155px]">
             <Skeleton className="h-full"></Skeleton>

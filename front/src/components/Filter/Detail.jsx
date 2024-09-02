@@ -5,7 +5,10 @@ import { ChevronLeft } from "lucide-react";
 import { GiDiamonds } from "react-icons/gi";
 import { toast } from "react-toastify";
 
-import { fetchDeleteCourse, fetchUpdateViewcount } from "../../redux/slices/apiSlice";
+import {
+  fetchDeleteCourse,
+  fetchUpdateViewcount,
+} from "../../redux/slices/apiSlice";
 
 const { kakao } = window;
 
@@ -23,10 +26,23 @@ const Detail = () => {
   const isUserOwner = user.user_id === detail.user_id;
 
   const viewData = {
-  // console.log(user.user_id, detail.course_id);
     user_id: user.user_id,
     course_id: detail.course_id,
   };
+
+  const options = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(viewData),
+  };
+
+  console.log(user.user_id, detail.course_id);
+
+  useEffect(() => {
+    dispatch(fetchUpdateViewcount(options));
+  }, [dispatch, viewData]);
 
   const markerImages = {
     start: new kakao.maps.MarkerImage(
@@ -55,7 +71,10 @@ const Detail = () => {
       clearMarkers();
       detail.waypoint.forEach(({ Ma, La }, index) => {
         const position = new kakao.maps.LatLng(Ma, La);
-        addMarker(position, index === 0 ? markerImages.start : markerImages.waypoint);
+        addMarker(
+          position,
+          index === 0 ? markerImages.start : markerImages.waypoint
+        );
         addLinePath(position);
       });
     };
@@ -78,10 +97,6 @@ const Detail = () => {
       return () => polyline.setMap(null);
     }
   }, [map, linePath]);
-
-  useEffect(() => {
-    dispatch(fetchUpdateViewcount(viewData));
-  }, [dispatch, viewData]);
 
   useEffect(() => {
     const preventScroll = (event) => {
@@ -136,83 +151,93 @@ const Detail = () => {
 
   return (
     <div className="detail relative overflow-hidden">
-      <div id="map" className="relative" style={{ width: "400px", height: "500px" }} />
+      <div
+        id="map"
+        className="relative"
+        style={{ width: "400px", height: "500px" }}
+      />
 
       <div className="detail-wrapper">
         <div className="fixed top-0 left-0 w-full h-auto z-10">
           <div className="detail-header">
-            <button onClick={handleBack} className="fixed left-[1rem] top-[0.25rem]">
-              <ChevronLeft className="w-[2.5rem] h-[2.5rem] cursor-pointer items-center" />
+            <button onClick={handleBack} className="fixed left-[1rem]">
+              <ChevronLeft className="w-[2.5rem] h-[2.5rem]" />
             </button>
             <div className="text-xl">코스 상세페이지</div>
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 w-full h-[50vh] bg-[#eee] pt-3 px-3 pb-8 text-gray-800 rounded-t-xl shadow-[0_-1px_6px_5px_rgba(0,0,0,0.2)] overflow-y-scroll z-10">
-          <div className="flex flex-col gap-4 justify-between h-full text-base">
-            <div className="flex flex-col justify-between">
+        <div className="fixed bottom-0 left-0 w-full h-[50vh] bg-[#eee] pt-3 px-3 pb-8 text-gray-800 rounded-t-xl shadow-[0_-1px_6px_5px_rgba(0,0,0,0.2)] z-10">
+          <div className=" flex flex-col gap-4 h-full text-base">
+            <div className=" flex flex-col justify-between w-full">
               <h5 className="font-bold p-4">제목: {detail.course_name}</h5>
               <hr className="bg-purple-600 h-[2px]" />
             </div>
 
-            <div className="flex flex-col gap-y-1 text-sm">
-              <div className="flex items-center gap-x-2">
-                <GiDiamonds className="w-4 h-4 text-yellow-500" />
-                작성자: {detail.user_name}
+            <div className="overflow-y-scroll pb-10">
+              <div className="grid grid-cols-2 gap-x-2 pb-4">
+                <div className="flex flex-col justify-between text-sm h-[183px]">
+                  <div className="flex items-center gap-x-2">
+                    <GiDiamonds className="w-4 h-4 text-yellow-500" />
+                    작성자: {detail.user_name}
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <GiDiamonds className="w-4 h-4 text-yellow-500" />
+                    조회수: {detail.viewcount}
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <GiDiamonds className="w-4 h-4 text-yellow-500" />
+                    거리: {detail.distance}km
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <GiDiamonds className="w-4 h-4 text-yellow-500" />
+                    지역구: {detail.city}
+                  </div>
+                </div>
+
+                <div className="w-full h-[183px]">
+                  <img
+                    src={detail.img_url}
+                    alt="코스 이미지"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
-              <div className="flex items-center gap-x-2">
-                <GiDiamonds className="w-4 h-4 text-yellow-500" />
-                조회수: {detail.viewcount}
-              </div>
-              <div className="flex items-center gap-x-2">
-                <GiDiamonds className="w-4 h-4 text-yellow-500" />
-                거리: {detail.distance}km
-              </div>
-              <div className="flex items-center gap-x-2">
-                <GiDiamonds className="w-4 h-4 text-yellow-500" />
-                지역구: {detail.city}
+
+              <div className="p-3 bg-purple-200 rounded-md h-fit text-gray-700 break-words">
+                <p className="indent-4 h-full">{detail.content}</p>
               </div>
             </div>
-
-            <div className="h-[50vh]">
-              <img
-                src={detail.img_url}
-                alt="코스 이미지"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div className="h-[40%] p-3 bg-purple-200 rounded-md overflow-y-scroll text-gray-700 break-words">
-              <p className="indent-4">{detail.content}</p>
-            </div>
-
-            {isUserOwner ? (
-              <div className="flex justify-between gap-x-4 font-semibold">
-                <button
-                  onClick={() => {}}
-                  className="w-full bg-yellow-300 py-2 rounded-xl hover:bg-yellow-400 hover:shadow-md"
-                >
-                  수정
-                </button>
-                <button
-                  onClick={handleDelete}
-                  className="w-full bg-red-300 py-2 rounded-xl hover:bg-red-400 hover:shadow-md"
-                >
-                  삭제
-                </button>
-              </div>
-            ) : (
-              <div>
-                <button
-                  onClick={handleBack}
-                  className="w-full bg-purple-400 py-2 rounded-xl hover:bg-purple-500 hover:shadow-md"
-                >
-                  완료
-                </button>
-              </div>
-            )}
           </div>
         </div>
+      </div>
+
+      <div className="fixed bottom-0 left-0 w-full z-50 p-4 bg-[#eee]">
+        {isUserOwner ? (
+          <div className="flex justify-between gap-x-4 font-semibold">
+            <button
+              onClick={() => {}}
+              className="w-full bg-yellow-300 py-2 rounded-xl hover:bg-yellow-400 hover:shadow-md"
+            >
+              수정
+            </button>
+            <button
+              onClick={handleDelete}
+              className="w-full bg-red-300 py-2 rounded-xl hover:bg-red-400 hover:shadow-md"
+            >
+              삭제
+            </button>
+          </div>
+        ) : (
+          <div>
+            <button
+              onClick={handleBack}
+              className="w-full bg-purple-400 py-2 rounded-xl hover:bg-purple-500 hover:shadow-md"
+            >
+              완료
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
