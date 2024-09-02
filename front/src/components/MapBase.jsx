@@ -18,6 +18,7 @@ import { Crosshair } from 'lucide-react';
 import { Sun } from 'lucide-react';
 import { Plus } from 'lucide-react';
 import { Minus } from 'lucide-react';
+import Recommend from './Recommend';
 
 const { kakao } = window;
 
@@ -483,6 +484,9 @@ const MapBase = () => {
   return (
     <div>
       <div id="map" className='relative' style={{width: "400px", height: "900px"}}/>
+
+      {/* 이벤트 배너 */}
+      <Recommend />
       
       {/* 내 위치로 이동 */}
       <div className="absolute bottom-24 left-[14px] z-10">

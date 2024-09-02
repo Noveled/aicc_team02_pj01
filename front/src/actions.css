@@ -13,3 +13,11 @@
   bottom: 0; /* 팝업 화면에 표시 */
   transition: bottom 0.5s ease; /* 슬라이드 애니메이션 */
 }
+
+.recommendCoursePop.close {
+  display: none;
+}
+
+.recommendCoursePop.closeToday {
+  display: none;
+}
