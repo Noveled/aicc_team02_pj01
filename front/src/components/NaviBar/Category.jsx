@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
-import Item from "../Filter/Item";
-
 import { useDispatch, useSelector } from "react-redux";
+
+import Item from "../Filter/Item";
+import ItemLoadingSkeleton from "../Filter/ItemLoadingSkeleton";
+
 import { fetchGetUsersJoinCourseData } from "../../redux/slices/apiSlice";
 import { fetchGetUsersData } from "../../redux/slices/usersSlice";
+
+import { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Category = ({ title }) => {
   const dispatch = useDispatch();
 
   const [dis, setDis] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [showCourse, setShowCourse] = useState();
   const courseData = useSelector((state) => state.api.usersCourse);
 
@@ -17,8 +23,11 @@ const Category = ({ title }) => {
     const fetchGetCourse = async () => {
       try {
         await dispatch(fetchGetUsersJoinCourseData()).unwrap();
+        setLoading(true);
       } catch (error) {
         console.log("Failed to fetch items:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchGetCourse();
@@ -126,12 +135,19 @@ const Category = ({ title }) => {
             </button>
           </div>
         )}
-        <div className="flex overflow-x-auto w-full">
-          {showCourse?.map((item, idx) => (
-            <div className="category-items w-[195px]">
-              <Item key={idx} item={item}></Item>
-            </div>
-          ))}
+        <div className="flex w-full">
+          {loading ? (
+            <SkeletonTheme baseColor="#202020" highlightColor="#444">
+              <ItemLoadingSkeleton></ItemLoadingSkeleton>
+              <ItemLoadingSkeleton></ItemLoadingSkeleton>
+            </SkeletonTheme>
+          ) : (
+            showCourse?.map((item, idx) => (
+              <div className="category-items w-[195px]">
+                <Item key={idx} item={item}></Item>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>
