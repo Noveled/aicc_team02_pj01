@@ -10,7 +10,6 @@ exports.updateCourse = async (req, res) => {
     distance,
     waypoint,
     city,
-    is_visible,
     is_private,
     url,
     center,
@@ -26,12 +25,12 @@ exports.updateCourse = async (req, res) => {
     const result = await database.query(
       `WITH updated_course AS (
           UPDATE running_course_table 
-          SET course_name = $1, content = $2, thumbnail_id = $3, updated_at = $4, distance = $5, waypoint = $6, city = $7, is_visible = $8, is_private = $9, center = $10, level = $11
-          WHERE course_id = $14
+          SET course_name = $1, content = $2, thumbnail_id = $3, updated_at = $4, distance = $5, waypoint = $6, city = $7, is_private = $8, center = $9, level = $10
+          WHERE course_id = $13
           RETURNING course_id
       )
       UPDATE images_table 
-      SET url = $12, img_created_at = $13 
+      SET url = $11, img_created_at = $12
       WHERE course_id = (SELECT course_id FROM updated_course)`,
       [
         course_name,
@@ -41,7 +40,6 @@ exports.updateCourse = async (req, res) => {
         distance,
         JSON.stringify(waypoint),
         city,
-        is_visible,
         is_private,
         JSON.stringify(center),
         level,

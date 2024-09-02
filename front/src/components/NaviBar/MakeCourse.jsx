@@ -6,7 +6,7 @@ import { changeMapInfo } from "../../redux/slices/currentStateSlice";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import { ChevronLeft, PenLine, Plus, Minus, X } from "lucide-react";
+import { ChevronLeft, PenLine, Plus, Minus, X, RotateCcw, UndoDot  } from "lucide-react";
 
 import "../../actions.css";
 
@@ -399,13 +399,13 @@ const MakeCourse = () => {
           <ChevronLeft className="w-8 h-8 cursor-pointer" />
         </Link>
         <div className="relative w-full">
-          <div className="absolute flex gap-2 bg-sky-500 rounded-3xl p-1 -left-2 bottom-6">
-            <PenLine className="text-white w-3 h-3" />
-            <span className=" text-white font-semibold text-[8px]">
+          <div className="absolute border border-[#7c5ecf] flex gap-2 bg-white rounded-3xl p-1 -left-2 bottom-6">
+            <PenLine className="text-[#7c5ecf] w-3 h-3" />
+            <span className=" text-[#7c5ecf] px-1 mr-2 font-semibold text-[8px]">
               {isMakeCoursePop ? <span>STEP 2</span> : <span>STEP 1</span>}
             </span>
           </div>
-          <span className="makeCourseHeader border rounded-3xl px-4 py-[6px] bg-slate-600 text-base text-white font-bold"></span>
+          <span className="makeCourseHeader border rounded-3xl px-6 py-[6px] bg-[#7c5ecf] text-base text-white font-bold shadow-2xl"></span>
         </div>
       </div>
       {/* 카카오 맵 */}
@@ -423,7 +423,7 @@ const MakeCourse = () => {
           }`}
           onClick={() => zoomIn()}
         >
-          <Plus className="h-[22px] w-[22px] text-[#888888]" />
+          <Plus className="h-[22px] w-[22px] text-[#c8b5fc]" />
         </button>
 
         <button
@@ -432,7 +432,7 @@ const MakeCourse = () => {
           }`}
           onClick={() => zoomOut()}
         >
-          <Minus className="h-[22px] w-[22px] text-[#888888]" />
+          <Minus className="h-[22px] w-[22px] text-[#c8b5fc]" />
         </button>
       </div>
 
@@ -443,7 +443,7 @@ const MakeCourse = () => {
           className={`border border-gray-200 rounded-full p-1 shadow-lg bg-white`} // transition-colors duration-200 ${ isClickedZoomOut ? 'bg-gray-200' : 'bg-white' }
           onClick={() => clearAllMarkers()}
         >
-          <Minus className="h-[30px] w-[30px] text-[#888888]" />
+          <RotateCcw  className="h-[30px] w-[30px] text-[#c8b5fc]" />
         </button>
 
         {/* 마커 하나 지우기 */}
@@ -451,7 +451,7 @@ const MakeCourse = () => {
           className={`border border-gray-200 rounded-full p-1 shadow-lg bg-white`} // transition-colors duration-200 ${ isClickedZoomOut ? 'bg-gray-200' : 'bg-white' }
           onClick={() => deleteLastMarker()}
         >
-          <Minus className="h-[30px] w-[30px] text-[#888888]" />
+          <UndoDot className="h-[30px] w-[30px] text-[#c8b5fc]" />
         </button>
       </div>
 
@@ -459,7 +459,7 @@ const MakeCourse = () => {
       <div className="absolute flex items-center justify-center p-2 bg-white rounded-full border border-gray-200 shadow-lg bottom-[150px] left-3 z-10">
         <span className="text-xl font-bold text-[#232323]">
           {calculateDist()}
-          <span className="text-base text-[#888888]">KM</span>
+          <span className="text-base text-[#7c5ecf]">KM</span>
         </span>
       </div>
 
@@ -468,8 +468,8 @@ const MakeCourse = () => {
         className="absolute w-full flex items-center justify-center p-2 bottom-[86px] z-10"
         onClick={() => toggleMakeCoursePop()}
       >
-        <div className="w-4/5 py-2 flex items-center justify-center bg-white rounded-full border border-gray-200 shadow-lg">
-          <span className="text-xl font-bold text-[#232323]">
+        <div className="w-4/5 py-2 flex items-center justify-center bg-white rounded-full border-2 border-[#7c5ecf] shadow-lg">
+          <span className="text-xl  font-bold text-[#7c5ecf]">
             코스 정보 입력하기
           </span>
         </div>
