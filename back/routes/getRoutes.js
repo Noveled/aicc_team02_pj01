@@ -6,12 +6,14 @@ const { getUsers } = require("../controllers/getUsers");
 const { getUsersJoinCourse } = require("../controllers/getUsersJoinCourse");
 const { getCourse } = require("../controllers/getCourse");
 const { getFacilities } = require("../controllers/getFacilities");
+const { get1course } = require("../controllers/getOneCourse");
 
 router.get("/get_user/:userId", getUser); // 로그인한 유저정보
 router.get("/get_user_join_course/:userId", getUserJoinCourse); // 한명의 유저와 코스 조인
 router.get("/get_users", getUsers); // 전체 유저정보
 router.get("/get_users_join_course", getUsersJoinCourse); // 전체유저와 코스 조인
-router.get("/get_course", getCourse); // 컨트롤러 함수 연결 - :은 정해지지 않은 문자열 표시
+router.get("/get_course", getCourse); //코스 전체
+router.get("/get1course/:course_id", get1course); // 선택된 코스 정보
 router.get("/get_facilities", getFacilities); // 편의시설 위치 api
 
 module.exports = router; // router 모듈 내보내기

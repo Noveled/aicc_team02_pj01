@@ -3,6 +3,7 @@ import {
   DELETE_COURSE_API_URL,
   GET_COURSE_API_URL,
   GET_Facilities_API_URL,
+  GET_ONE_COURSE_API_URL,
   GET_USER_JOIN_COURSE_API_URL,
   GET_USERS_JOIN_COURSE_API_URL,
   UPDATE_COURSE_API_URL,
@@ -14,6 +15,13 @@ import {
   patchRequest,
   putRequest,
 } from "../../utils/requestMethod";
+
+const get1courseFetchThunk = (actionType, apiUrl) => {
+  return createAsyncThunk(actionType, async (course_id) => {
+    const fullPath = `${apiUrl}/${course_id}`;
+    return await getRequest(fullPath);
+  });
+};
 
 const getCourseFetchThunk = (actionType, apiUrl) => {
   return createAsyncThunk(actionType, async () => {
@@ -54,6 +62,11 @@ const updateItemFetchThunk = (actionType, apiUrl) => {
 };
 
 // 코스 정보 api
+export const fetchGet1courseData = get1courseFetchThunk(
+  "fetchGet1course",
+  GET_ONE_COURSE_API_URL
+);
+
 export const fetchGetCourseData = getCourseFetchThunk(
   "fetchGetCourse",
   GET_COURSE_API_URL
@@ -121,6 +134,7 @@ const handleRejected = (state, action) => {
 const apiSlice = createSlice({
   name: "api",
   initialState: {
+    get1course: null,
     getCourseData: null,
     myCourse: null,
     usersCourse: null,
@@ -133,8 +147,11 @@ const apiSlice = createSlice({
 
     isError: false,
   },
+
   extraReducers: (builder) => {
     builder
+      .addCase(fetchGet1courseData.fulfilled, handleFulfilled("get1course"))
+      .addCase(fetchGet1courseData.rejected, handleRejected)
       .addCase(fetchGetCourseData.fulfilled, handleFulfilled("getCourseData"))
       .addCase(fetchGetCourseData.rejected, handleRejected)
       .addCase(

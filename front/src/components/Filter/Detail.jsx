@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 import {
   fetchDeleteCourse,
+  fetchGet1courseData,
   fetchUpdateViewcount,
 } from "../../redux/slices/apiSlice";
 
@@ -17,11 +18,13 @@ const Detail = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [detail, setDetail] = useState(location.state.item);
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [linePath, setLinePath] = useState([]);
 
-  const detail = location.state.item;
+  const course_info = useSelector((state) => state.api.get1course);
+
   const user = useSelector((state) => state.userInfoState.userInfo);
   const isUserOwner = user.user_id === detail.user_id;
 
@@ -40,6 +43,7 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(fetchUpdateViewcount(options));
+    dispatch(fetchGet1courseData(detail.course_id));
   }, [dispatch, viewData]);
 
   const markerImages = {
