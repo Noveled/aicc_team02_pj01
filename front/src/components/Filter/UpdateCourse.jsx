@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { changeCurrentPage } from "../../redux/slices/currentStateSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 import { changeMapInfo } from "../../redux/slices/currentStateSlice";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -54,6 +53,49 @@ const UpdateCourse = () => {
   const [uploadImgUrl, setUploadImgUrl] = useState("");
 
   const handleBack = () => window.history.back();
+
+  const markerImages = {
+    start: new kakao.maps.MarkerImage(
+      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png",
+      new kakao.maps.Size(32, 34),
+      { offset: new kakao.maps.Point(18, 32) }
+    ),
+    waypoint: new kakao.maps.MarkerImage(
+      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+      new kakao.maps.Size(32, 34),
+      { offset: new kakao.maps.Point(18, 32) }
+    ),
+  };
+
+  useEffect(() => {
+    const mapContainer = document.getElementById("map");
+    const kakaoMap = new kakao.maps.Map(mapContainer, {
+      center: new kakao.maps.LatLng(
+        course_info.center.Ma,
+        course_info.center.La
+      ),
+      level: course_info.level,
+    });
+    setMap(kakaoMap);
+  }, [course_info.center, course_info.level]);
+
+  useEffect(() => {
+    const loadMarkers = () => {
+      clearAllMarkers();
+      course_info.waypoint.forEach(({ Ma, La }, index) => {
+        const position = new kakao.maps.LatLng(Ma, La);
+        addMarker(
+          position,
+          index === 0 ? markerImages.start : markerImages.waypoint
+        );
+        addLinePath(position);
+      });
+    };
+
+    if (map) {
+      loadMarkers();
+    }
+  }, [map]); // map, course_info.waypoint, markerImages
 
   const onchangeImageUpload = (e) => {
     const { files } = e.target;
@@ -483,7 +525,7 @@ const UpdateCourse = () => {
 
             {/* 이미지 업로드 */}
             <img
-              className="w-full h-[240px] overflow-hidden object-fit"
+              className="w-full h-[240px] object-cover"
               src={uploadImgUrl || defaultImgUrl}
               alt="Preview"
               img="img"
