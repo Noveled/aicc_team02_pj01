@@ -4,7 +4,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import { ChevronLeft, PenLine, Plus, Minus, X, RotateCcw, UndoDot } from "lucide-react";
+import {
+  ChevronLeft,
+  PenLine,
+  Plus,
+  Minus,
+  X,
+  RotateCcw,
+  UndoDot,
+} from "lucide-react";
 
 import "../../actions.css";
 import { fetchUpdateCourse } from "../../redux/slices/apiSlice";
@@ -44,6 +52,9 @@ const UpdateCourse = () => {
 
   const [isClickedZoomIn, setIsClickedZoomIn] = useState(false); // 줌인 색상
   const [isClickedZoomOut, setIsClickedZoomOut] = useState(false); // 줌아웃 색상
+  const [isClickedClearAll, setIsClickedClearAll] = useState(false); // 마커 모두지우기 색상
+  const [isClickedClearLast, setIsClickedClearLast] = useState(false); // 마커하나 지우기 색상
+
   // 이미지 업로드
   const [uploadImgUrl, setUploadImgUrl] = useState("");
 
@@ -87,8 +98,7 @@ const UpdateCourse = () => {
       course_info.waypoint.forEach(({ Ma, La }, index) => {
         const position = new kakao.maps.LatLng(Ma, La);
         addMarker(
-          position,
-          index === 0 ? markerImages.start : markerImages.waypoint
+          position
         );
         addLinePath(position);
       });
@@ -294,6 +304,25 @@ const UpdateCourse = () => {
     }
   }, [isClickedZoomOut]);
 
+  // 마커 지우기 색상 전환
+  useEffect(() => {
+    if (isClickedClearAll) {
+      const timer = setTimeout(() => {
+        setIsClickedClearAll(false);
+      }, 200); // 200ms 후에 원래 배경색으로 복원
+      return () => clearTimeout(timer); // 타이머 클리어
+    }
+  }, [isClickedClearAll]);
+
+  useEffect(() => {
+    if (isClickedClearLast) {
+      const timer = setTimeout(() => {
+        setIsClickedClearLast(false);
+      }, 200); // 200ms 후에 원래 배경색으로 복원
+      return () => clearTimeout(timer); // 타이머 클리어
+    }
+  }, [isClickedClearLast]);
+
   useEffect(() => {
     const popElement = document.querySelector(".makeCoursePop");
     if (popElement) {
@@ -313,6 +342,7 @@ const UpdateCourse = () => {
     setMarkers([]);
     setLinePath([]);
     setDists([]);
+    setIsClickedClearAll(true);
   };
 
   // 마지막에 추가된 마커 지우기
@@ -325,6 +355,7 @@ const UpdateCourse = () => {
       setLinePath(linePath.slice(0, -1));
       setDists(dists.slice(0, -1));
     }
+    setIsClickedClearLast(true);
   };
 
   // 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수
@@ -432,7 +463,9 @@ const UpdateCourse = () => {
       <div className="absolute flex flex-col gap-1 bottom-[150px] right-3 z-10">
         {/* 마커 모두 지우기 */}
         <button
-          className={`border border-gray-200 rounded-full p-1 shadow-lg bg-white`} // transition-colors duration-200 ${ isClickedZoomOut ? 'bg-gray-200' : 'bg-white' }
+          className={`border border-gray-200 rounded-full p-1 shadow-lg transition-colors duration-200 ${
+            isClickedClearAll ? "bg-gray-200" : "bg-white"
+          }`}
           onClick={() => clearAllMarkers()}
         >
           <RotateCcw className="h-[30px] w-[30px] text-[#c8b5fc]" />
@@ -440,7 +473,9 @@ const UpdateCourse = () => {
 
         {/* 마커 하나 지우기 */}
         <button
-          className={`border border-gray-200 rounded-full p-1 shadow-lg bg-white`} // transition-colors duration-200 ${ isClickedZoomOut ? 'bg-gray-200' : 'bg-white' }
+          className={`border border-gray-200 rounded-full p-1 shadow-lg transition-colors duration-200 ${
+            isClickedClearLast ? "bg-gray-200" : "bg-white"
+          }`}
           onClick={() => deleteLastMarker()}
         >
           <UndoDot className="h-[30px] w-[30px] text-[#c8b5fc]" />
@@ -461,7 +496,7 @@ const UpdateCourse = () => {
         onClick={() => toggleMakeCoursePop()}
       >
         <div className="w-4/5 py-2 flex items-center justify-center bg-white rounded-full border-2 border-[#7c5ecf] shadow-lg">
-        <span className="text-xl  font-bold text-[#7c5ecf]">
+          <span className="text-xl  font-bold text-[#7c5ecf]">
             코스 정보 수정하기
           </span>
         </div>
@@ -521,7 +556,9 @@ const UpdateCourse = () => {
             </div>
 
             <div className="flex flex-col">
-              <span className="text-base text-[#111111] font-semibold py-1">지역</span>
+              <span className="text-base text-[#111111] font-semibold py-1">
+                지역
+              </span>
               <div>
                 <select
                   name="city"

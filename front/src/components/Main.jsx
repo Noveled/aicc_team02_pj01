@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Map from "./Map";
 import Recommend from "./Recommend";
 import FooterNaviBar from "./NaviBar/FooterNaviBar";
 import MapBase from "./MapBase";
@@ -7,22 +6,22 @@ import MapBase from "./MapBase";
 const Main = () => {
   useEffect(() => {
     // 스크롤 비활성화
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
 
     const preventScroll = (event) => {
       event.preventDefault();
       event.stopPropagation();
     };
 
-    window.addEventListener('scroll', preventScroll);
-    document.addEventListener('touchmove', preventScroll, { passive: false });
+    window.addEventListener("scroll", preventScroll);
+    document.addEventListener("touchmove", preventScroll, { passive: false });
 
     return () => {
       // 컴포넌트 언마운트 시 스크롤 복원
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
 
-      window.removeEventListener('scroll', preventScroll);
-      document.removeEventListener('touchmove', preventScroll);
+      window.removeEventListener("scroll", preventScroll);
+      document.removeEventListener("touchmove", preventScroll);
     };
   }, []);
 
