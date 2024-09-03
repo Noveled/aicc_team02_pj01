@@ -87,7 +87,8 @@ const UpdateCourse = () => {
       course_info.waypoint.forEach(({ Ma, La }, index) => {
         const position = new kakao.maps.LatLng(Ma, La);
         addMarker(
-          position
+          position,
+          index === 0 ? markerImages.start : markerImages.waypoint
         );
         addLinePath(position);
       });

@@ -38,7 +38,7 @@ const Category = ({ title }) => {
       setShowCourse(
         courseData?.filter(
           (course) =>
-            course.city === "강남구" &&
+            course.city === "강동구" &&
             course.is_private === false &&
             course.is_visible === true
         )
@@ -47,7 +47,7 @@ const Category = ({ title }) => {
       setShowCourse(
         courseData?.filter(
           (course) =>
-            course.city === "강북구" &&
+            course.city === "구로구" &&
             course.is_private === false &&
             course.is_visible === true
         )
