@@ -29,12 +29,17 @@ const MyPage = () => {
     dispatch(logout());
     dispatch(deleteUserInfo());
   };
+
+  const handleback = () => {
+    window.history.back();
+  };
+
   return (
     <div className="my-page w-full px-4">
       <div className="my-page-wrapper flex flex-col py-7">
         <div className="mypage-upper flex flex-col gap-5">
           <div className="flex justify-between">
-            <button>
+            <button onClick={handleback}>
               <ChevronLeft />
             </button>
             <span className="text-[20px] text-[#7c5ecf] rounded-md px-2 w-full text-center py-1">
