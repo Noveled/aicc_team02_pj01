@@ -102,7 +102,7 @@ const Login = () => {
         <div className="flex flex-col gap-4 py-4">
           <button
             type="submit"
-            className="auth-btn w-[20%] bg-[#B3E0FF] hover:bg-gradient-to-b from-sky-200 to-sky-300 bg"
+            className="auth-btn bg-[#B3E0FF] hover:bg-gradient-to-b from-sky-200 to-sky-300"
           >
             Sign In
           </button>
