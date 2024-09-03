@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { changeMapInfo } from "../../redux/slices/currentStateSlice";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import { ChevronLeft, PenLine, Plus, Minus, X } from "lucide-react";
+import { ChevronLeft, PenLine, Plus, Minus, X, RotateCcw, UndoDot } from "lucide-react";
 
 import "../../actions.css";
 import { fetchUpdateCourse } from "../../redux/slices/apiSlice";
@@ -16,7 +15,7 @@ const { kakao } = window;
 const UpdateCourse = () => {
   const location = useLocation();
   const course_info = location.state;
-  // console.log(course_info);
+  // console.log('course_info', course_info);
 
   // useNavigate 훅 생성
   const navigate = useNavigate();
@@ -24,10 +23,6 @@ const UpdateCourse = () => {
   const dispatch = useDispatch();
   // const [userData, setUserData] = useState();
   const userData = useSelector((state) => state.userInfoState);
-  const mapInfo = useSelector((state) => state.currentState.mapInfo);
-  // console.log(mapInfo);
-
-  // console.log('userData', userData);
 
   // 기본 업로드 이미지
   const defaultImgUrl =
@@ -77,6 +72,13 @@ const UpdateCourse = () => {
       level: course_info.level,
     });
     setMap(kakaoMap);
+
+    window.kakao.maps.event.addListener(kakaoMap, "click", (mouseEvent) => {
+      const position = mouseEvent.latLng;
+      addMarker(position);
+      addLinePath(position);
+      addDstance();
+    });
   }, [course_info.center, course_info.level]);
 
   useEffect(() => {
@@ -201,27 +203,6 @@ const UpdateCourse = () => {
     }
   };
 
-  // 맵 api 불러오고 클릭 이벤트 리스너 추가
-  useEffect(() => {
-    // console.log(mapInfo.center['Ma'], mapInfo.center['La']);
-    // console.log(mapInfo.lv);
-    const mapContainer = document.getElementById("map");
-    const mapOptions = {
-      center: new kakao.maps.LatLng(mapInfo.center["Ma"], mapInfo.center["La"]),
-      level: mapInfo.lv,
-    };
-
-    const kakaoMap = new kakao.maps.Map(mapContainer, mapOptions);
-    setMap(kakaoMap);
-
-    window.kakao.maps.event.addListener(kakaoMap, "click", (mouseEvent) => {
-      const position = mouseEvent.latLng;
-      addMarker(position);
-      addLinePath(position);
-      addDstance();
-    });
-  }, []);
-
   // 로그인 여부 체크 겸 유저 id 미리 집어넣기
   useEffect(() => {
     if (userData.userInfo === null) {
@@ -253,18 +234,6 @@ const UpdateCourse = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // 마우스 드래그로 지도 이동이 완료되었을 때 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
-    if (map) {
-      kakao.maps.event.addListener(map, "dragend", function () {
-        // 지도 중심좌표를 얻어옵니다
-        const latlng = map.getCenter();
-        const mapLv = map.getLevel();
-        dispatch(changeMapInfo({ center: latlng, lv: mapLv }));
-      });
-    }
-  }, [map]);
-
   // values의 waypoint, center, level 값 갱신 &
   // 맵 위에 마커, 폴리라인 그리기
   useEffect(() => {
@@ -290,7 +259,6 @@ const UpdateCourse = () => {
       });
       polyline.setMap(map);
       printMarkers(map);
-
       return () => polyline.setMap(null);
     }
   }, [linePath, map]);
@@ -403,7 +371,8 @@ const UpdateCourse = () => {
     try {
       await dispatch(fetchUpdateCourse(values)).unwrap();
       toast.success("코스가 수정되었습니다.");
-      handleBack();
+      // handleBack(); // 수정한 내용을 바로 반영 못하는 현상이 있음
+      navigate("/box"); // 위 내용 수정하려면 backend endpoint 이용해야 할것으로 생각되어 우선 임시로 box 로 이동시킴.
     } catch (error) {
       console.log("Error update course:", error);
       toast.error("코스 수정에 실패했습니다.");
@@ -412,6 +381,7 @@ const UpdateCourse = () => {
   };
 
   // console.log(values);
+  console.log(markers);
 
   return (
     <div className="make-course relative">
@@ -421,13 +391,13 @@ const UpdateCourse = () => {
           <ChevronLeft className="w-8 h-8 cursor-pointer" />
         </button>
         <div className="relative w-full">
-          <div className="absolute flex gap-2 bg-sky-500 rounded-3xl p-1 -left-2 bottom-6">
-            <PenLine className="text-white w-3 h-3" />
-            <span className=" text-white font-semibold text-[8px]">
+          <div className="absolute border border-[#7c5ecf] flex gap-2 bg-white rounded-3xl p-1 -left-2 bottom-6">
+            <PenLine className="text-[#7c5ecf] w-3 h-3" />
+            <span className=" text-[#7c5ecf] px-1 mr-2 font-semibold text-[8px]">
               {isMakeCoursePop ? <span>STEP 2</span> : <span>STEP 1</span>}
             </span>
           </div>
-          <span className="makeCourseHeader border rounded-3xl px-4 py-[6px] bg-slate-600 text-base text-white font-bold"></span>
+          <span className="makeCourseHeader border rounded-3xl px-6 py-[6px] bg-[#7c5ecf] text-base text-white font-bold shadow-2xl"></span>
         </div>
       </div>
       {/* 카카오 맵 */}
@@ -445,7 +415,7 @@ const UpdateCourse = () => {
           }`}
           onClick={() => zoomIn()}
         >
-          <Plus className="h-[22px] w-[22px] text-[#888888]" />
+          <Plus className="h-[22px] w-[22px] text-[#c8b5fc]" />
         </button>
 
         <button
@@ -454,7 +424,7 @@ const UpdateCourse = () => {
           }`}
           onClick={() => zoomOut()}
         >
-          <Minus className="h-[22px] w-[22px] text-[#888888]" />
+          <Minus className="h-[22px] w-[22px] text-[#c8b5fc]" />
         </button>
       </div>
 
@@ -465,7 +435,7 @@ const UpdateCourse = () => {
           className={`border border-gray-200 rounded-full p-1 shadow-lg bg-white`} // transition-colors duration-200 ${ isClickedZoomOut ? 'bg-gray-200' : 'bg-white' }
           onClick={() => clearAllMarkers()}
         >
-          <Minus className="h-[30px] w-[30px] text-[#888888]" />
+          <RotateCcw className="h-[30px] w-[30px] text-[#c8b5fc]" />
         </button>
 
         {/* 마커 하나 지우기 */}
@@ -473,15 +443,15 @@ const UpdateCourse = () => {
           className={`border border-gray-200 rounded-full p-1 shadow-lg bg-white`} // transition-colors duration-200 ${ isClickedZoomOut ? 'bg-gray-200' : 'bg-white' }
           onClick={() => deleteLastMarker()}
         >
-          <Minus className="h-[30px] w-[30px] text-[#888888]" />
+          <UndoDot className="h-[30px] w-[30px] text-[#c8b5fc]" />
         </button>
       </div>
 
       {/* 현재 총 거리 */}
       <div className="absolute flex items-center justify-center p-2 bg-white rounded-full border border-gray-200 shadow-lg bottom-[150px] left-3 z-10">
-        <span className="text-xl font-bold text-[#232323]">
+        <span className="text-xl font-bold text-[#111111]">
           {calculateDist()}
-          <span className="text-base text-[#888888]">KM</span>
+          <span className="text-base text-[#7c5ecf]"> KM</span>
         </span>
       </div>
 
@@ -490,15 +460,15 @@ const UpdateCourse = () => {
         className="absolute w-full flex items-center justify-center p-2 bottom-[86px] z-10"
         onClick={() => toggleMakeCoursePop()}
       >
-        <div className="w-4/5 py-2 flex items-center justify-center bg-white rounded-full border border-gray-200 shadow-lg">
-          <span className="text-xl font-bold text-[#232323]">
+        <div className="w-4/5 py-2 flex items-center justify-center bg-white rounded-full border-2 border-[#7c5ecf] shadow-lg">
+        <span className="text-xl  font-bold text-[#7c5ecf]">
             코스 정보 수정하기
           </span>
         </div>
       </button>
 
       <div
-        className={`makeCoursePop flex flex-col  bg-slate-600 text-lg z-50 rounded-t-2xl overflow-auto`}
+        className={`makeCoursePop flex flex-col  bg-white text-lg z-50 border-t-2 border-[#7c5ecf] rounded-t-2xl overflow-auto`}
         onSubmit={handleUpdateCourse}
       >
         <div className="flex flex-col w-full h-full p-4">
@@ -508,7 +478,7 @@ const UpdateCourse = () => {
           >
             <X />
           </button>
-          <form className="flex flex-col w-full h-full gap-2 py-2 text-black">
+          <form className="flex flex-col w-full h-full gap-2 text-[#111111]">
             <div className="flex flex-col">
               <span className="text-base font-semibold py-1">코스명</span>
               <input
@@ -525,7 +495,7 @@ const UpdateCourse = () => {
 
             {/* 이미지 업로드 */}
             <img
-              className="w-full h-[240px] object-cover"
+              className="w-full h-[240px] border border-gray-[#888888] rounded-md overflow-hidden object-cover"
               src={uploadImgUrl || defaultImgUrl}
               alt="Preview"
               img="img"
@@ -551,7 +521,7 @@ const UpdateCourse = () => {
             </div>
 
             <div className="flex flex-col">
-              <span className="text-base font-semibold py-1">지역</span>
+              <span className="text-base text-[#111111] font-semibold py-1">지역</span>
               <div>
                 <select
                   name="city"
@@ -608,7 +578,7 @@ const UpdateCourse = () => {
             </div>
 
             <input
-              className="border border-gray-400 bg-orange-300 rounded-md px-2 cursor-pointer"
+              className="border border-none text-white py-1 bg-[#7c5ecf] rounded-md px-2 cursor-pointer"
               type="submit"
               value={"수정"}
             ></input>

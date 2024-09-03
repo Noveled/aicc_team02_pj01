@@ -461,7 +461,7 @@ const MakeCourse = () => {
       <div className="absolute flex items-center justify-center p-2 bg-white rounded-full border border-gray-200 shadow-lg bottom-[150px] left-3 z-10">
         <span className="text-xl font-bold text-[#111111]">
           {calculateDist()}
-          <span className="text-base text-[#7c5ecf]">KM</span>
+          <span className="text-base text-[#7c5ecf]"> KM</span>
         </span>
       </div>
 
@@ -505,7 +505,7 @@ const MakeCourse = () => {
 
             {/* 이미지 업로드 */}
             <img
-              className="w-full h-[240px] border border-gray-[#888888] rounded-md overflow-hidden object-fit"
+              className="w-full h-[240px] border border-gray-[#888888] rounded-md overflow-hidden object-cover"
               src={uploadImgUrl || baseimg}
               alt="Preview"
               img="img"
@@ -519,7 +519,7 @@ const MakeCourse = () => {
             <div className="flex flex-col">
               <span className="text-base font-semibold py-1">코스 설명</span>
               <textarea
-                className="border rounded-md w-full h-[180px] resize-none"
+                className="border w-full h-[180px] border-gray-400 rounded-md resize-none"
                 type="text"
                 name="content"
                 placeholder="코스 설명"
@@ -531,7 +531,7 @@ const MakeCourse = () => {
             </div>
 
             <div className="flex flex-col">
-              <span className="text-base font-semibold py-1">지역</span>
+              <span className="text-base text-[#111111] font-semibold py-1">지역</span>
               <div>
                 <select
                   name="city"
