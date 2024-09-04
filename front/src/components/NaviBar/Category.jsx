@@ -16,6 +16,7 @@ const Category = ({ title }) => {
   const [dis, setDis] = useState(0);
   const [loading, setLoading] = useState(true);
   const [showCourse, setShowCourse] = useState();
+  const [selectCity, setSelectCity] = useState("강남구");
   const courseData = useSelector((state) => state.api.usersCourse);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const Category = ({ title }) => {
       }
     };
     fetchGetCourse();
-  }, [dispatch]);
+  }, [dispatch, selectCity]);
 
   useEffect(() => {
     if (title === "근처 추천 코스") {
@@ -47,7 +48,7 @@ const Category = ({ title }) => {
       setShowCourse(
         courseData?.filter(
           (course) =>
-            course.city === "구로구" &&
+            course.city === selectCity &&
             course.is_private === false &&
             course.is_visible === true
         )
@@ -105,7 +106,50 @@ const Category = ({ title }) => {
 
   return (
     <div className="search-items">
-      <h4 className="search-title">{title}</h4>
+      <div className="flex justify-center items-center relative">
+        <h4 className="search-title">{title}</h4>
+        {title === "지역 추천 코스" && (
+          <div className="absolute left-2/3 flex justify-center">
+            <select
+              name="city"
+              id="city"
+              className="p-0.5 border border-purple-500 rounded-md text-purple-700"
+              value={selectCity}
+              onChange={(e) => setSelectCity(e.target.value)}
+              size=""
+            >
+              <option value="" disabled>
+                선택
+              </option>
+              <option value="강남구">강남구</option>
+              <option value="강동구">강동구</option>
+              <option value="강북구">강북구</option>
+              <option value="강서구">강서구</option>
+              <option value="관악구">관악구</option>
+              <option value="광진구">광진구</option>
+              <option value="구로구">구로구</option>
+              <option value="금천구">금천구</option>
+              <option value="노원구">노원구</option>
+              <option value="도봉구">도봉구</option>
+              <option value="동대문구">동대문구</option>
+              <option value="동작구">동작구</option>
+              <option value="마포구">마포구</option>
+              <option value="서대문구">서대문구</option>
+              <option value="서초구">서초구</option>
+              <option value="성동구">성동구</option>
+              <option value="성북구">성북구</option>
+              <option value="송파구">송파구</option>
+              <option value="양천구">양천구</option>
+              <option value="영등포구">영등포구</option>
+              <option value="용산구">용산구</option>
+              <option value="은평구">은평구</option>
+              <option value="종로구">종로구</option>
+              <option value="중구">중구</option>
+              <option value="중랑구">중랑구</option>
+            </select>
+          </div>
+        )}
+      </div>
       <div className="search-content overflow-x-scroll">
         {title === "거리별 코스" && (
           <div className="flex justify-between px-4 gap-4">
