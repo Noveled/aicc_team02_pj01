@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+
+import { city_options } from "../../utils/data";
 import { changeCurrentPage } from "../../redux/slices/currentStateSlice";
 import { changeMapInfo } from "../../redux/slices/currentStateSlice";
 import { toast } from "react-toastify";
@@ -31,6 +34,7 @@ const MakeCourse = () => {
   // const [userData, setUserData] = useState();
   const userData = useSelector((state) => state.userInfoState);
   const mapInfo = useSelector((state) => state.currentState.mapInfo);
+  const ct_options = city_options;
   // console.log(mapInfo);
 
   // console.log('userData', userData);
@@ -570,7 +574,17 @@ const MakeCourse = () => {
               <span className="text-base text-[#111111] font-semibold py-1">
                 지역
               </span>
-              <div>
+              <Select
+                options={ct_options}
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    borderColor: state.isFocused ? "purple" : "#7c5ecf",
+                  }),
+                }}
+                onChange={(e) => setValues({ ...values, city: e.value })}
+              ></Select>
+              {/* <div>
                 <select
                   name="city"
                   id="city"
@@ -609,7 +623,7 @@ const MakeCourse = () => {
                   <option value="중구">중구</option>
                   <option value="중랑구">중랑구</option>
                 </select>
-              </div>
+              </div> */}
             </div>
 
             <div>

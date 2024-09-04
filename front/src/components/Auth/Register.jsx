@@ -127,14 +127,6 @@ const Register = () => {
 
   return (
     <div className="register h-[100vh] bg-gradient-to-b from-violet-400 to-purple-500 bg">
-      {/* <div className="h-[30vh]">
-        <div className="flex justify-center items-center font-bold text-2xl h-[10vh] text-purple-700">
-          회원가입
-        </div>
-        <div className="h-[20vh] py-8 flex justify-center items-center">
-          <FaWalking className="w-full h-full text-purple-600" />
-        </div>
-      </div> */}
       <AuthHeader title="회원가입"></AuthHeader>
       <div className="register-wrapper px-10 h-[70vh]">
         <form
