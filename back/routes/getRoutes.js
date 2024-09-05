@@ -1,12 +1,13 @@
 const router = require("express").Router(); // api path 를 전달해 주는 메서드
 
-const { getUser } = require("../controllers/getUser");
-const { getUserJoinCourse } = require("../controllers/getUserJoinCourse");
-const { getUsers } = require("../controllers/getUsers");
-const { getUsersJoinCourse } = require("../controllers/getUsersJoinCourse");
-const { getCourse } = require("../controllers/getCourse");
+const { getUser, getUsers } = require("../controllers/getUser");
+const {
+  getCourse,
+  getUsersJoinCourse,
+  getUserJoinCourse,
+  get1course,
+} = require("../controllers/getCourse");
 const { getFacilities } = require("../controllers/getFacilities");
-const { get1course } = require("../controllers/getOneCourse");
 const { getMapApi } = require("../controllers/getMapApi");
 
 router.get("/get_user/:userId", getUser); // 로그인한 유저정보
