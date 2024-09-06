@@ -149,6 +149,7 @@ const Detail = () => {
 
   const handleBack = () => window.history.back();
 
+  console.log('detail.img_url', detail.img_url);
   return (
     <div className="detail relative overflow-hidden">
       <div
