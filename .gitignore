@@ -24,3 +24,8 @@ yarn-debug.log*
 yarn-error.log*
 
 /git
+
+# database 개인과 분리
+/back/database/database.js
+/back/.github
+/front/.github
