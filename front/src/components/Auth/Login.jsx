@@ -33,7 +33,7 @@ const Login = () => {
       return;
     }
     axios
-      .post("http://localhost:8080/login", values)
+      .post(`${process.env.REACT_APP_MY_DOMAIN}/login`, values)
       .then((res) => {
         if (res.status === 201) {
           const decoded = jwtDecode(res.data.token);
@@ -41,7 +41,9 @@ const Login = () => {
           dispatch(login({ authData: decoded }));
 
           axios
-            .get(`http://localhost:8080/get_user/${decoded["name"]}`)
+            .get(
+              `${process.env.REACT_APP_MY_DOMAIN}/get_user/${decoded["name"]}`
+            )
             .then((res) => {
               if (res.status === 200) {
                 console.log("res.data", res.data[0]);
