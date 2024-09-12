@@ -3,22 +3,22 @@
 // 코스 등록시 유저ID 는 로그인 기준으로 자동 입력
 //
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import CourseData from './CourseData';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import CourseData from "./CourseData";
 
 const { kakao } = window;
 
 const PolyMap = () => {
   const positions = [
-    { title: '카카오', latlng: new kakao.maps.LatLng(33.450705, 126.570677) },
-    { title: '생태연못', latlng: new kakao.maps.LatLng(33.450936, 126.569477) },
-    { title: '텃밭', latlng: new kakao.maps.LatLng(33.450879, 126.56994) },
-    { title: '근린공원', latlng: new kakao.maps.LatLng(33.451393, 126.570738) },
+    { title: "카카오", latlng: new kakao.maps.LatLng(33.450705, 126.570677) },
+    { title: "생태연못", latlng: new kakao.maps.LatLng(33.450936, 126.569477) },
+    { title: "텃밭", latlng: new kakao.maps.LatLng(33.450879, 126.56994) },
+    { title: "근린공원", latlng: new kakao.maps.LatLng(33.451393, 126.570738) },
   ];
 
   const imageSrc =
-    'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
+    "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
   const [map, setMap] = useState(null);
   const [mapCenter, SetMapCenter] = useState();
@@ -29,19 +29,19 @@ const PolyMap = () => {
   const [boxInfo, setBoxInfo] = useState([]);
   const [courseData, setCourseData] = useState([]);
   const [values, setValues] = useState({
-    course_name: '',
-    user_id: '',
-    distance: '',
+    course_name: "",
+    user_id: "",
+    distance: "",
     waypoint: linePath,
-    city: '',
+    city: "",
     is_private: true,
-    url: '',
-    center: '',
-    level: '',
+    url: "",
+    center: "",
+    level: "",
   });
 
   useEffect(() => {
-    const mapContainer = document.getElementById('map');
+    const mapContainer = document.getElementById("map");
     const mapOptions = {
       center: new kakao.maps.LatLng(33.450701, 126.570667),
       level: 3,
@@ -50,7 +50,7 @@ const PolyMap = () => {
     const kakaoMap = new kakao.maps.Map(mapContainer, mapOptions);
     setMap(kakaoMap);
 
-    window.kakao.maps.event.addListener(kakaoMap, 'click', (mouseEvent) => {
+    window.kakao.maps.event.addListener(kakaoMap, "click", (mouseEvent) => {
       const position = mouseEvent.latLng;
       addMarker(position);
       addLinePath(position);
@@ -77,9 +77,9 @@ const PolyMap = () => {
       const polyline = new kakao.maps.Polyline({
         path: linePath,
         strokeWeight: 5,
-        strokeColor: '#FFAE00',
+        strokeColor: "#FFAE00",
         strokeOpacity: 0.7,
-        strokeStyle: 'solid',
+        strokeStyle: "solid",
       });
       polyline.setMap(map);
       printMarkers(map);
@@ -214,7 +214,7 @@ const PolyMap = () => {
           // console.log(res.data);
           setCourseData(res.data);
         } else {
-          alert('코스 불러오기 실패했습니다.');
+          alert("코스 불러오기 실패했습니다.");
         }
       })
       .catch((error) => {
@@ -232,11 +232,11 @@ const PolyMap = () => {
       !values.city ||
       !values.url
     ) {
-      alert('입력값을 확인해주세요.');
+      alert("입력값을 확인해주세요.");
       return;
     }
     if (values.waypoint.length === 0) {
-      alert('지도를 클릭해 코스를 입력해주세요.');
+      alert("지도를 클릭해 코스를 입력해주세요.");
       return;
     }
 
@@ -246,9 +246,9 @@ const PolyMap = () => {
         console.log(res);
         if (res.status === 201) {
           console.log(res);
-          alert('코스등록이 완료되었습니다.');
+          alert("코스등록이 완료되었습니다.");
         } else {
-          alert('코스등록에 실패했습니다.');
+          alert("코스등록에 실패했습니다.");
         }
       })
       .catch((error) => {
@@ -265,7 +265,7 @@ const PolyMap = () => {
   return (
     <>
       <h2>Poly Map</h2>
-      <div id="map" style={{ width: '800px', height: '800px' }}></div>
+      <div id="map" style={{ width: "800px", height: "800px" }}></div>
 
       <form className="flex gap-2 py-2" onSubmit={handlePostCourse}>
         <input

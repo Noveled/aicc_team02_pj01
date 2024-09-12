@@ -41,7 +41,9 @@ const Login = () => {
           dispatch(login({ authData: decoded }));
 
           axios
-            .get(`${process.env.REACT_APP_MY_DOMAIN}/get_user/${decoded["name"]}`)
+            .get(
+              `${process.env.REACT_APP_MY_DOMAIN}/get_user/${decoded["name"]}`
+            )
             .then((res) => {
               if (res.status === 200) {
                 console.log("res.data", res.data[0]);
