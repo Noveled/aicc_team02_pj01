@@ -125,7 +125,7 @@ const UpdateCourse = () => {
     formData.append("file", uploadFile);
     // console.log('uploadFile', uploadFile);
     axios
-      .post("http://localhost:8080/upload_image", formData)
+      .post(`${process.env.REACT_APP_MY_DOMAIN}/upload_image`, formData)
       .then((res) => {
         setUploadImgUrl(res.data.url);
         setValues({ ...values, url: res.data.url });

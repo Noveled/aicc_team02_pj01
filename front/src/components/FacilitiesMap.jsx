@@ -57,7 +57,7 @@ const FacilitiesMap = () => {
   }, [type])
 
   useEffect(() => {
-    axios.get('http://localhost:8080/get_facilities')
+    axios.get(`${process.env.REACT_APP_MY_DOMAIN}/get_facilities`)
     .then((res) => {
       // console.log(res);
       if (res.status === 200) {
