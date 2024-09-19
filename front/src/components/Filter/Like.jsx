@@ -22,36 +22,36 @@ const Like = () => {
       return;
     }
 
-    dispatch(fetchGetUsersData());
     const fetchGetCourse = async () => {
+      setLoading(true);
       try {
+        await dispatch(fetchGetUsersData()).unwrap();
         await dispatch(fetchGetUserJoinCourseData(userId)).unwrap();
-        setLoading(true);
       } catch (error) {
         console.log("Failed to fetch items:", error);
       } finally {
         setLoading(false);
       }
     };
+
     fetchGetCourse();
-  }, [dispatch, userId]);
+  }, [dispatch, userId, myCourse]);
 
   return (
     <div className="my-course bg-violet-50">
-      <div className="grid grid-cols-2 w-full">
+      <div className="grid grid-cols-6 w-full xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {loading ? (
           <SkeletonTheme baseColor="#ddd6fe" highlightColor="#c4b5fd">
-            <ItemLoadingSkeleton></ItemLoadingSkeleton>
-            <ItemLoadingSkeleton></ItemLoadingSkeleton>
-            <ItemLoadingSkeleton></ItemLoadingSkeleton>
-            <ItemLoadingSkeleton></ItemLoadingSkeleton>
+            <ItemLoadingSkeleton />
+            <ItemLoadingSkeleton />
+            <ItemLoadingSkeleton />
+            <ItemLoadingSkeleton />
           </SkeletonTheme>
         ) : (
           myCourse
             ?.filter((item) => item.is_visible === true)
-            ?.map((item, idx) => <Item key={idx} item={item}></Item>)
+            ?.map((item) => <Item key={item.course_id} item={item} />)
         )}
-        {}
       </div>
     </div>
   );
