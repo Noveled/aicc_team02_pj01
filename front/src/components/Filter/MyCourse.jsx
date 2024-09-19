@@ -11,7 +11,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const MyCourse = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   const userId = useSelector((state) => state.userInfoState.userInfo.user_id);
@@ -25,8 +25,12 @@ const MyCourse = () => {
     const fetchGetCourse = async () => {
       setLoading(true); // 로딩 상태를 true로 설정
       try {
-        await dispatch(fetchGetUsersData()).unwrap();
-        await dispatch(fetchGetUserJoinCourseData(userId)).unwrap();
+        if (!userId) {
+          await dispatch(fetchGetUsersData()).unwrap();
+        }
+        if (!myCourse) {
+          await dispatch(fetchGetUserJoinCourseData(userId)).unwrap();
+        }
       } catch (error) {
         console.log("Failed to fetch items:", error);
       } finally {

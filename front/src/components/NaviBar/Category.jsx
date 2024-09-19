@@ -23,11 +23,12 @@ const Category = ({ title }) => {
   const ct_options = city_options;
 
   useEffect(() => {
-    dispatch(fetchGetUsersData());
+    setLoading(true);
     const fetchGetCourse = async () => {
       try {
-        await dispatch(fetchGetUsersJoinCourseData()).unwrap();
-        setLoading(true);
+        if (!courseData) {
+          await dispatch(fetchGetUsersJoinCourseData()).unwrap();
+        }
       } catch (error) {
         console.log("Failed to fetch items:", error);
       } finally {
