@@ -1,29 +1,29 @@
-import React from 'react';
+import React from "react";
 
-import FooterNaviBar from './FooterNaviBar';
+import FooterNaviBar from "./FooterNaviBar";
 
-import { logout } from '../../redux/slices/authSlice';
-import { deleteUserInfo } from '../../redux/slices/userInfoSlice';
+import { logout } from "../../redux/slices/authSlice";
+import { deleteUserInfo } from "../../redux/slices/userInfoSlice";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
-import { IoMdSettings } from 'react-icons/io';
-import profile_image from '../../assets/images/profile_image.jpg';
-import current_weight from '../../assets/images/current_weight.jpg';
-import weight_icon from '../../assets/images/weight_icon.png';
-import myActivity from '../../assets/images/myActivity.png';
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
+import { IoMdSettings } from "react-icons/io";
+import profile_image from "../../assets/images/profile_image.jpg";
+import current_weight from "../../assets/images/current_weight.jpg";
+import weight_icon from "../../assets/images/weight_icon.png";
+import myActivity from "../../assets/images/myActivity.png";
 
-import { FiSettings } from 'react-icons/fi';
-import { FaArrowRightToBracket } from 'react-icons/fa6';
-import { TbShoe } from 'react-icons/tb';
-import { LiaCalendarDaySolid } from 'react-icons/lia';
+import { FiSettings } from "react-icons/fi";
+import { FaArrowRightToBracket } from "react-icons/fa6";
+import { TbShoe } from "react-icons/tb";
+import { LiaCalendarDaySolid } from "react-icons/lia";
 
 const MyPage = () => {
   const dispatch = useDispatch();
 
   const userData = useSelector((state) => state.userInfoState);
-  console.log(userData);
+  // console.log(userData);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -127,7 +127,7 @@ const MyPage = () => {
           </div>
         </div>
 
-        <Link to={'/'}>
+        <Link to={"/"}>
           <div
             onClick={handleLogout}
             className="border border-gray-400 bg-[#7c5ecf] rounded-md px-2 cursor-pointer text-white w-full text-center py-2 mt-4"

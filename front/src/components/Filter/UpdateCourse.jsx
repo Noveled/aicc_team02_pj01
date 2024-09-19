@@ -275,16 +275,16 @@ const UpdateCourse = () => {
   }, [linePath, map]);
 
   // 코스 등록 상세페이지 팝업을 위한 상태관리
-  useEffect(() => {
-    const popHeader = document.querySelector(".makeCourseHeader");
-    if (popHeader) {
-      if (isMakeCoursePop) {
-        popHeader.innerText = "설명을 추가해 코스를 완성하세요.";
-      } else {
-        popHeader.innerText = "지도를 눌러 코스를 그려주세요.";
-      }
-    }
-  }, [isMakeCoursePop]);
+  // useEffect(() => {
+  //   const popHeader = document.querySelector(".makeCourseHeader");
+  //   if (popHeader) {
+  //     if (isMakeCoursePop) {
+  //       popHeader.innerText = "설명을 추가해 코스를 완성하세요.";
+  //     } else {
+  //       popHeader.innerText = "지도를 눌러 코스를 그려주세요.";
+  //     }
+  //   }
+  // }, [isMakeCoursePop]);
 
   // 줌 인 아웃 색상전환
   useEffect(() => {
@@ -380,7 +380,7 @@ const UpdateCourse = () => {
   };
 
   const toggleMakeCoursePop = () => {
-    console.log("isMakeCoursePop Click :", isMakeCoursePop);
+    // console.log("isMakeCoursePop Click :", isMakeCoursePop);
     setIsMakeCoursePop(!isMakeCoursePop);
   };
 
@@ -413,30 +413,35 @@ const UpdateCourse = () => {
   };
 
   // console.log(values);
-  console.log(markers);
+  // console.log(markers);
 
   return (
-    <div className="make-course relative">
+    <div className="make-course relativ h-[100vh]">
       {/* 헤더 영역 */}
       <div className="absolute top-4 left-0 w-full flex justify-between items-center py-4 px-6 z-10">
         <button onClick={handleBack}>
           <ChevronLeft className="w-8 h-8 cursor-pointer" />
         </button>
-        <div className="relative w-full">
-          <div className="absolute border border-[#7c5ecf] flex gap-2 bg-white rounded-3xl p-1 -left-2 bottom-6">
-            <PenLine className="text-[#7c5ecf] w-3 h-3" />
-            <span className=" text-[#7c5ecf] px-1 mr-2 font-semibold text-[8px]">
-              {isMakeCoursePop ? <span>STEP 2</span> : <span>STEP 1</span>}
-            </span>
+        <div className="w-full flex justify-center">
+          <div className="makeCourseHeader relative border rounded-3xl px-6 py-[6px] bg-[#7c5ecf] text-base text-white font-bold shadow-2xl">
+            <div className="absolute border border-[#7c5ecf] flex gap-2 bg-white rounded-3xl p-1 -left-4 bottom-7 h-6 items-center">
+              <PenLine className="text-[#7c5ecf] w-3 h-3" />
+              <span className=" text-[#7c5ecf] px-1 mr-2 font-semibold text-[8px]">
+                {isMakeCoursePop ? <span>STEP 2</span> : <span>STEP 1</span>}
+              </span>
+            </div>
+            {isMakeCoursePop
+              ? "설명을 추가해 코스를 완성하세요."
+              : "지도를 눌러 코스를 그려주세요"}
           </div>
-          <span className="makeCourseHeader border rounded-3xl px-6 py-[6px] bg-[#7c5ecf] text-base text-white font-bold shadow-2xl"></span>
         </div>
       </div>
+
       {/* 카카오 맵 */}
       <div
         id="map"
         className="relative"
-        style={{ width: "400px", height: "900px" }}
+        style={{ width: "100%", height: "100%" }}
       ></div>
 
       {/* 줌 인아웃 */}
@@ -504,15 +509,15 @@ const UpdateCourse = () => {
       </button>
 
       <div
-        className={`makeCoursePop flex flex-col  bg-white text-lg z-50 border-t-2 border-[#7c5ecf] rounded-t-2xl overflow-auto`}
+        className={`makeCoursePop flex flex-col items-center  bg-white text-lg z-50 border-t-2 border-[#7c5ecf] rounded-t-2xl overflow-auto`}
         onSubmit={handleUpdateCourse}
       >
-        <div className="flex flex-col w-full h-full p-4">
+        <div className="flex flex-col w-full h-full p-4 max-w-[390px]">
           <button
             className="flex justify-end"
             onClick={() => toggleMakeCoursePop()}
           >
-            <X />
+            <X className="text-[#888888]" />
           </button>
           <form className="flex flex-col w-full h-full gap-2 text-[#111111]">
             <div className="flex flex-col">

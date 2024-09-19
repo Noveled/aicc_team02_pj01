@@ -30,7 +30,7 @@ const Main = () => {
       <div className="h-[93vh]">
         {/* 상단에 오늘의 추천 코스 보여주기 */}
         {/* <Recommend></Recommend> */}
-        <div className="mapContainer overflow-hidden">
+        <div className="mapContainer overflow-hidden h-full w-full">
           <MapBase />
           {/* 
           1. 앱 실행하면 현재 위치를 출력 ( 현재 위치정보 get )

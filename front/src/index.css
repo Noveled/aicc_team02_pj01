@@ -48,7 +48,6 @@
   flex-direction: column;
   padding: 0.5rem 0;
   border-bottom: 1px solid #c8b5fc;
-  /* overflow-x: scroll; */
 }
 
 .search-title {
@@ -74,7 +73,7 @@
 }
 
 .category-items {
-  flex-basis: 50%;
+  _flex-basis: 50%;
   flex-shrink: 0;
 }
 

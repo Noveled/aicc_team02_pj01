@@ -1,8 +1,8 @@
 .makeCoursePop {
   position: fixed;
   bottom: -100vh; /* 팝업창 화면 아래로 숨김 */
-  left: 0px; 
-  width: 390px;
+  left: 0px;
+  width: 100%;
   height: 93vh;
   border-right: 2px solid darkgray;
   color: white;

@@ -65,9 +65,9 @@ const MapBase = () => {
 
   useEffect(() => {
     const mapContainer = document.getElementById("map");
-    console.log('mapContainer :', mapContainer);
-    console.log('kakao :', kakao);
-    console.log('window: ', window);
+    // console.log("mapContainer :", mapContainer);
+    // console.log("kakao :", kakao);
+    // console.log("window: ", window);
 
     const mapOptions = {
       center: new kakao.maps.LatLng(mapInfo.center["Ma"], mapInfo.center["La"]),
@@ -508,11 +508,11 @@ const MapBase = () => {
   // console.log(userMarker);
 
   return (
-    <div>
+    <div className="h-full w-full">
       <div
         id="map"
         className="relative"
-        style={{ width: "400px", height: "900px" }}
+        style={{ width: "100%", height: "100%" }}
       />
 
       {/* 이벤트 배너 */}
@@ -572,7 +572,7 @@ const MapBase = () => {
       </div>
 
       {/* 카테고리 슬라이더 */}
-      <div className="absolute top-8 z-10 w-[390px] text-[12px] font-semibold text-[#232323]">
+      <div className="absolute top-8 z-10 text-[12px] font-semibold text-[#232323]">
         <Slider {...settings}>
           <div className="mx-[2px]">
             <button
@@ -623,7 +623,7 @@ const MapBase = () => {
               </div>
             </button>
           </div>
-          <div>
+          <div className="mx-[2px]">
             <button
               className={`{border border-gray-200 bg-white rounded-full py-1 px-2 shadow ${
                 type === "storage" && "bg-slate-200"

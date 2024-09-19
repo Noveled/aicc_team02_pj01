@@ -7,7 +7,7 @@ import banner_001 from "../assets/images/Recommend_001.PNG";
 import banner_002 from "../assets/images/Recommend_002.PNG";
 import banner_003 from "../assets/images/Recommend_003.PNG";
 
-import { X } from 'lucide-react';
+import { X } from "lucide-react";
 
 const Recommend = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(true);
@@ -39,7 +39,7 @@ const Recommend = () => {
       } else {
         popupElement.classList.remove("closeToday");
       }
-      
+
       if (!isPopupVisible) {
         popupElement.classList.add("close");
       } else {
@@ -59,8 +59,10 @@ const Recommend = () => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="recommendCoursePop absolute rounded-lg w-11/12 top-8 px-8 pt-4 bg-[#7c5ecf] text-white shadow-lg z-50">
-        <div className="box-border text-xl text-center font-semibold">오늘의 추천 코스</div>
+      <div className="recommendCoursePop absolute rounded-lg w-11/12 top-8 px-8 pt-4 bg-[#7c5ecf] text-white shadow-lg z-50 max-w-[390px]">
+        <div className="box-border text-xl text-center font-semibold">
+          오늘의 추천 코스
+        </div>
         <Slider className="w-full my-4" {...sliderSettings}>
           <div className="mx-[2px] w-[370px] p-1">
             <img className="w-full" src={banner_001} alt="추천 코스 1" />
@@ -73,17 +75,21 @@ const Recommend = () => {
           </div>
         </Slider>
         <div className="flex gap-2 justify-center">
-          <button onClick={handleTodayClose} className="box-border border border-gray-200 rounded-3xl p-1 text-[12px] right-2 text-right font-semibold my-2">
+          <button
+            onClick={handleTodayClose}
+            className="box-border border border-gray-200 rounded-3xl p-1 text-[12px] right-2 text-right font-semibold my-2"
+          >
             1일 동안 보지 않기
           </button>
-          <button onClick={handleClose} className="box-border border border-gray-200 rounded-3xl px-2 py-1 text-[12px] right-2 text-right font-semibold my-2">
+          <button
+            onClick={handleClose}
+            className="box-border border border-gray-200 rounded-3xl px-2 py-1 text-[12px] right-2 text-right font-semibold my-2"
+          >
             닫기
           </button>
         </div>
-        
       </div>
     </div>
-    
   );
 };
 

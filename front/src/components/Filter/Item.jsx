@@ -18,11 +18,17 @@ const Item = ({ item }) => {
             <h5 className="truncate">제목: {item.course_name}</h5>
             <p className="truncate text-[#888888]">내용: {item.content}</p>
             <div className="flex justify-between gap-x-[0.25rem]">
-              <div className="text-xs truncate text-[#888888]">지역: {item.city}</div>
-              <div className="text-xs truncate text-[#888888]">거리: {item.distance}km</div>
+              <div className="text-xs truncate text-[#888888]">
+                지역: {item.city}
+              </div>
+              <div className="text-xs truncate text-[#888888]">
+                거리: {item.distance}km
+              </div>
             </div>
             <div className="flex justify-between">
-              <div className="text-xs truncate text-[#888888]">작성자: {item.user_name}</div>
+              <div className="text-xs truncate text-[#888888]">
+                작성자: {item.user_name}
+              </div>
               <div className="text-xs flex items-center gap-x-1 truncate text-[#888888]">
                 조회수: {item.viewcount}
               </div>

@@ -29,3 +29,5 @@ yarn-error.log*
 /back/database/database.js
 /back/.github
 /front/.github
+/front/Dockerfile
+/front/nginx.conf

@@ -162,9 +162,9 @@ const Category = ({ title }) => {
               <ItemLoadingSkeleton></ItemLoadingSkeleton>
             </SkeletonTheme>
           ) : (
-            showCourse?.map((item, idx) => (
-              <div className="category-items w-[195px]">
-                <Item key={idx} item={item}></Item>
+            showCourse?.map((item) => (
+              <div className="category-items w-[195px] xs:basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5 basis-1/6">
+                <Item key={item.course_id} item={item}></Item>
               </div>
             ))
           )}
