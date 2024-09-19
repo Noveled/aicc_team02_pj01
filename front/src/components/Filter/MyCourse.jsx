@@ -25,12 +25,8 @@ const MyCourse = () => {
     const fetchGetCourse = async () => {
       setLoading(true); // 로딩 상태를 true로 설정
       try {
-        if (!userId) {
-          await dispatch(fetchGetUsersData()).unwrap();
-        }
-        if (!myCourse) {
-          await dispatch(fetchGetUserJoinCourseData(userId)).unwrap();
-        }
+        await dispatch(fetchGetUsersData()).unwrap();
+        await dispatch(fetchGetUserJoinCourseData(userId)).unwrap();
       } catch (error) {
         console.log("Failed to fetch items:", error);
       } finally {
@@ -54,7 +50,7 @@ const MyCourse = () => {
         ) : (
           myCourse
             ?.filter((item) => item.is_visible === true)
-            ?.map((item) => <Item key={item.course_id} item={item} />) // `item.id`가 고유 식별자라면 사용
+            ?.map((item) => <Item key={item.course_id} item={item} />)
         )}
       </div>
     </div>

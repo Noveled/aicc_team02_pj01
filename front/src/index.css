@@ -73,7 +73,6 @@
 }
 
 .category-items {
-  _flex-basis: 50%;
   flex-shrink: 0;
 }
 

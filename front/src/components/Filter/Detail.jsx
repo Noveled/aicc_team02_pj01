@@ -140,6 +140,7 @@ const Detail = () => {
         await dispatch(fetchDeleteCourse(detail.course_id)).unwrap();
         toast.success("아이템이 삭제되었습니다.");
         navigate("/box");
+        window.location.reload();
       } catch (error) {
         toast.error("아이템 삭제에 실패했습니다.");
         console.error(error);
@@ -147,7 +148,12 @@ const Detail = () => {
     }
   };
 
-  const handleBack = () => window.history.back();
+  const handleBack = () => {
+    window.history.back();
+    setTimeout(function () {
+      window.location.reload();
+    }, 50);
+  };
 
   return (
     <div className="detail relative overflow-hidden">

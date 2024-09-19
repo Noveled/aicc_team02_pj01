@@ -405,6 +405,7 @@ const UpdateCourse = () => {
       toast.success("코스가 수정되었습니다.");
       // handleBack(); // 수정한 내용을 바로 반영 못하는 현상이 있음
       navigate("/box"); // 위 내용 수정하려면 backend endpoint 이용해야 할것으로 생각되어 우선 임시로 box 로 이동시킴.
+      window.location.reload();
     } catch (error) {
       console.log("Error update course:", error);
       toast.error("코스 수정에 실패했습니다.");

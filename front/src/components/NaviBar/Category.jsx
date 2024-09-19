@@ -26,9 +26,7 @@ const Category = ({ title }) => {
     setLoading(true);
     const fetchGetCourse = async () => {
       try {
-        if (!courseData) {
-          await dispatch(fetchGetUsersJoinCourseData()).unwrap();
-        }
+        await dispatch(fetchGetUsersJoinCourseData()).unwrap();
       } catch (error) {
         console.log("Failed to fetch items:", error);
       } finally {
@@ -127,7 +125,7 @@ const Category = ({ title }) => {
           </div>
         )}
       </div>
-      <div className="search-content overflow-x-scroll">
+      <div className="search-content">
         {title === "거리별 코스" && (
           <div className="flex justify-between px-4 gap-4">
             <button
@@ -156,9 +154,12 @@ const Category = ({ title }) => {
             </button>
           </div>
         )}
-        <div className="flex w-full text-violet-300">
+        <div className="flex w-full text-violet-300 overflow-x-scroll">
           {loading ? (
             <SkeletonTheme baseColor="#ddd6fe" highlightColor="#c4b5fd">
+              <ItemLoadingSkeleton></ItemLoadingSkeleton>
+              <ItemLoadingSkeleton></ItemLoadingSkeleton>
+              <ItemLoadingSkeleton></ItemLoadingSkeleton>
               <ItemLoadingSkeleton></ItemLoadingSkeleton>
               <ItemLoadingSkeleton></ItemLoadingSkeleton>
             </SkeletonTheme>

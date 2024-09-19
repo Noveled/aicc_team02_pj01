@@ -415,6 +415,7 @@ const MakeCourse = () => {
           dispatch(changeCurrentPage({ title: "보관함" }));
           // 페이지 이동
           navigate("/box");
+          window.location.reload();
         } else {
           toast.error("코스등록에 실패했습니다.");
         }
